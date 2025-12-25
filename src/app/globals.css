@@ -1,0 +1,44 @@
+@import "tailwindcss";
+
+/* Global font */
+* {
+  font-family: "Poppins", sans-serif;
+
+}
+
+/* WebKit Browsers (Chrome, Safari, Edge) */
+/* Scrollbar width (vertical) and height (horizontal) */
+::-webkit-scrollbar {
+  width: 4px;
+  /* Vertical scrollbar width */
+  height: 4px;
+  /* Horizontal scrollbar height */
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgb(240, 240, 240);
+  /* Tailwind red-700 */
+  border-radius: 2px;
+  border: none;
+}
+
+@keyframes glowUpDown {
+
+  0%,
+  100% {
+    transform: translateY(-5px);
+    opacity: 0.1;
+  }
+
+  50% {
+    transform: translateY(5px);
+    opacity: 0.8;
+  }
+}
+
+
+
