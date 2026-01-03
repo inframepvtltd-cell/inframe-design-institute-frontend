@@ -8,7 +8,7 @@ import AppSection from "./homePageComponents/AppSection";
 import TrustedPlatform from "./homePageComponents/TrustedPlatform";
 import StudyMaterials from "./homePageComponents/StudyMaterials";
 import dynamic from "next/dynamic";
-const BannerSlider = dynamic(() => import('./homePageComponents/BannerSlider'), { ssr: false });
+import BannerSlider from "./homePageComponents/BannerSlider";
 
 const BookaSession = dynamic(() => import('./homePageComponents/BookaSession'), { ssr: false });
 
