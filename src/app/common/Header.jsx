@@ -28,14 +28,19 @@ import Swal from "sweetalert2";
 import { logoutUser } from "../redux/slices/userSlice";
 import axios from "axios";
 import { cartDataFunc } from "../redux/slices/cartSlice";
-import { redirect, usePathname, useRouter } from "next/navigation";
+import { redirect, useParams, usePathname, useRouter } from "next/navigation";
 import Cookies from "js-cookie";
+import { freeResApi, studeyMaterials } from "../demoapis/api";
+
 
 export default function Header() {
+
+
 
   const dispatch = useDispatch();
 
   const path = usePathname().split("/")[1]
+
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL
   const [cartOpen, setCartOpen] = useState(false);
@@ -56,7 +61,6 @@ export default function Header() {
   const LoginUsername = useSelector((store) => store.loginStore.user ? store.loginStore.user.userName : 'Loading...')
 
   const cartData = useSelector((store) => store.cartStore.cartAllData)
-  // console.log(cartData)
 
   const totalAmountInCart = cartData.reduce((prev, curr) => {
     return prev + Number(curr.courseDetails.coursePrice);
@@ -115,7 +119,6 @@ export default function Header() {
   }, [])
 
 
-
   const fetchOnlineCategory = () => {
     axios.get(`${apiBaseUrl}/category/fetch-online-category`)
       .then((res) => res.data)
@@ -136,8 +139,6 @@ export default function Header() {
         setOfflineCourseCategories(finalRes.categoryData)
       })
   }
-
-
 
   useEffect(() => {
     fetchOfflineCategory()
@@ -280,12 +281,12 @@ export default function Header() {
                 alt=""
               />
             </Link>
-            <button
+            <div
               onClick={() => setMegaMenuOpen(!MegaMenuOpen)}
               className={`${MegaMenuOpen
-                ? "bg-gray-900 text-white"
-                : "bg-white text-gray-900"
-                } flex items-center  gap-2 border-[2px] border-gray-900 rounded-[10px] px-[15px] py-[8px] text-gray-900    cursor-pointer  font-semibold duration-300 hover:bg-gray-900 hover:text-white hover:border-transparent`}
+                ? "bg-black text-white"
+                : "bg-white text-black"
+                } flex items-center  gap-2 border-[2px] border-black rounded-full px-[15px] py-[8px] text-black    cursor-pointer  font-semibold duration-300 hover:bg-black hover:text-white hover:border-transparent`}
             >
               All Courses{" "}
               <FaAngleDown
@@ -303,12 +304,12 @@ export default function Header() {
               {MegaMenuOpen && (
                 <div className="absolute top-[100%] z-50 left-0 w-full h-screen bg-[rgba(0,0,0,0.6)] "></div>
               )}
-            </button>
+            </div>
           </div>
 
           <button
             onClick={() => setEnquiryModel(true)}
-            className="fixed top-1/2 right-[23px] translate-x-[50%] -rotate-90 bg-white  border-2 border-black px-7 py-[10px] font-semibold cursor-pointer text-[18px] rounded-md shadow-lg  hover:bg-white hover:text-black  duration-500 "
+            className="fixed bottom-[200px] right-[40px]  translate-x-[50%] -rotate-90 bg-black text-white  border-2 border-black px-7 py-[12px] font-semibold cursor-pointer text-[18px] rounded-full shadow-lg  hover:bg-white hover:text-black  duration-500 "
           >
             Enquiry Now
           </button>
@@ -332,10 +333,9 @@ export default function Header() {
                         (course) => course.courseCategory?._id === subCat._id
                       )
                       : [];
-
                     return (
                       <ul key={subCat._id} className="border-r-[1px] border-[#e1e1e1]">
-                        <li className="text-[20px] capitalize text-gray-900 mb-2">
+                        <li className="text-[20px] capitalize text-black mb-2">
                           {subCat.categoryName}
                         </li>
                         <ul>
@@ -345,7 +345,7 @@ export default function Header() {
                                 key={course._id}
                                 href={`/online-courses/${course.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}
                               >
-                                <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                                <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                                   {course.courseName}
                                 </li>
                               </Link>
@@ -382,7 +382,7 @@ export default function Header() {
 
                     return (
                       <ul key={subCat._id} className="border-r-[1px] border-[#e1e1e1]">
-                        <li className="text-[20px] capitalize text-gray-900 mb-2">
+                        <li className="text-[20px] capitalize text-black mb-2">
                           {subCat.categoryName}
                         </li>
                         <ul>
@@ -392,7 +392,7 @@ export default function Header() {
                                 key={course._id}
                                 href={`/offline-courses/${course.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}
                               >
-                                <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                                <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                                   {course.courseName}
                                 </li>
                               </Link>
@@ -412,116 +412,39 @@ export default function Header() {
 
                 className="text-[16px] font-semibold hover:bg-gray-100 px-[10px] py-[35px] duration-300 cursor-pointer capitalize text-gray-500 group "
               >
-                study materials
+                Study Materials
                 <div
                   className={`invisible opacity-0 group-hover:opacity-100 origin-top transition-all brightness-110 duration-300 ease-in-out group-hover:visible absolute top-[100%] left-1/2 -translate-x-1/2 w-[1020px] h-auto bg-white shadow-2xl border-[1px] border-gray-300 grid grid-cols-4 gap-4 p-7 rounded-b-[35px] z-50`}
                 >
 
-                  <ul
 
-                    className="border-r-[1px] border-[#e1e1e1]"
-                  >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
-                      architecture
-                    </li>
-                    <ul>
+                  {studeyMaterials.map((item, ind) => {
+                    const { courses } = item
+                    return (
+                      <ul
+                        key={ind}
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nata ug
-                      </li>
+                        className="border-r-[1px] border-[#e1e1e1]"
+                      >
+                        <li className="text-[20px] capitalize text-black mb-2">
+                          {item?.subCat}
+                        </li>
+                        <ul>
+                          {courses?.map((course, courseIdx) => {
+                            return (
+                              <Link key={courseIdx} href={`/study-materials/${course.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}><li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
+                                {course}
+                              </li></Link>
+                            )
+                          })}
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        jee mains ug
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        combo nata jee mains ug
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        gate pg
-                      </li>
-
-                    </ul>
-                  </ul>
-
-
-                  <ul
-
-                    className="border-r-[1px] border-[#e1e1e1]"
-                  >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
-                      design
-                    </li>
-                    <ul>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift ug
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nid ug
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        u-ceed ug
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        combo nift nid ug
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        combo nift nid u-ceed ug
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift pg
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nid pg
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        ceed pg
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        combo nid ceed pg
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        combo need ceed nift pg
-                      </li>
-
-                    </ul>
-                  </ul>
+                        </ul>
+                      </ul>
+                    )
+                  })}
 
 
 
-
-                  <ul
-
-                    className="border-r-[1px] border-[#e1e1e1]"
-                  >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
-                      fashion technology
-                    </li>
-                    <ul>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift ug
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        fddi ug
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift pg
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nid pg
-                      </li>
-
-                    </ul>
-                  </ul>
 
                 </div>
               </li>
@@ -539,22 +462,22 @@ export default function Header() {
 
                     className="border-r-[1px] border-[#e1e1e1]"
                   >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
+                    <li className="text-[20px] capitalize text-black mb-2">
                       Design Reasoning
                     </li>
                     <ul>
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         nift
                       </li>
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         nid
                       </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         u-ceed
                       </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         fddi
                       </li>
 
@@ -566,20 +489,20 @@ export default function Header() {
 
                     className="border-r-[1px] border-[#e1e1e1]"
                   >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
+                    <li className="text-[20px] capitalize text-black mb-2">
                       architecture aptitude
 
                     </li>
                     <ul>
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         nata
                       </li>
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         jee mains ug
                       </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         gate pg
                       </li>
 
@@ -592,22 +515,22 @@ export default function Header() {
 
                     className="border-r-[1px] border-[#e1e1e1]"
                   >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
+                    <li className="text-[20px] capitalize text-black mb-2">
                       Drawing
                     </li>
                     <ul>
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         nift sketching
                       </li>
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         nata sketching
                       </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         nid sketching
                       </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
+                      <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                         u-ceed sketching
                       </li>
 
@@ -618,132 +541,45 @@ export default function Header() {
               </li>
 
 
-              <li
+              <Link href={'/free-resources'}><li
 
                 className="text-[16px] font-semibold hover:bg-gray-100 px-[10px] py-[35px] duration-300 cursor-pointer capitalize text-gray-500 group "
               >
                 Free resources
-                <div
+                {/* <div
                   className={`invisible opacity-0 group-hover:opacity-100 origin-top transition-all brightness-110 duration-300 ease-in-out group-hover:visible absolute top-[100%] left-1/2 -translate-x-1/2 w-[1020px] h-auto bg-white shadow-2xl border-[1px] border-gray-300 grid grid-cols-4 gap-4 p-7 rounded-b-[35px] z-50`}
                 >
 
-                  <ul
 
-                    className="border-r-[1px] border-[#e1e1e1]"
-                  >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
-                      Webinars
-                    </li>
-                    <ul>
+                  {freeResApi.map((item, ind) => {
+                    const { courses } = item
+                    return (
+                      <ul
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift
-                      </li>
+                        className="border-r-[1px] border-[#e1e1e1]"
+                      >
+                        <li className="text-[20px] capitalize text-black mb-2">
+                          {item?.subCat}
+                        </li>
+                        <ul>
+                          {courses?.map((course, courseIdx) => {
+                            return (
+                              <Link href={`/free-resources/${course.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}><li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
+                                {course}
+                              </li></Link>
+                            )
+                          })}
 
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nid
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nata
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        u-ceed
-                      </li>
-
-
-
-                    </ul>
-                  </ul>
-
-
-                  <ul
-
-                    className="border-r-[1px] border-[#e1e1e1]"
-                  >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
-                      blogs
-                    </li>
-                    <ul>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nid
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nata
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        u-ceed
-                      </li>
+                        </ul>
+                      </ul>
+                    )
+                  })}
 
 
 
-                    </ul>
-                  </ul>
 
-
-                  <ul
-
-                    className="border-r-[1px] border-[#e1e1e1]"
-                  >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
-                      free question paper
-                    </li>
-                    <ul>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nid
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nata
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        u-ceed
-                      </li>
-
-
-
-                    </ul>
-                  </ul>
-
-                  <ul
-
-                    className="border-r-[1px] border-[#e1e1e1]"
-                  >
-                    <li className="text-[20px] capitalize text-gray-900 mb-2">
-                      current affairs
-                    </li>
-                    <ul>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nift
-                      </li>
-
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nid
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        nata
-                      </li>
-                      <li className="ml-2 my-[10px] text-gray-600 hover:text-gray-900 duration-300">
-                        u-ceed
-                      </li>
-
-
-
-                    </ul>
-                  </ul>
-
-                </div>
-              </li>
-
+                </div> */}
+              </li></Link>
 
             </ul>
 
@@ -808,9 +644,9 @@ export default function Header() {
                   setActivePage("login");
                   setMegaMenuOpen(false);
                 }}
-                className="bg-gray-950 text-white duration-300 cursor-pointer px-[25px] rounded-[10px] hover:bg-white border-[2] border-black hover:text-gray-900 font-semibold py-[10px] text-[16px]"
+                className="bg-gray-950 text-white duration-300 cursor-pointer px-[25px] rounded-full hover:bg-white border-[2] border-black hover:text-black font-semibold py-[8px] text-[16px]"
               >
-                Login / Register
+                Sign in
               </button>
             }
           </div>
@@ -859,7 +695,7 @@ export default function Header() {
                   setActivePage("login");
                   setMegaMenuOpen(false);
                 }}
-                className="bg-gray-900 hover:bg-gray-800 duration-300 cursor-pointer px-[25px] rounded-[10px] py-[10px] text-white text-[16px]"
+                className="bg-black hover:bg-gray-800 duration-300 cursor-pointer px-[25px] rounded-[10px] py-[10px] text-white text-[16px]"
               >
                 Login
               </button>
@@ -922,7 +758,7 @@ export default function Header() {
 
 
             {token ?
-              <button className="w-full bg-gray-900 hover:bg-gray-900 duration-300 text-white rounded-[10px] py-[10px] text-[20px]">
+              <button className="w-full bg-black hover:bg-black duration-300 text-white rounded-[10px] py-[10px] text-[20px]">
                 {LoginUsername}
               </button>
 
@@ -933,9 +769,9 @@ export default function Header() {
                   setMobileMenu(false);
                   setMegaMenuOpen(false);
                 }}
-                className="w-full bg-gray-900 hover:bg-gray-900 duration-300 text-white rounded-[10px] py-[10px] text-[20px]"
+                className="w-full bg-black hover:bg-black duration-300 text-white rounded-[10px] py-[10px] text-[20px]"
               >
-                Login / Register
+                Sign in
               </button>
 
             }
@@ -960,13 +796,13 @@ export default function Header() {
               </Link>
               <button
                 onClick={() => setSubCategoryMenu("")}
-                className="text-3xl text-gray-900"
+                className="text-3xl text-black"
                 aria-label="Close Menu"
               >
                 <IoMdArrowForward />
               </button>
             </div>
-            <h3 className="text-xl mb-5 bg-gray-900 text-white px-3 rounded py-[12px]  ">
+            <h3 className="text-xl mb-5 bg-black text-white px-3 rounded py-[12px]  ">
               {subCategoryMenu}
             </h3>
 
@@ -1009,7 +845,7 @@ export default function Header() {
       {/* contact model work */}
       <div
         onClick={() => setcontactModel(!contactModel)}
-        className="fixed  top-[88%] right-[25px] z-[110] text-[28px] hover:bg-white bg-gray-900 text-white hover:text-gray-900 rounded-full lg:p-4 p-3 transition-all ease-in-out duration-300 shadow-2xl"
+        className="fixed  top-[88%] right-[10px] z-[110] text-[28px] hover:bg-white bg-black text-white hover:text-black rounded-full lg:p-4 p-3 transition-all ease-in-out duration-300 shadow-2xl"
       >
         {contactModel ? <IoMdClose /> : <FaPhoneAlt />}
 
@@ -1041,7 +877,7 @@ export default function Header() {
               href="https://wa.me/919649964937"
               target="_blank"
               rel="noopener noreferrer"
-              className="block w-full py-[10px] border-2  text-[16px] border-gray-200 font-semibold mt-3 duration-300 text-gray-900 rounded-[10px] text-center bg-white cursor-pointer hover:border-[#08993e] hover:text-white hover:bg-[#08993e] transition"
+              className="block w-full py-[10px] border-2  text-[16px] border-gray-200 font-semibold mt-3 duration-300 text-black rounded-[10px] text-center bg-white cursor-pointer hover:border-[#08993e] hover:text-white hover:bg-[#08993e] transition"
             >
               Send Message
             </a>
@@ -1135,12 +971,12 @@ export default function Header() {
             Total Price: <span className="font-bold text-gray-950">₹{totalAmountInCart}</span>
           </p>
           <Link href={""}>
-            <button className="hover:bg-white w-full hover:text-gray-900 font-bold px-10 py-3 bg-gray-900 text-white border-transparent shadow-lg border-2 hover:border-gray-950 uppercase cursor-pointer transition duration-200 text-base rounded-lg ">
+            <button className="hover:bg-white w-full hover:text-black font-bold px-10 py-3 bg-black text-white border-transparent shadow-lg border-2 hover:border-gray-950 uppercase cursor-pointer transition duration-200 text-base rounded-lg ">
               Order Now
             </button>
           </Link>
         </div>
       </div>
-    </header>
+    </header >
   );
 }

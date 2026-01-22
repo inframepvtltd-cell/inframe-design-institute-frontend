@@ -32,6 +32,7 @@ export default function Blogs() {
         }
     };
 
+
     // 🔹 Fetch blogs on component mount
     useEffect(() => {
         fetchAllBlogs()
@@ -62,7 +63,7 @@ export default function Blogs() {
                         {/* Hero Image */}
                         <div
                             className="absolute inset-0 bg-cover bg-center transition-transform duration-500 group-hover:scale-105"
-                            style={{ backgroundImage: `url('https://res.cloudinary.com/denc4i3lt/image/upload/v1767426949/blogging-fun-content-creation-online-streaming-video-blog-young-girl-making-selfie-social-network-sharing-feedback-self-promotion-strategy-vector-isolated-concept-metaphor-illustration_335657-855_ywqa2r.avif')` }}
+                            style={{ backgroundImage: `url('${blog.hero_image}')` }}
                         ></div>
 
                         {/* Overlay */}

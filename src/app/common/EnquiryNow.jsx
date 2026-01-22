@@ -137,13 +137,17 @@ export default function EnquiryForm({ setEnquiryModel, enquiryModel }) {
     <form
       onSubmit={enquiryAdd}
       className={`${enquiryModel ? "right-0" : "-right-full"
-        } space-y-5 lg:w-[30%] sm:w-[60%] w-[80%] h-[100vh] z-40 flex-1 fixed top-0 duration-700  py-7 px-7 text-gray-900 bg-white`}
+        } space-y-5 lg:w-[27%] sm:w-[60%] shadow-lg shadow-black w-[80%] h-[100vh] z-[1000] flex-1 fixed top-0 duration-700  py-7 px-7 text-black bg-white`}
     >
       <div className="flex justify-between items-center">
-        <h2 className="text-[30px] font-[500]">Enquiry now</h2>
+        <div>
+          <h2 className="text-[30px] font-semibold ">Enquiry now</h2>
+          <p className="mt-1 text-black">
+            Fill all the fields to connect with us, we will respond in a few minutes
+          </p>        </div>
         <span
           onClick={() => setEnquiryModel(false)}
-          className="cursor-pointer hover:bg-gray-900 hover:text-white p-[4px] rounded-[10px] text-gray-600 duration-300 text-[25px] border-2 border-gray-100 hover:border-transparent"
+          className="cursor-pointer hover:bg-black hover:text-white p-[4px] rounded-[10px] text-black duration-300 text-[25px] border-2 border-gray-100 hover:border-transparent"
         >
           <IoClose />
         </span>
@@ -153,7 +157,7 @@ export default function EnquiryForm({ setEnquiryModel, enquiryModel }) {
         value={enquiryName}
         onChange={(e) => setEnquiryName(e.target.value)}
         required
-        className="border border-gray-300 w-full rounded-[5px] px-3 lg:py-[15px] py-[10px]" 
+        className="border border-gray-300 w-full rounded-[5px] px-3 lg:py-[15px] py-[10px]"
         placeholder="Enter Your Name"
         type="text"
       />
@@ -162,7 +166,7 @@ export default function EnquiryForm({ setEnquiryModel, enquiryModel }) {
         value={enquiryEmail}
         onChange={(e) => setEnquiryEmail(e.target.value)}
         required
-        className="border border-gray-300 w-full rounded-[5px] px-3 lg:py-[15px] py-[10px]" 
+        className="border border-gray-300 w-full rounded-[5px] px-3 lg:py-[15px] py-[10px]"
         placeholder="Enter Your Email"
         type="email"
       />
@@ -171,7 +175,7 @@ export default function EnquiryForm({ setEnquiryModel, enquiryModel }) {
         value={enquiryPhone}
         onChange={(e) => setEnquiryPhone(e.target.value)}
         required
-        className="border border-gray-300 w-full rounded-[5px] px-3 lg:py-[15px] py-[10px]" 
+        className="border border-gray-300 w-full rounded-[5px] px-3 lg:py-[15px] py-[10px]"
         placeholder="Enter Your Phone Number"
         type="number"
       />
@@ -243,7 +247,7 @@ export default function EnquiryForm({ setEnquiryModel, enquiryModel }) {
 
       <button
         type="submit"
-        className="w-full rounded-[5px] font-semibold py-3 text-white bg-gray-900 hover:bg-white hover:text-gray-900 border-2 hover:border-gray-900"
+        className="w-full rounded-[5px] font-semibold py-3 text-white bg-black hover:bg-white hover:text-black border-2 hover:border-black"
       >
         Enquiry Now
       </button>

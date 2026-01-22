@@ -460,11 +460,11 @@ export default function FooterNew() {
                     target="_blank"
                     href={"https://play.google.com/store/apps?hl=en_IN"}
                   >
-                    <img
+                    {/* <img
                       className="w-[160px] h-[70px] object-contain cursor-pointer "
                       src="/playStore.png"
                       alt="Get it on Google Play"
-                    />
+                    /> */}
                   </Link>
                 </div>
               </div>

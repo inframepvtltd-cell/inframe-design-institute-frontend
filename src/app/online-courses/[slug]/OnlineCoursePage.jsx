@@ -1,6 +1,4 @@
 'use client'
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 import {
     FaLongArrowAltDown,
     FaMinusCircle,
@@ -8,12 +6,17 @@ import {
 } from "react-icons/fa";
 import { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import Slider from "react-slick";
 import Link from "next/link";
 import axios from "axios";
 import { useSelector } from "react-redux";
 import Swal from "sweetalert2";
 import { TiTick } from "react-icons/ti";
+import { Swiper, SwiperSlide } from "swiper/react";
+import "swiper/css";
+import "swiper/css/navigation";
+import "swiper/css/pagination";
+import { Autoplay, Navigation, Pagination } from "swiper/modules";
+
 
 export default function OnlineCoursePage({ params }) {
     const slug = useParams().slug.replace(/[^a-zA-Z0-9+]/g, " ")
@@ -52,33 +55,6 @@ export default function OnlineCoursePage({ params }) {
             .getElementById("recording-section")
             ?.scrollIntoView({ behavior: "smooth" });
     };
-
-    const settings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        slidesToShow: 4, // default
-        slidesToScroll: 1,
-        autoplay: true,
-        centerPadding: "30px",
-        centerMode: true,
-        autoplaySpeed: 1500,
-        responsive: [
-            {
-                breakpoint: 1024, // tablets
-                settings: {
-                    slidesToShow: 2,
-                },
-            },
-            {
-                breakpoint: 640, // mobile
-                settings: {
-                    slidesToShow: 1,
-                },
-            },
-        ],
-    }
-
 
 
     const addToCart = ({ itemId, main }) => {
@@ -143,7 +119,7 @@ export default function OnlineCoursePage({ params }) {
                     }}
                 >
                     {/* 🔹 Gradient Overlay (z-10) */}
-                    <div className="absolute inset-0 bg-gradient-to-r from-black via-black/50 to-transparent z-10"></div>
+                    <div className="absolute inset-0 bg-linear-to-r from-black via-black/50 to-transparent z-10"></div>
 
                     {/* 🔹 Text Content (z-20) */}
                     <div className="w-[1320px] mx-auto">
@@ -156,7 +132,7 @@ export default function OnlineCoursePage({ params }) {
                             </p>
                             <button
                                 onClick={scrollMoment}
-                                className="bg-white font-[500] hover:bg-transparent hover:border-white border-transparent border-2 duration-300  hover:text-white text-gray-900  rounded-full py-[10px] px-10 mt-5 text-[18px] cursor-pointer grid grid-cols-[95%_auto] items-center group"
+                                className="bg-white font-medium hover:bg-transparent hover:border-white border-transparent border-2 duration-300  hover:text-white text-gray-900  rounded-full py-[10] px-10 mt-5 text-[18px] cursor-pointer grid grid-cols-[95%_auto] items-center group"
                             >
                                 {" "}
                                 View Course Overview{" "}
@@ -200,7 +176,7 @@ export default function OnlineCoursePage({ params }) {
                                                     className="list-none flex items-center gap-3"
                                                     key={index}
                                                 >
-                                                    <div className="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-gray-950 text-white text-sm flex items-center justify-center">
+                                                    <div className="shrink-0 mt-1 w-6 h-6 rounded-full bg-gray-950 text-white text-sm flex items-center justify-center">
                                                         <TiTick />
                                                     </div>{" "}
                                                     {item}
@@ -224,7 +200,7 @@ export default function OnlineCoursePage({ params }) {
                                             onClick={() =>
                                                 alert("Thank you for purchasing the course!")
                                             }
-                                            className="relative overflow-hidden cursor-pointer bg-gradient-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white px-6 py-3 rounded-md font-semibold transition-all duration-300 shadow-md hover:shadow-xl"
+                                            className="relative overflow-hidden cursor-pointer bg-linear-to-r from-gray-900 to-gray-800 hover:from-gray-800 hover:to-gray-900 text-white px-6 py-3 rounded-md font-semibold transition-all duration-300 shadow-md hover:shadow-xl"
                                         >
                                             Buy Now
                                         </button>
@@ -243,7 +219,7 @@ export default function OnlineCoursePage({ params }) {
                                 {/* Key Features */}
                                 <h2 className="text-[40px]  font-bold mt-10">Our Key Features</h2>
 
-                                <div className="bg-white border border-gray-300 rounded-[10px] shadow-2xl mt-[20px] lg:mt-[20px] py-[20px] lg:py-[60px] px-3 lg:px-6">
+                                <div className="bg-white border border-gray-300 rounded-[10px] shadow-2xl mt-[20] lg:mt-[20] py-[20] lg:py-[60px] px-3 lg:px-6">
                                     <p className="text-[20px] mb-7">
                                         Experience top-quality courses designed to help you excel
                                         effortlessly
@@ -298,7 +274,7 @@ export default function OnlineCoursePage({ params }) {
                                 <img
                                     src={specificCourseData?.courseBannerImage}
                                     alt={specificCourseData?.courseName + " " + "banner"}
-                                    className="w-full h-[100%] object-cover object-top rounded-lg shadow-md"
+                                    className="w-full h-full object-cover object-top rounded-lg shadow-md"
                                 />
                             </div>
                         </div>
@@ -308,7 +284,6 @@ export default function OnlineCoursePage({ params }) {
                 {/* hero banner image section  */}
 
                 <section className="w-full  lg:my-[30px] my-[30px] " >
-                    {/* {console.log(staticPath + specificCourseData?.courseHeroImage)} */}
                     <img src={specificCourseData?.courseHcourseImageeroImage} className="w-full max-h-[330px] object-cover" />
                 </section>
 
@@ -331,8 +306,8 @@ export default function OnlineCoursePage({ params }) {
                                                 onClick={() => setActiveTab(item)}
                                                 className={`${item === activeTab
                                                     ? "bg-gray-950 text-white"
-                                                    : "bg-gradient-to-r from-gray-300 to-white text-gray-900"
-                                                    } lg:px-7 md:px-5 px-2 py-[10px] border-[1px] hover:border-gray-600 cursor-pointer  border-gray-300 hover:bg-gray-950 capitalize  duration-100`}
+                                                    : "bg-linear-to-r from-gray-300 to-white text-gray-900"
+                                                    } lg:px-7 md:px-5 px-2 py-[10] border hover:border-gray-600 cursor-pointer  border-gray-300 hover:bg-gray-950 capitalize  duration-100`}
                                             >
                                                 {item}
                                             </button>
@@ -398,14 +373,14 @@ export default function OnlineCoursePage({ params }) {
 
                                         {/* Show More / Show Less Button */}
 
-                                        <div className="text-center my-6">
+                                        <p className="text-center my-6">
                                             <button
                                                 onClick={() => setShowAll(!showAll)}
                                                 className="text-gray-600 hover:text-gray-800 font-medium underline cursor-pointer"
                                             >
                                                 {showAll ? "Show Less" : "Show More"}
                                             </button>
-                                        </div>
+                                        </p>
 
                                     </div>
                                 )}
@@ -468,7 +443,7 @@ export default function OnlineCoursePage({ params }) {
                                         <ul className="space-y-4">
                                             {specificCourseData?.courseLearnPoints?.map((point, index) => (
                                                 <li key={index} className="flex items-start gap-3">
-                                                    <div className="flex-shrink-0 mt-1 w-6 h-6 rounded-full bg-gray-950 text-white text-sm flex items-center justify-center">
+                                                    <div className="shrink-0 mt-1 w-6 h-6 rounded-full bg-gray-950 text-white text-sm flex items-center justify-center">
                                                         {index + 1}
                                                     </div>
                                                     <p className="text-gray-700 leading-relaxed">{point}</p>
@@ -527,7 +502,7 @@ export default function OnlineCoursePage({ params }) {
                                         key={idx}
                                         className="bg-white border border-gray-200 p-5 rounded-lg shadow-sm hover:shadow-md transition"
                                     >
-                                        <h4 className="text-[18px] font-[500] mb-2 text-gray-900">
+                                        <h4 className="text-[18px] font-medium mb-2 text-gray-900">
                                             {item.title}
                                         </h4>
                                         <p className="text-gray-900 text-sm">{item.desc}</p>
@@ -547,78 +522,96 @@ export default function OnlineCoursePage({ params }) {
                                 </p>
                             </div>
 
-                            {onlineCourseData.length >= 1
 
+                            {
+                                onlineCourseData.length >= 1 ? (
 
-                                ?
-                                <Slider {...settings}>
-                                    {onlineCourseData?.map((course) => (
-                                        <div key={course.id} className="px-2 ">
-                                            <div className="bg-white h-[550px] shadow-md group rounded-lg overflow-hidden hover:shadow-lg cursor-pointer transition">
-                                                <img
-                                                    src={course?.courseImage}
-                                                    alt={slug}
-                                                    className="w-full h-[340px] group-hover:scale-[1.03]  object-center duration-300 object-cover"
-                                                />
-                                                <div className="p-4">
-                                                    <Link
-                                                        href={`/online-courses/${course.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}
-                                                    >
-                                                        <h3 className="text-lg capitalize hover:underline cursor-pointer font-semibold  text-gray-900">
-                                                            {course?.courseName?.replace(/[^a-zA-Z0-9]/g, " ")}
-                                                        </h3>
-                                                    </Link>
-                                                    <p className="text-sm text-gray-600 ">
-                                                        {course?.cousreHeadline}
-                                                    </p>
-                                                    <p className="text-[22px] font-bold mt-1">
-                                                        {" "}
-                                                        ₹ {course.coursePrice} /-
-                                                    </p>
-                                                    <div className="mt-4 grid grid-cols-2 gap-4">
-                                                        <button
-                                                            onClick={() => addToCart({ itemId: course._id, main: 'online course' })}
-                                                            className="bg-gray-200 hover:bg-gray-300 cursor-pointer transition duration-300 py-[7px] text-[14px] w-[100%] rounded-lg  font-medium">
-                                                            Add to Cart
-                                                        </button>
-                                                        <button className="bg-gray-900 hover:bg-gray-800 transition duration-300 cursor-pointer py-[7px] text-[14px] rounded-lg text-white font-medium">
-                                                            Buy Now
-                                                        </button>
+                                    <Swiper
+                                        modules={[Pagination, Autoplay]}
+                                        spaceBetween={16}
+                                        slidesPerView={1}
+                                        pagination={{ clickable: true }}
+                                        autoplay={{ delay: 3000 }}
+                                        breakpoints={{
+                                            640: { slidesPerView: 1 },
+                                            768: { slidesPerView: 2 },
+                                            1024: { slidesPerView: 4 },
+                                        }}
+                                    >
+                                        {onlineCourseData?.map((course) => (
+                                            <SwiperSlide key={course._id}>
+                                                <div className="px-2">
+                                                    <div className="bg-white h-[550px] shadow-md group rounded-lg overflow-hidden hover:shadow-lg cursor-pointer transition">
+
+                                                        <img
+                                                            src={course?.courseImage}
+                                                            alt={course.courseName}
+                                                            className="w-full h-[340px] group-hover:scale-[1.03] object-cover duration-300"
+                                                        />
+
+                                                        <div className="p-4">
+                                                            <Link
+                                                                href={`/online-courses/${course.courseName
+                                                                    .toLowerCase()
+                                                                    .replace(/[^a-zA-Z0-9]/g, "-")}`}
+                                                            >
+                                                                <h3 className="text-lg capitalize hover:underline font-semibold text-gray-900">
+                                                                    {course?.courseName?.replace(/[^a-zA-Z0-9]/g, " ")}
+                                                                </h3>
+                                                            </Link>
+
+                                                            <p className="text-sm text-gray-600">
+                                                                {course?.cousreHeadline}
+                                                            </p>
+
+                                                            <p className="text-[22px] font-bold mt-1">
+                                                                ₹ {course.coursePrice} /-
+                                                            </p>
+
+                                                            <div className="mt-4 grid grid-cols-2 gap-4">
+                                                                <button
+                                                                    onClick={() =>
+                                                                        addToCart({ itemId: course._id, main: "online course" })
+                                                                    }
+                                                                    className="bg-gray-200 hover:bg-gray-300 transition py-[7px] text-[14px] rounded-lg font-medium"
+                                                                >
+                                                                    Add to Cart
+                                                                </button>
+
+                                                                <button className="bg-gray-900 hover:bg-gray-800 transition py-[7px] text-[14px] rounded-lg text-white font-medium">
+                                                                    Buy Now
+                                                                </button>
+                                                            </div>
+                                                        </div>
+
                                                     </div>
                                                 </div>
+                                            </SwiperSlide>
+                                        ))}
+                                    </Swiper>
+
+                                ) : (
+
+                                    /* Skeleton Loader */
+                                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
+                                        {[...Array(4)].map((_, index) => (
+                                            <div
+                                                key={index}
+                                                className="border shadow-md rounded-[10px] p-4 animate-pulse bg-white"
+                                            >
+                                                <div className="w-full h-[200px] bg-gray-200 rounded mb-4"></div>
+                                                <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
+                                                <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
+                                                <div className="h-3 bg-gray-200 rounded w-5/6 mb-4"></div>
+                                                <div className="h-4 bg-gray-300 rounded w-1/4 mb-4"></div>
+                                                <div className="grid grid-cols-2 gap-3">
+                                                    <div className="h-10 bg-gray-300 rounded"></div>
+                                                    <div className="h-10 bg-gray-300 rounded"></div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    ))}
-                                </Slider>
-
-                                :
-                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 px-4">
-                                    {[...Array(4)].map((_, index) => (
-                                        <div
-                                            key={index}
-                                            className="border border-gray-200 shadow-md rounded-[10px] p-4 animate-pulse bg-white"
-                                        >
-                                            {/* Image Skeleton */}
-                                            <div className="w-full h-[200px] bg-gray-200 rounded mb-4"></div>
-
-                                            {/* Title */}
-                                            <div className="h-4 bg-gray-300 rounded w-3/4 mb-2"></div>
-
-                                            {/* Subtitle */}
-                                            <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-                                            <div className="h-3 bg-gray-200 rounded w-5/6 mb-4"></div>
-
-                                            {/* Price */}
-                                            <div className="h-4 bg-gray-300 rounded w-1/4 mb-4"></div>
-
-                                            {/* Buttons */}
-                                            <div className="grid grid-cols-2 gap-3 mt-auto">
-                                                <div className="h-10 bg-gray-300 rounded"></div>
-                                                <div className="h-10 bg-gray-300 rounded"></div>
-                                            </div>
-                                        </div>
-                                    ))}
-                                </div>
+                                        ))}
+                                    </div>
+                                )
                             }
 
 
@@ -627,7 +620,7 @@ export default function OnlineCoursePage({ params }) {
                 </section>
 
                 {/* 10. Final CTA */}
-                <section className="bg-gray-950 text-white text-center py-12 px-4 lg:my-[40px] my-[30px]">
+                <section className="bg-gray-950 text-white text-center py-12 px-4 lg:my-[40] my-[30px]">
                     <h2 className="text-[40px] font-bold mb-5 capitalize">
                         Are you ready to learn this course ?{" "}
                     </h2>
@@ -674,7 +667,7 @@ export default function OnlineCoursePage({ params }) {
                                                 className={`transition-all overflow-hidden ${currentFaqId === index
                                                     ? "h-auto opacity-100 scale-100"
                                                     : "h-0 opacity-0 scale-95"
-                                                    } text-white text-[18px] my-[10px] w-full`}
+                                                    } text-white text-[18px] my-[10] w-full`}
                                             >
                                                 {answer}
                                             </div>

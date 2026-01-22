@@ -87,7 +87,6 @@ export function LoginForm({ activePage, userData, dispatch, userEmail, setUserEm
             user: finalRes.userData,
             token: finalRes.token
           }
-          // console.log(finalObj)
           dispatch(loginUserData(finalObj))
           Swal.fire({
             title: 'Login Successful',
@@ -132,20 +131,17 @@ export function LoginForm({ activePage, userData, dispatch, userEmail, setUserEm
           })
         }
       });
-
   }
 
-
-
   return (
-    <div className="fixed lg:w-[350px] w-[320px] h-[auto] z-[1000] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-[10px] shadow-md shadow-gray-600">
+    <div className={`fixed ${activePage == 'login' ? 'opacity-100' : 'opacity-0'} lg:w-[400px] w-[320px] h-[auto] z-[1000] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 duration-300 transition-all bg-white p-6 rounded-[5px] shadow-md shadow-black`}>
       <div className="flex justify-between items-center">
-        <h3 className="text-[30px] font-semibold text-gray-900 my-4 capitalize">
-          Login
+        <h3 className="text-[30px] font-semibold text-black my-4 capitalize">
+          Sign in
         </h3>
         <span
           onClick={() => setActivePage("")}
-          className="text-[25px] text-gray-500 hover:text-gray-900 duration-300 cursor-pointer"
+          className="text-[25px] text-black hover:text-black duration-300 cursor-pointer"
         >
           <HiMiniArrowRightStartOnRectangle />
         </span>
@@ -154,25 +150,25 @@ export function LoginForm({ activePage, userData, dispatch, userEmail, setUserEm
         <input
           onChange={(e) => setUserEmail(e.target.value)}
           required
-          className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+          className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-black transition"
           placeholder="Enter Your Email"
           type="text"
         />
         <input
           onChange={(e) => setUserPassword(e.target.value)}
           required
-          className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+          className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-black transition"
           placeholder="Enter Your Password"
           type="password"
         />
-        <button className="w-full hover:bg-white hover:text-black hover:border-gray-900 border-[2px] border-transparent bg-gray-900 duration-300 cursor-pointer text-white rounded-[15px] capitalize font-semibold py-[10px] ">
-          Login
+        <button className="w-full hover:bg-white hover:text-black hover:border-black border-[2px] border-transparent bg-black duration-300 cursor-pointer text-white rounded-[15px] capitalize font-semibold py-[10px] ">
+          Sign in
         </button>
         <p className="text-center">
           Not a member yet ?{" "}
           <span
             onClick={() => setActivePage("register")}
-            className="text-gray-600
+            className="text-black
                  hover:underline cursor-pointer"
           >
             Sign Up
@@ -313,14 +309,14 @@ export function Register({
 
   return (
     <>
-      <div className="fixed lg:w-[400px] w-[320px] h-[auto] z-[1000] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-[10px] shadow-md shadow-gray-600">
+      <div className="fixed lg:w-[400px] w-[320px] h-[auto] z-[1000] top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-white p-5 rounded-[10px] shadow-md shadow-black">
         <div className="flex justify-between items-center">
-          <h3 className="text-[25px] text-gray-900 my-4 capitalize  font-semibold">
-            Register
+          <h3 className="text-[30px] text-black my-4 capitalize  font-semibold">
+            Sign up
           </h3>
           <span
             onClick={() => setActivePage("")}
-            className="text-[25px] hover:text-gray-600 duration-300 cursor-pointer"
+            className="text-[25px] hover:text-black duration-300 cursor-pointer"
           >
             <HiMiniArrowRightStartOnRectangle />
           </span>
@@ -329,14 +325,14 @@ export function Register({
           <input
             onChange={(e) => setUserName(e.target.value)}
             required
-            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-black transition"
             placeholder="Enter Your Name"
             type="text"
           />
           <input
             onChange={(e) => setUserPhone(e.target.value)}
             required
-            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-black transition"
             placeholder="Enter Your Phone Number"
             type="tel"
             autoComplete="tel"
@@ -345,14 +341,14 @@ export function Register({
           <input
             onChange={(e) => setUserEmail(e.target.value)}
             required
-            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-black transition"
             placeholder="Enter Your Email"
             type="email"
           />
           <input
             onChange={(e) => setUserPassword(e.target.value)}
             required
-            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+            className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-black transition"
             placeholder="Create a Password"
             type="password"
           />
@@ -361,17 +357,17 @@ export function Register({
               onChange={(e) => setOtpValue(e.target.value)}
               required
               placeholder="Enter OTP"
-              className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition"
+              className="border border-gray-300 w-full rounded-[15px] px-[8px] py-[12px] focus:outline-none focus:ring-2 focus:ring-black transition"
             />
           )}
-          <button className="w-full bg-gray-900 hover:bg-transparent hover:text-gray-900 border-2 border-transparent hover:border-gray-900 duration-300 cursor-pointer text-white font-semibold rounded-[15px] capitalize py-[10px] focus:outline-none focus:ring-2 focus:ring-gray-500 transition">
+          <button className="w-full bg-black hover:bg-transparent hover:text-black border-2 border-transparent hover:border-black duration-300 cursor-pointer text-white font-semibold rounded-[15px] capitalize py-[10px] focus:outline-none focus:ring-2 focus:ring-black transition">
             {otpStatus ? "Verify OTP & Register" : "Request OTP"}
           </button>
           <p className="text-center">
             Already a member ?{" "}
             <span
               onClick={() => setActivePage("login")}
-              className="text-gray-600
+              className="text-black
                  hover:underline cursor-pointer"
             >
               Sign In
