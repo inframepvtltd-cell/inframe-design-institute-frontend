@@ -145,11 +145,10 @@ export const SuccessStories = () => {
         {[...Array(5)].map((_, i) => (
           <Star
             key={i}
-            className={`w-3 sm:w-4 h-4 ${
-              i < Math.floor(rating)
-                ? "fill-yellow-400 text-yellow-400"
-                : "fill-gray-300 text-gray-300"
-            }`}
+            className={`w-3 sm:w-4 h-4 ${i < Math.floor(rating)
+              ? "fill-yellow-400 text-yellow-400"
+              : "fill-gray-300 text-gray-300"
+              }`}
           />
         ))}
         <span className="ml-1 text-xs sm:text-sm font-medium text-gray-700">
