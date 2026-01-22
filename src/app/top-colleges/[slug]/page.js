@@ -9,7 +9,6 @@ export default function TopColleges() {
   const specificCategoryData = AllCollegesData.filter(
     (item) => item.category === slug
   )[0];
-  console.log(specificCategoryData);
 
   return (
     <>

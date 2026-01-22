@@ -15,7 +15,6 @@ export default function CartPage() {
 
     const [staticpath, setstaticpath] = useState('')
     const cartData = useSelector((store) => store.cartStore.cartAllData)
-    console.log(cartData)
     // Example cart data (replace with real cart state or API)
     const totalAmountInCart = cartData.reduce((prev, curr) => {
         return prev + Number(curr.courseDetails?.coursePrice);

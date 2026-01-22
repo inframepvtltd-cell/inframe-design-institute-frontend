@@ -9,8 +9,6 @@ export async function generateMetadata({ params }) {
 
   try {
     const response = await axios.get(`${apiBaseUrl}/meta-data/fetch-online/${slug}`,);
-    console.log(response)
-
     const data = response.data.courseData;
     console.log(response.data);
 

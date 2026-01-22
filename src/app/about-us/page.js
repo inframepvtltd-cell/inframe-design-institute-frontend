@@ -1,10 +1,10 @@
 "use client";
 
 import Image from "next/image";
-import Slider from "react-slick";
-import "slick-carousel/slick/slick.css";
-import "slick-carousel/slick/slick-theme.css";
 
+import { Swiper, SwiperSlide } from "swiper/react";
+import { Autoplay } from "swiper/modules";
+import "swiper/css";
 
 export default function About() {
     const whyToJoinData = [
@@ -75,17 +75,6 @@ export default function About() {
         },
     ];
 
-    const sliderSettings = {
-        dots: false,
-        infinite: true,
-        speed: 500,
-        autoplay: true,
-        autoplaySpeed: 1500,
-        pauseOnHover: true,
-        slidesToShow: 1,
-        slidesToScroll: 1,
-        arrows: false,
-    };
 
     return (
         <div className="w-full bg-white">
@@ -172,51 +161,58 @@ export default function About() {
                             sound career.
                         </p>
                     </div>
+                    {/* ------- WHY TO JOIN (DESKTOP GRID) ------- */}
+
                     <div className="hidden lg:grid grid-cols-4 gap-5 mt-10">
-                        {whyToJoinData.map((item, index) => {
-                            return (
-                                <div
-                                    style={{ backgroundImage: `url(${item.src})` }}
-                                    key={index}
-                                    className="my-[5px] w-[100%] h-[350px] rounded-[10px]  shadow-lg  flex items-end group overflow-hidden bg-cover bg-center  relative"
-                                >
-                                    <div className="w-[100%] h-[100%] bg-gradient-to-t from-black/80 via-transparent to-transparent absolute top-0 left-0"></div>
-                                    {/* <span className="text-[22px] group-hover:opacity-0 translate-y-0 group-hover:translate-y-[100%] duration-500 rounded-b-[10px] w-[100%] bg-white px-5 py-5  font-semibold ">
-                                        {item.heading}
-                                    </span> */}
-                                    <span className="text-[22px] group-hover:bg-transparent group-hover:text-white duration-500  w-[100%] origin-bottom relative z-40  bg-white px-5 py-5  font-semibold ">
-                                        {item.heading}
-                                    </span>
-                                </div>
-                            );
-                        })}
+                        {whyToJoinData.map((item, index) => (
+                            <div
+                                key={index}
+                                style={{ backgroundImage: `url(${item.src})` }}
+                                className="h-[350px] rounded-[10px] shadow-lg flex items-end bg-cover bg-center relative"
+                            >
+                                <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent"></div>
+                                <span className="relative z-10 bg-white px-5 py-5 w-full text-[22px] font-semibold">
+                                    {item.heading}
+                                </span>
+                            </div>
+                        ))}
                     </div>
 
+                    {/* ------- WHY TO JOIN (MOBILE SWIPER) ------- */}
                     <div className="lg:hidden block mt-5">
-                        <Slider {...sliderSettings}>
+                        <Swiper
+                            modules={[Autoplay]}
+                            autoplay={{
+                                delay: 1500,
+                                disableOnInteraction: false,
+                            }}
+                            loop
+                            speed={600}
+                            slidesPerView={1}
+                            spaceBetween={12}
+                        >
                             {whyToJoinData.map((item, index) => (
-                                <div key={index} className="px-2">
-                                    {" "}
-                                    {/* Add padding if you want spacing between slides */}
+                                <SwiperSlide key={index}>
                                     <div
                                         style={{ backgroundImage: `url(${item.src})` }}
-                                        className="w-full h-[390px] rounded-[10px] shadow-lg flex items-end group overflow-hidden bg-cover bg-center relative"
+                                        className="w-full h-[390px] rounded-[10px] shadow-lg flex items-end bg-cover bg-center relative"
                                     >
-                                        <div className="absolute top-0 left-0 w-full h-full bg-gradient-to-t from-black/80 via-transparent to-transparent z-10"></div>
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent z-10"></div>
 
-                                        <span className="text-[22px] font-semibold bg-white px-5 py-5 w-full z-20 relative duration-500 group-hover:bg-transparent group-hover:text-white">
+                                        <span className="relative z-20 bg-white px-5 py-5 w-full text-[22px] font-semibold">
                                             {item.heading}
                                         </span>
                                     </div>
-                                </div>
+                                </SwiperSlide>
                             ))}
-                        </Slider>
+                        </Swiper>
                     </div>
+
                 </div>
-            </section>
+            </section >
 
             {/* why should we design */}
-            <section className="w-full lg:py-[40px] py-[30px] ">
+            < section className="w-full lg:py-[40px] py-[30px] " >
                 <div className="max-w-[1320px] mx-auto lg:px-0 px-3">
                     <h3 className="text-gray-900 lg:text-[35px] text-[30px] font-bold capitalize mb-4">
                         Why should we design
@@ -288,10 +284,10 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* vision and mission */}
-            <section className="w-full bg-white lg:mb-[60px] my-[30px]">
+            < section className="w-full bg-white lg:mb-[60px] my-[30px]" >
                 <div className="max-w-[1320px] mx-auto lg:py-[30px] lg:px-6 px-3">
                     <h3 className="text-gray-900 lg:text-[35px] text-[30px] font-bold capitalize pb-5 mb-5">
                         Vision & mission
@@ -345,10 +341,10 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-            </section>
+            </section >
 
             {/* gallery */}
-            <section className="bg-gradient-to-b from-[#f8f8f8] via-white to-white w-full">
+            < section className="bg-gradient-to-b from-[#f8f8f8] via-white to-white w-full" >
                 <div className="max-w-[1320px] mx-auto lg:px-0 px-3">
                     <h3 className="text-gray-900 lg:text-[35px] text-[30px] font-bold capitalize py-5">
                         Gallery
@@ -462,7 +458,7 @@ export default function About() {
                         </div>
                     </div>
                 </div>
-            </section>
-        </div>
+            </section >
+        </div >
     );
 }
