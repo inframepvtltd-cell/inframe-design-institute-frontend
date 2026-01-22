@@ -1,0 +1,175 @@
+"use client";
+import Image from "next/image";
+import { useEffect, useRef } from "react";
+
+export default function BookDetailsPopup({ open, onClose }) {
+  const popupRef = useRef(null);
+  const contentRef = useRef(null);
+
+  useEffect(() => {
+    const handleEsc = (e) => {
+      if (e.key === "Escape") onClose();
+    };
+
+    if (open) {
+      document.addEventListener("keydown", handleEsc);
+      document.body.style.overflow = "hidden";
+    }
+
+    return () => {
+      document.removeEventListener("keydown", handleEsc);
+      document.body.style.overflow = "auto";
+    };
+  }, [open, onClose]);
+
+  const handleBackdropClick = (e) => {
+    if (popupRef.current && !popupRef.current.contains(e.target)) {
+      onClose();
+    }
+  };
+
+  if (!open) return null;
+
+  const bookDescription = `This Study Material consist of 20 Books which helps in improving drawing as well as reasoning and other subjects:
+
+Book 1: This book guide you about basic of drawing with drawing material: type of pencil,Eraser, shade shadows: Shading techniques and Rendering textures, Light and shadow, Cross Section, anthropometry,Pencil marking : Type of pencil marking, Unit of measure, Typography: Lettering , Calligraphy, anatomy sketching, drawing element, thoery of design Elements of Design: Line, Shape, Form, Colour, Pattern, Texture, Principles of Design: Balance, Rhythm, Proportion, Unity, Contrast, , colours- psychology, and colour applications, , Exploded view of objects Human figures, Drawing the head, Human body in motion, Drawing of Birds, Drawing of Animals, Caricature, Animation.Only drawing skill is not important for cracking any design aptitude exam.
+
+Book 2: This book guide you about basic starting to end product technical drawing of Orthographic projection: Principle Plane, Angle of Projection, Isomertric projection: Introduction, Principle Plane, Angle of Projection, Difference between isometric projection , Axanometric View with practise questions and previous year question.
+
+Book 3: This book guide you about basic starting to end product technical drawing of Perspective projection, what is Perspective, Vanishing point Types of Perspective Projection Drawing with practise questions and previous year question.
+
+Book 4: This book guide you about what is Visual Communication, mode of advertisement and many more with their exercises.
+
+Book 5: This book guide you about Design ability chapter which include postal stamp, Postcard, Invitation and many more.
+
+Book 6: This book guide you about Foundation of English Grammar include Noun, Pronoun etc
+
+Book 7: This book guide you about English vocabulary like synonyms , antonyms etc
+
+Book 8: This book guide you about verbal reasoning.
+
+Book 9: This book consist Quantitative aptitude part 1
+
+Book 10: This book consist Quantitative aptitude part 2
+
+Book 11: This book consist General Knowledge.
+
+Book 12:This book Consist General awareness .
+
+Book 13:This book Consist Abstract Reasoning.
+
+Book 14:This book Consist Mechanical Reasoning.
+
+Book 15: This book consist Current Affairs.(This will Couriered you in the month of October because Exam Paper Consist last 6 month current news).
+
+Book 16: This book Consist of Non Verbal reasoning consist of Chapter's like Series, Folding Figure and many more.
+
+Book 17:This book Consist of Previous year original paper of NIFT exam.
+
+Book 18:This book Consist of Previous year original paper of NID exam.
+
+Book 19:This book Consist of Previous year original paper of UCEED exam.
+
+Book 20: How to manage all subject and attempt complete paper within time limit of exam.
+Last and very important – guidelines for improving your speed. Most of the students face problem-completing all questions in 3 hours’ time limit. This module will help you by giving tips on improving your speed and completing the paper with in time limit.
+Note: Module 20 will be send through mail after receiving photocopy of your NIFT & NID Admit card at IDI Jodhpur.`;
+
+  return (
+    <div
+      className="fixed inset-0 bg-black/60 flex items-center justify-center z-50 p-2 xs:p-3 sm:p-4 md:p-6"
+      onClick={handleBackdropClick}
+    >
+      <div
+        ref={popupRef}
+        className="bg-white rounded-lg xs:rounded-xl sm:rounded-2xl w-full max-w-xs xs:max-w-sm sm:max-w-2xl md:max-w-3xl lg:max-w-4xl xl:max-w-5xl max-h-[85vh] xs:max-h-[88vh] sm:max-h-[90vh] md:max-h-[92vh] overflow-hidden flex flex-col"
+      >
+        {/* Close Button - Responsive */}
+        <button
+          onClick={onClose}
+          className="absolute top-2 xs:top-3 sm:top-4 right-2 xs:right-3 sm:right-4 w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 bg-white rounded-full border border-gray-300 shadow-md sm:shadow-lg flex items-center justify-center text-xl xs:text-2xl font-bold text-gray-600 hover:text-black hover:bg-gray-50 z-20 transition-all duration-200 cursor-pointer"
+          aria-label="Close popup"
+        >
+          ×
+        </button>
+
+        {/* Photos - Responsive Layout */}
+        <div className="flex flex-col sm:flex-row gap-3 xs:gap-4 sm:gap-4 md:gap-6 p-3 xs:p-4 sm:p-6 pb-2 xs:pb-3 sm:pb-4">
+          {/* Front Cover */}
+          <div className="relative w-full sm:w-1/2 h-48 xs:h-56 sm:h-64 md:h-72 lg:h-80">
+            <Image
+              src="/Popup-books/nid-nift-uceed-2026.jpg"
+              alt="Front Cover - Study Material Books"
+              fill
+              style={{ objectFit: "contain" }}
+              className="rounded-md xs:rounded-lg"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 50vw"
+              priority
+            />
+          </div>
+          
+          {/* Back Cover */}
+          <div className="relative w-full sm:w-1/2 h-48 xs:h-56 sm:h-64 md:h-72 lg:h-80">
+            <Image
+              src="/Popup-books/Backside-NID-NIFT-UCEED.jpg"
+              alt="Back Cover - Study Material Books"
+              fill
+              style={{ objectFit: "contain" }}
+              className="rounded-md xs:rounded-lg"
+              sizes="(max-width: 640px) 100vw, (max-width: 768px) 50vw, 50vw"
+              priority
+            />
+          </div>
+        </div>
+
+        {/* Content Section with Scroll - Responsive */}
+        <div className="p-3 xs:p-4 sm:p-6 pt-0 flex-1 overflow-hidden flex flex-col min-h-0">
+          <h3 className="text-lg xs:text-xl sm:text-2xl md:text-2xl font-bold text-gray-800 mb-3 xs:mb-4">
+            📚 Detailed Book Contents
+          </h3>
+
+          <div 
+            ref={contentRef}
+            className="overflow-y-auto pr-1 xs:pr-2 flex-1 min-h-0"
+            style={{ 
+              maxHeight: "calc(85vh - 400px)",
+              maxHeight: "calc(88vh - 420px)",
+              maxHeight: "calc(90vh - 440px)",
+              maxHeight: "calc(92vh - 460px)",
+            }}
+          >
+            <div className="space-y-4 xs:space-y-5 sm:space-y-6 pb-3 xs:pb-4">
+              {bookDescription.split("\n\n").map((paragraph, index) => {
+                if (paragraph.startsWith("Book ")) {
+                  const bookMatch = paragraph.match(/^(Book \d+:)/);
+                  if (bookMatch) {
+                    const title = bookMatch[1];
+                    const content = paragraph.replace(title, "");
+                    return (
+                      <div
+                        key={index}
+                        className="pb-3 xs:pb-4 border-b border-gray-300 last:border-0"
+                      >
+                        <h4 className="font-bold text-base xs:text-lg sm:text-xl text-blue-700 mb-1 xs:mb-2">
+                          {title}
+                        </h4>
+                        <p className="text-gray-700 text-sm xs:text-base sm:text-lg leading-relaxed">{content}</p>
+                      </div>
+                    );
+                  }
+                }
+
+                return (
+                  <div key={index} className="bg-blue-50 p-3 xs:p-4 rounded-lg border border-blue-200">
+                    <p className="text-gray-800 font-medium text-sm xs:text-base sm:text-lg">
+                      {paragraph}
+                    </p>
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+}

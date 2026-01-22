@@ -76,9 +76,11 @@ export default function FreeResources() {
 
     // console.log(freeResData)
 
-
     useEffect(() => {
         getFreeRes()
+    }, [])
+
+    useEffect(() => {
         getFreeResCategories()
     }, [])
 

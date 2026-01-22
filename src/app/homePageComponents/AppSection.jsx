@@ -1,10 +1,10 @@
 "use client";
 
 export default function AppSection() {
- 
 
-  
-  
+
+
+
   return (
     <div className="w-full lg:p-0 p-3 lg:mt-[60px] my-[20px] overflow-hidden">
       <div className="lg:mx-6 mx-3">
@@ -37,7 +37,7 @@ export default function AppSection() {
               />
             </div>
           </div>
-          {/* <div ref={rightRef} className="lg:w-[320px]   h-[auto]">
+          {/* <div className="lg:w-[320px] h-[auto]">
             <img
               className="w-full h-full object-contain rounded-[10px]"
               src="https://www.pw.live/_next/static/media/download-app-right-image.aaca3c09.webp"

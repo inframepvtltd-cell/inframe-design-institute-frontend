@@ -44,8 +44,11 @@ export default function Checkout() {
 
   useEffect(() => {
     fetchAllOnlineCourses();
-    fetchAllOfflineCourses();
   }, []);
+
+  useEffect(() => {
+    fetchAllOfflineCourses();
+  }, [])
 
   const addToCart = ({ itemId, main }) => {
     if (!token) {
