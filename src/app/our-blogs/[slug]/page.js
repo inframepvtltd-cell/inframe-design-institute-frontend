@@ -75,7 +75,7 @@ export default function BlogPage() {
                         {/* Section Quote */}
                         {section.quote && (
                             <blockquote className="border-l-4 border-black pl-6 italic text-gray-900 mb-4">
-                                "{section.quote}" - {section.quote_author || "Unknown"}
+                                {section.quote} - {section.quote_author || "Unknown"}
                             </blockquote>
                         )}
 
