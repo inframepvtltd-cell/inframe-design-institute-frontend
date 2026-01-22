@@ -3,7 +3,7 @@ import { FAQs } from "../components/FAQ";
 import { Footer } from "../components/Footer";
 import { GalleryBooksImages } from "../components/GalleryBooksImages";
 import { HeaderOffer } from "../components/HederOffer";
-// import { HeroBanner1 } from "../components/HeroBanner1";
+import { HeroBanner1 } from "../components/HeroBanner1";
 import { HeroBanner2 } from "../components/HeroBanner2";
 import { StudyMaterialFeatures } from "../components/StudyMaterialFeatures";
 import { SuccessStories } from "../components/SuccessStories";
@@ -17,7 +17,7 @@ export default function Home() {
     return (
         <>
             <HeaderOffer />
-            {/* <HeroBanner1 /> */}
+            <HeroBanner1 />
             <YoutubeSection />
             <BuyNowCards />
             <WhyInFrame />
