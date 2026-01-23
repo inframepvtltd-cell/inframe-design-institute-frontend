@@ -151,13 +151,13 @@ export default function OnlineCoursePage({ params }) {
       </section> */}
 
                 {/* course details section */}
-                <section className="w-full py-[30px] lg:pt-[30px] bg-white text-gray-900">
-                    <div className="max-w-[1320px] mx-auto px-3 lg:px-0">
+                <section className="w-full py-[30px]  lg:pt-[30px] bg-white text-gray-900">
+                    <div className="max-w-[1320px] mx-auto px-3 lg:px-3">
                         <div className="grid md:grid-cols-[72%_auto] gap-10 items-center md:items-start">
                             {/* === LEFT SIDE: Course Content === */}
                             <div className="w-full h-full">
                                 {/* Course Info Card */}
-                                <div className="bg-white p-0 transition-all duration-300 shadow-[0_0_50px_rgba(0,0,0,0.05)]">
+                                <div className="bg-white p-5 rounded transition-all duration-300 shadow-[0_0_50px_rgba(0,0,0,0.05)]">
                                     {/* Course Name */}
                                     <h3 className="text-[40px] font-bold text-gray-900 mb-4 leading-tight tracking-tight capitalize">
                                         {specificCourseData?.courseName?.replace(/[^a-zA-Z0-9]/g, " ")}

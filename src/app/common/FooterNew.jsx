@@ -67,12 +67,16 @@ export default function FooterNew() {
 
                 {onlineCourseData?.map((item, index) => {
                   return (
-                    <li
+                    <Link key={index}
+                      href={`/online-courses/${item.courseName
+                        .toLowerCase()
+                        .replace(/[^a-zA-Z0-9]/g, "-")}`}
+                    ><li
                       key={index}
                       className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black"
                     >
-                      {item.courseName}
-                    </li>
+                        {item.courseName}
+                      </li></Link>
                   );
                 })}
               </ul>
@@ -83,12 +87,14 @@ export default function FooterNew() {
 
                 {offlineCourseData?.map((item, index) => {
                   return (
-                    <li
-                      key={index}
-                      className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black"
-                    >
-                      {item.courseName}
-                    </li>
+                    <Link href={`/offline-courses/${item.courseName
+                      .toLowerCase()
+                      .replace(/[^a-zA-Z0-9]/g, "-")}`}><li
+                        key={index}
+                        className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black"
+                      >
+                        {item.courseName}
+                      </li></Link>
                   );
                 })}
               </ul>
