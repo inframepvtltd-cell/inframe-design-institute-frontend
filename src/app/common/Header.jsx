@@ -432,29 +432,23 @@ export default function Header() {
                         <ul>
                           {courses?.map((course, courseIdx) => {
                             return (
-                              <Link key={courseIdx} href={`/study-materials/${course.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}><li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
+                              <Link key={courseIdx} href={`/study-materials/notes/${course.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}><li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
                                 {course}
                               </li></Link>
                             )
                           })}
-
                         </ul>
                       </ul>
                     )
                   })}
-
-
-
-
                 </div>
               </li>
-
               <li
 
                 className="text-[16px] font-semibold hover:bg-gray-100 px-[10px] py-[35px] duration-300 cursor-pointer capitalize text-gray-500 group "
               >
                 Test series
-                <div
+                {/* <div
                   className={`invisible opacity-0 group-hover:opacity-100 origin-top transition-all brightness-110 duration-300 ease-in-out group-hover:visible absolute top-[100%] left-1/2 -translate-x-1/2 w-[1020px] h-auto bg-white shadow-2xl border-[1px] border-gray-300 grid grid-cols-4 gap-4 p-7 rounded-b-[35px] z-50`}
                 >
 
@@ -537,7 +531,7 @@ export default function Header() {
                     </ul>
                   </ul>
 
-                </div>
+                </div> */}
               </li>
 
 
