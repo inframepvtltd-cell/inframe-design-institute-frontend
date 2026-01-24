@@ -245,7 +245,7 @@ export default function Header() {
           iconColor: 'black',
           confirmButtonColor: "black",
           background: 'white',
-          confirmButtonText: "Back To HomePage",
+          confirmButtonText: "Ok",
         })
           .then((res) => {
             if (res.isConfirmed) {
@@ -581,7 +581,7 @@ export default function Header() {
             {token ?
               <button
                 onClick={() => setProfileMenu(!profileMenu)}
-                className="border-2 rounded-[5px] cursor-pointer border-gray-300 text-gray-950  flex gap-[4px] items-center capitalize duration-200 px-4 py-2 relative bg-white shadow-2xl "
+                className="border-2 rounded-full cursor-pointer border-gray-300 text-gray-950  flex gap-[4px] items-center capitalize duration-200 px-4 py-2 relative bg-white shadow-2xl "
               >
                 {LoginUsername}  <FaAngleDown className="" />
 
@@ -595,7 +595,7 @@ export default function Header() {
                   className={`${profileMenu
                     ? "opacity-100 -translate-y-0"
                     : "opacity-0 -translate-y-3"
-                    } w-[220px] h-auto absolute top-[168%] -left-10 bg-white shadow-2xl shadow-black origin-top  duration-300 transition-all ease-in-out z-30`}
+                    } w-[220px] h-auto absolute top-[168%] -left-10 bg-white shadow-2xl shadow-black origin-top duration-300 transition-all ease-in-out z-30`}
                 >
                   <ul className="text-start p-5">
                     <li

@@ -12,7 +12,6 @@ export async function generateMetadata({ params }) {
     const data = response.data.courseData;
     console.log(response.data);
 
-
     return {
       title: data.courseMetaTitle || "Online Course | EduPlatform",
       description:
