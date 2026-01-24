@@ -129,7 +129,7 @@ export default function OnlineCoursePage({ params }) {
 
   return (
     <>
-      <div className="w-full bg-white text-black">
+      <div className="w-full overflow-x-hidden bg-white text-black">
         {}
         <section
           className="w-full min-h-[60vh] flex lg:px-6 px-3 bg-cover bg-top relative"
@@ -297,6 +297,51 @@ export default function OnlineCoursePage({ params }) {
                   />
                 </div>
               </div>
+            </div>
+          </div>
+        </section>
+
+        {/* cards section  */}
+        <section className="relative bg-white py-8 px-6 md:px-12 overflow-hidden">
+          {/* subtle background accent */}
+          <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#00000008,transparent_50%)]" />
+
+          <div className="relative max-w-7xl mx-auto">
+            {/* section heading */}
+            <div className="max-w-2xl mb-16">
+              <h2 className="text-3xl md:text-4xl font-extrabold text-black leading-tight">
+                Shaping India's Future
+              </h2>
+              <p className="mt-4 text-lg text-neutral-600">
+                A legacy of excellence, results, and industry-leading
+                mentorship.
+              </p>
+            </div>
+
+            {/* cards */}
+            <div className="grid gap-10 md:grid-cols-3">
+              {cards.map((card, index) => (
+                <div
+                  key={index}
+                  className="group relative border border-neutral-200 p-10 transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
+                >
+                  <h3 className="mt-4 text-2xl font-semibold text-black">
+                    {card.title}
+                  </h3>
+
+                  <p className="mt-4 text-neutral-700 leading-relaxed">
+                    {card.description}
+                  </p>
+
+                  <button className="mt-10 inline-flex items-center gap-2 bg-black text-white px-7 py-3 text-sm font-medium transition-all group-hover:gap-4">
+                    {card.button}
+                    <span>→</span>
+                  </button>
+
+                  {/* hover accent line */}
+                  <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-black transition-all duration-500 group-hover:w-full" />
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -504,14 +549,12 @@ export default function OnlineCoursePage({ params }) {
               </div>
             </section>
 
-           
-
             {/* 🔹 Why Choose Us Section */}
             <section className="w-full bg-black my-10 text-white rounded-2xl p-10">
               <div className="max-w-[1320px] mx-auto">
                 {/* Heading */}
                 <div className="mb-14 max-w-3xl">
-                  <h2 className="text-4xl lg:text-5xl font-extrabold mb-4">
+                  <h2 className="text-3xl lg:text-4xl font-extrabold mb-4">
                     Features of the Program
                   </h2>
                   <p className="text-lg text-gray-300">
@@ -583,7 +626,7 @@ export default function OnlineCoursePage({ params }) {
               <div className="max-w-[1320px] mx-auto">
                 {/* Heading */}
                 <div className="mb-12 max-w-3xl">
-                  <h2 className="text-4xl lg:text-5xl text-black font-extrabold capitalize mb-4">
+                  <h2 className="text-3xl lg:text-4xl text-black font-extrabold capitalize mb-4">
                     Explore More Courses
                   </h2>
                   <p className="text-lg text-gray-600">
@@ -729,7 +772,7 @@ export default function OnlineCoursePage({ params }) {
           <div className="max-w-[1320px] mx-auto">
             <div className="bg-black rounded-[28px] p-8 lg:p-12 shadow-[0_30px_80px_rgba(0,0,0,0.35)]">
               {/* Heading */}
-              <h4 className="text-4xl lg:text-5xl font-extrabold text-white mb-10">
+              <h4 className="text-3xl lg:text-4xl font-extrabold text-white mb-10">
                 Frequently Asked Questions
               </h4>
 
@@ -796,60 +839,6 @@ export default function OnlineCoursePage({ params }) {
             </div>
           </div>
         </section>
-
-         {/* cards section  */}
-      <section className="relative bg-white py-8 px-6 md:px-12 overflow-hidden">
-        {/* subtle background accent */}
-        <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#00000008,transparent_50%)]" />
-
-        <div className="relative max-w-7xl mx-auto">
-          {/* section heading */}
-          <div className="max-w-2xl mb-16">
-            <h2 className="text-4xl md:text-5xl font-extrabold text-black leading-tight">
-              Shaping India's Future
-            </h2>
-            <p className="mt-6 text-lg text-neutral-600">
-              A legacy of excellence, results, and industry-leading mentorship.
-            </p>
-          </div>
-
-          {/* cards */}
-          <div className="grid gap-10 md:grid-cols-3">
-            {cards.map((card, index) => (
-              <div
-                key={index}
-                className="group relative border border-neutral-200 p-10 transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
-              >
-                {/* large background number */}
-                <span className="absolute -top-6 -right-4 text-7xl font-bold text-gray-100 group-hover:text-black/10 transition">
-                  {card.number}
-                </span>
-
-                {/* card content */}
-                <span className="text-sm tracking-widest text-neutral-500">
-                  {card.number}
-                </span>
-
-                <h3 className="mt-4 text-2xl font-semibold text-black">
-                  {card.title}
-                </h3>
-
-                <p className="mt-4 text-neutral-700 leading-relaxed">
-                  {card.description}
-                </p>
-
-                <button className="mt-10 inline-flex items-center gap-2 bg-black text-white px-7 py-3 text-sm font-medium transition-all group-hover:gap-4">
-                  {card.button}
-                  <span>→</span>
-                </button>
-
-                {/* hover accent line */}
-                <div className="absolute bottom-0 left-0 h-[2px] w-0 bg-black transition-all duration-500 group-hover:w-full" />
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
       </div>
     </>
   );
