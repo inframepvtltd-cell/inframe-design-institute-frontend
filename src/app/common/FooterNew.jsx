@@ -56,7 +56,7 @@ export default function FooterNew() {
       <footer className="">
         <div className="w-full lg:mt-[60px]  bg-gradient-to-b from-black/5 via-transparent to-transparent text-black lg:px-6 px-3">
           <div className="max-w-[1320px] mx-auto py-[30px] ">
-            <h2 className="text-[30px] text-black font-bold capitalize mb-5 pb-1">
+            <h2 className="text-[30px] text-black font-extrabold capitalize mb-5 pb-1">
               Courses We Provide
             </h2>
             <div className="grid lg:grid-cols-5 md:grid-cols-3 sm:grid-cols-2 grid-cols-1 gap-10">

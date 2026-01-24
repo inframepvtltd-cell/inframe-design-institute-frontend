@@ -37,35 +37,15 @@ export default function BannerSlider() {
       >
         {sliderData.map((item, index) => (
           <SwiperSlide key={index}>
-            <div className="relative w-full h-[90vh]">
+            <div className="relative w-full h-[70vh]">
 
               {/* Image */}
-              <Image
-                width={1320}
-                height={1000}
+              <img
+              loading="lazy"
                 src={item.sliderImage}
                 alt="Banner"
-                className="w-full h-full object-cover object-top"
+                className="w-full h-full object-center object-cover"
               />
-
-              {/* Overlay */}
-              <div className="absolute inset-0 bg-gradient-to-r from-black via-black/70 to-black/10" />
-
-              {/* Text Content */}
-              <div className="absolute top-[15%] left-[5%] max-w-[600px] text-white">
-                <h2 className="font-bold uppercase lg:text-[45px] text-[30px]">
-                  {item.sliderHeadlineFirst}
-                  <br />
-                  <span className="text-gray-200 uppercase font-bold animate-pulse">
-                    {item.sliderHeadlineSecond}
-                  </span>
-                </h2>
-
-                <p className="mt-4 text-gray-200 lg:text-[20px] text-[18px] leading-[30px]">
-                  {item.sliderDescription}
-                </p>
-              </div>
-
             </div>
           </SwiperSlide>
         ))}
