@@ -219,7 +219,7 @@ export default function OfflineCoursePage({ params }) {
 
               {/* ================= KEY FEATURES ================= */}
               <div className="mt-16">
-                <h2 className="text-4xl font-extrabold mb-4">
+                <h2 className="lg:text-5xl text-4xl font-extrabold mb-4">
                   Why Choose This Course?
                 </h2>
                 <p className="text-lg text-black mb-10 max-w-2xl">
@@ -282,19 +282,18 @@ export default function OfflineCoursePage({ params }) {
         </div>
       </section>
 
-
-    {/* cards section  */}
+      {/* cards section  */}
       <section className="relative bg-white py-8 px-6 md:px-12 overflow-hidden">
         {/* subtle background accent */}
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,#00000008,transparent_50%)]" />
 
-        <div className="relative max-w-7xl mx-auto">
+        <div className="relative max-w-[1320] mx-auto">
           {/* section heading */}
           <div className="max-w-2xl mb-16">
             <h2 className="text-4xl md:text-5xl font-extrabold text-black leading-tight">
               Shaping India's Future
             </h2>
-            <p className="mt-6 text-lg text-neutral-600">
+            <p className="mt-4 text-lg text-neutral-600">
               A legacy of excellence, results, and industry-leading mentorship.
             </p>
           </div>
@@ -306,16 +305,6 @@ export default function OfflineCoursePage({ params }) {
                 key={index}
                 className="group relative border border-neutral-200 p-10 transition-all duration-500 hover:-translate-y-3 hover:shadow-2xl"
               >
-                {/* large background number */}
-                <span className="absolute -top-6 -right-4 text-7xl font-bold text-gray-100 group-hover:text-black/10 transition">
-                  {card.number}
-                </span>
-
-                {/* card content */}
-                <span className="text-sm tracking-widest text-neutral-500">
-                  {card.number}
-                </span>
-
                 <h3 className="mt-4 text-2xl font-semibold text-black">
                   {card.title}
                 </h3>
@@ -341,7 +330,7 @@ export default function OfflineCoursePage({ params }) {
         <div className="max-w-[1320px] mx-auto">
           {/* Heading */}
           <div className="mb-12 max-w-3xl">
-            <h2 className="text-4xl text-black lg:text-5xl font-extrabold capitalize mb-4">
+            <h2 className="text-4xl  lg:text-5xl text-black font-extrabold capitalize mb-4">
               Explore More Courses
             </h2>
             <p className="text-lg text-gray-600">
