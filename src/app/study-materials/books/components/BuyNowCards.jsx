@@ -19,7 +19,7 @@ const cards = [
       "Online doubt support",
       "Live classes on sunday",
     ],
-    image: "/Books/nid-nift-uceed-2026.jpg",
+    image: "/book_cover/3.png",
   },
   {
     id: 2,
@@ -33,7 +33,7 @@ const cards = [
       "Online doubt support",
       "Live classes on sunday",
     ],
-    image: "/Books/Book1.png",
+    image: "/book_cover/1.png",
   },
   {
     id: 3,
@@ -47,7 +47,7 @@ const cards = [
       "Online doubt support",
       "Live classes on sunday",
     ],
-    image: "/Books/nid-nift-uceed-pg.jpg",
+    image: "/book_cover/2.png",
   },
   {
     id: 4,
@@ -61,7 +61,7 @@ const cards = [
       "Online doubt support",
       "Live classes on sunday",
     ],
-    image: "/Books/book2-front.png",
+    image: "/book_cover/4.png",
   },
 ];
 

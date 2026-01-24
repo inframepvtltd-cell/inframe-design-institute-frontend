@@ -24,7 +24,7 @@ export const BottomEnrollFooter = () => {
             {/* Offer Price */}
             <div className="relative">
               <span className="text-2xl sm:text-3xl lg:text-4xl text-black font-bold tracking-tight">
-                ₹4500
+                3500
               </span>
               <div className="absolute -inset-1 bg-linear-to-r from-transparent via-black/5 to-transparent blur-sm opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
             </div>
