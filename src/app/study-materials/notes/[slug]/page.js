@@ -214,38 +214,24 @@ export default function StudyMaterialPage() {
             </h2>
 
             <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-              {[
-                {
-                  bookNumber: "Book 1",
-                  description:
-                    "Comprehensive guide covering all subjects, with practice exercises and tips for drawing & reasoning.",
-                },
-                {
-                  bookNumber: "Book 2",
-                  description:
-                    "Advanced techniques for creativity, perspective drawing, and problem-solving strategies.",
-                },
-                {
-                  bookNumber: "Book 3",
-                  description:
-                    "Includes previous year papers and mock tests with detailed solutions to help you ace the exam.",
-                },
-              ].map((book, index) => (
-                <div
-                  key={index}
-                  className="relative bg-white rounded-2xl shadow-2xl p-6 flex flex-col justify-between transform hover:scale-[1.01] hover:shadow-3xl transition-all duration-300 "
-                >
-                  {/* Book Number */}
-                  <div className="text-purple-600 font-bold text-xl mb-4">
-                    {book.bookNumber}
-                  </div>
+              {specificCourseData?.materialBooksDescription?.map(
+                (book, index) => (
+                  <div
+                    key={index}
+                    className="relative bg-white rounded-2xl shadow-2xl p-6 flex flex-col justify-between transform hover:scale-[1.01] hover:shadow-3xl transition-all duration-300 border-r-4 border-b-4 "
+                  >
+                    {/* Book Number */}
+                    <div className="text-blue-600 font-bold text-xl mb-4">
+                      Book {index + 1}
+                    </div>
 
-                  {/* Description */}
-                  <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
-                    {book.description}
-                  </p>
-                </div>
-              ))}
+                    {/* Description */}
+                    <p className="text-gray-700 text-sm lg:text-base leading-relaxed">
+                      {book}
+                    </p>
+                  </div>
+                ),
+              )}
             </div>
           </section>
         </section>
@@ -343,28 +329,23 @@ export default function StudyMaterialPage() {
 
               {/* FAQ Items */}
               <div className="space-y-2">
-                {specificCourseData?.courseFaqsQuestions?.map(
-                  (question, index) => {
-                    const answer =
-                      specificCourseData?.courseFaqsAnswer?.[index] ||
-                      "Answer not available";
+                {specificCourseData?.materialFaqs?.map((item, index) => {
+                  const isOpen = currentFaqId === index;
 
-                    const isOpen = currentFaqId === index;
-
-                    return (
-                      <div
-                        key={index}
-                        className="
+                  return (
+                    <div
+                      key={index}
+                      className="
                 bg-[#111]
                 rounded-[20px]
                 px-6
                 transition-all duration-300
               "
-                      >
-                        {/* Question */}
-                        <button
-                          onClick={() => setCurrentFaqId(isOpen ? null : index)}
-                          className="
+                    >
+                      {/* Question */}
+                      <button
+                        onClick={() => setCurrentFaqId(isOpen ? null : index)}
+                        className="
                   w-full
                   flex
                   items-center
@@ -377,29 +358,28 @@ export default function StudyMaterialPage() {
                   hover:text-white
                   transition
                 "
-                        >
-                          <span className="pr-6 ">{question}</span>
-                          <span className="text-xl">
-                            {isOpen ? <FaMinusCircle /> : <FaPlusCircle />}
-                          </span>
-                        </button>
+                      >
+                        <span className="pr-6 ">{item.question}</span>
+                        <span className="text-xl">
+                          {isOpen ? <FaMinusCircle /> : <FaPlusCircle />}
+                        </span>
+                      </button>
 
-                        {/* Answer */}
-                        <div
-                          className={`grid transition-all duration-300 ease-out ${
-                            isOpen
-                              ? "grid-rows-[1fr] opacity-100 pb-5"
-                              : "grid-rows-[0fr] opacity-0"
-                          }`}
-                        >
-                          <div className="overflow-hidden text-gray-300 text-sm lg:text-base leading-relaxed">
-                            answer
-                          </div>
+                      {/* Answer */}
+                      <div
+                        className={`grid transition-all duration-300 ease-out ${
+                          isOpen
+                            ? "grid-rows-[1fr] opacity-100 pb-5"
+                            : "grid-rows-[0fr] opacity-0"
+                        }`}
+                      >
+                        <div className="overflow-hidden text-gray-300 text-sm lg:text-base leading-relaxed">
+                          {item.answer}
                         </div>
                       </div>
-                    );
-                  },
-                )}
+                    </div>
+                  );
+                })}
               </div>
             </div>
           </div>
