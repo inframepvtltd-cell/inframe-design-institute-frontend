@@ -144,212 +144,235 @@ export default function Checkout() {
     992: { slidesPerView: 2, spaceBetween: 20 },
     1200: { slidesPerView: 3, spaceBetween: 25 },
   };
-
   return (
-    <div className="w-full bg-white">
-      {/* Cart Section for Desktop */}
-      <section className="lg:block hidden w-full h-[85vh] overflow-hidden lg:p-0 p-3">
-        <div className="max-w-[1320px] mx-auto text-black">
-          <div className="grid lg:grid-cols-[70%_auto] grid-cols-1 gap-3">
-            {/* Related Courses */}
-            <div className="py-6 h-[85vh] scrollbar overflow-y-scroll">
-              <h2 className="lg:text-[40px] px-3 text-[30px] capitalize border-b border-gray-200 pb-1 font-bold mb-5">
-                More Related Courses & Materials
+    <div className="w-full bg-[#f7f8fa]">
+      <section className="lg:block hidden w-full h-[85vh] overflow-hidden">
+        <div className="max-w-[1320px] mx-auto px-5 text-gray-900">
+
+          <div className="grid lg:grid-cols-[70%_auto] gap-6">
+
+            {/* ================= LEFT: COURSES ================= */}
+            <div className="py-6 h-[85vh] overflow-y-scroll scrollbar pr-3">
+
+              <h2 className="text-3xl font-semibold mb-6 border-b border-gray-200 pb-3">
+                Recommended Courses
               </h2>
 
-              {/* Online Courses */}
-              <div className="bg-white mb-5 p-3 rounded-lg shadow">
-                <h2 className="text-[25px] font-semibold capitalize mb-4">
-                  Related Online Courses
-                </h2>
-                {onlineCourseData.length ? (
-                  <Swiper
-                    modules={[Autoplay, Navigation, Pagination]}
-                    autoplay={{ delay: 1500 }}
-                    loop={true}
-                    navigation
-                    pagination={{ clickable: true }}
-                    breakpoints={swiperBreakpoints}
-                  >
-                    {onlineCourseData.map((item) => (
-                      <SwiperSlide key={item._id}>
-                        <div className="bg-white h-[600px] border shadow-md border-gray-200 rounded-[10px] overflow-hidden flex flex-col">
-                          <Image
-                            src={item.courseImage}
-                            alt={item.courseName}
-                            width={800}
-                            height={350}
-                            className="object-cover object-top w-full h-[350px]"
-                          />
-                          <div className="p-5 flex flex-col justify-between flex-1">
-                            <div>
-                              <Link
-                                href={`/online-courses/${item.courseName
-                                  .toLowerCase()
-                                  .replace(/[^a-zA-Z0-9]/g, "-")}`}
-                              >
-                                <h3 className="text-[18px] cursor-pointer hover:underline capitalize font-semibold mb-2">
-                                  {item.courseName.replace(/[^a-zA-Z0-9]/g, " ")}
-                                </h3>
-                              </Link>
-                              <p className="text-gray-600 mb-4">{item.cousreHeadline}</p>
-                              <p className="font-bold text-xl">₹{item.coursePrice}/-</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-3 mt-3">
-                              <button
-                                onClick={() =>
-                                  addToCart({ itemId: item._id, main: "online course" })
-                                }
-                                className="border border-gray-900 text-gray-900 hover:bg-gray-950 hover:text-white py-2 rounded-md font-semibold transition"
-                              >
-                                Add to Cart
-                              </button>
-                              <button className="bg-gray-950 hover:bg-gray-950 text-white py-2 rounded-md font-semibold">
-                                Buy Now
-                              </button>
-                            </div>
+              {/* ===== ONLINE COURSES ===== */}
+              <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 mb-8">
+                <h3 className="text-xl font-medium mb-6">
+                  Online Courses
+                </h3>
+
+                <Swiper
+                  modules={[Autoplay]}
+                  autoplay={{ delay: 1000 }}
+                  loop
+                  breakpoints={swiperBreakpoints}
+                >
+                  {onlineCourseData.map(item => (
+                    <SwiperSlide key={item._id}>
+                      <div className="
+                      bg-white
+                      rounded-3xl
+                      border border-gray-200
+                      shadow-sm
+                      hover:shadow-md
+                      transition
+                      overflow-hidden
+                      flex flex-col
+                      h-[600px]
+                    ">
+                        <Image
+                          src={item.courseImage}
+                          alt={item.courseName}
+                          width={800}
+                          height={350}
+                          className="h-[320px] w-full object-cover"
+                        />
+
+                        <div className="p-6 flex flex-col justify-between flex-1">
+                          <div>
+                            <Link href={`/online-courses/${item.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}>
+                              <h4 className="text-lg font-semibold mb-2 hover:text-gray-700">
+                                {item.courseName.replace(/[^a-zA-Z0-9]/g, " ")}
+                              </h4>
+                            </Link>
+
+                            <p className="text-gray-500 text-sm mb-4">
+                              {item.cousreHeadline}
+                            </p>
+
+                            <p className="text-2xl font-semibold">
+                              ₹{item.coursePrice}
+                            </p>
+                          </div>
+
+                          <div className="grid grid-cols-1 gap-2 mt-6">
+                            <button
+                              onClick={() => addToCart({ itemId: item._id, main: "online course" })}
+                              className="
+                              rounded-full
+                              border border-gray-300
+                              py-2.5
+                              font-medium
+                              hover:bg-gray-100
+                              transition
+                              px-2
+                            "
+                            >
+                              Add to Cart
+                            </button>
+
+                            <button
+                              className="
+                              rounded-full
+                              bg-gradient-to-b from-[#1f1f1f] to-black
+                              text-white
+                              py-2.5
+                              font-medium
+                              shadow-sm shadow-black/20
+                              hover:shadow-md
+                              transition
+                            "
+                            >
+                              Buy Now
+                            </button>
                           </div>
                         </div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                ) : (
-                  <p className="text-center text-gray-400">No Online Courses Found</p>
-                )}
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
               </div>
 
-              {/* Offline Courses */}
-              <div className="bg-white mb-5 p-3 rounded-lg shadow">
-                <h2 className="text-[25px] font-semibold capitalize mb-4">
-                  Related Offline Courses
-                </h2>
-                {offlineCourseData.length ? (
-                  <Swiper
-                    modules={[Autoplay, Navigation, Pagination]}
-                    autoplay={{ delay: 1500 }}
-                    loop={true}
-                    navigation
-                    pagination={{ clickable: true }}
-                    breakpoints={swiperBreakpoints}
-                  >
-                    {offlineCourseData.map((item) => (
-                      <SwiperSlide key={item._id}>
-                        <div className="bg-white h-[600px] border shadow-md border-gray-200 rounded-[10px] overflow-hidden flex flex-col">
-                          <Image
-                            src={item.courseImage}
-                            alt={item.courseName}
-                            width={800}
-                            height={350}
-                            className="object-cover object-top w-full h-[350px]"
-                          />
-                          <div className="p-5 flex flex-col justify-between flex-1">
-                            <div>
-                              <Link
-                                href={`/offline-courses/${item.courseName
-                                  .toLowerCase()
-                                  .replace(/[^a-zA-Z0-9]/g, "-")}`}
-                              >
-                                <h3 className="text-[18px] cursor-pointer hover:underline capitalize font-semibold mb-2">
-                                  {item.courseName.replace(/[^a-zA-Z0-9]/g, " ")}
-                                </h3>
-                              </Link>
-                              <p className="text-gray-600 mb-4">{item.cousreHeadline}</p>
-                              <p className="font-bold text-xl">₹{item.coursePrice}/-</p>
-                            </div>
-                            <div className="grid grid-cols-2 gap-3 mt-3">
-                              <button
-                                onClick={() =>
-                                  addToCart({ itemId: item._id, main: "offline course" })
-                                }
-                                className="border border-gray-900 text-gray-900 hover:bg-gray-950 hover:text-white py-2 rounded-md font-semibold transition"
-                              >
-                                Add to Cart
-                              </button>
-                              <button className="bg-gray-950 hover:bg-gray-950 text-white py-2 rounded-md font-semibold">
-                                Buy Now
-                              </button>
-                            </div>
+              {/* ===== OFFLINE COURSES (same theme) ===== */}
+              <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6">
+                <h3 className="text-xl font-medium mb-6">
+                  Offline Courses
+                </h3>
+
+                <Swiper modules={[Autoplay]} autoplay={{ delay: 1000 }} loop breakpoints={swiperBreakpoints}>
+                  {offlineCourseData.map(item => (
+                    <SwiperSlide key={item._id}>
+                      <div className="bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition overflow-hidden h-[600px] flex flex-col">
+                        <Image
+                          src={item.courseImage}
+                          alt={item.courseName}
+                          width={800}
+                          height={350}
+                          className="h-[320px] w-full object-cover"
+                        />
+                        <div className="p-6 flex flex-col justify-between flex-1">
+                          <div>
+                            <h4 className="text-lg font-semibold mb-2">
+                              {item.courseName.replace(/[^a-zA-Z0-9]/g, " ")}
+                            </h4>
+                            <p className="text-gray-500 text-sm mb-4">
+                              {item.cousreHeadline}
+                            </p>
+                            <p className="text-xl font-semibold">
+                              ₹{item.coursePrice}
+                            </p>
                           </div>
+
+                          <button className="
+                          w-full
+                          rounded-full
+                          bg-gradient-to-b from-[#1f1f1f] to-black
+                          text-white
+                          py-2.5
+                          font-medium
+                          shadow-sm
+                          hover:shadow-md
+                          transition
+                        ">
+                            Buy Now
+                          </button>
                         </div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                ) : (
-                  <p className="text-center text-gray-400">No Offline Courses Found</p>
-                )}
+                      </div>
+                    </SwiperSlide>
+                  ))}
+                </Swiper>
               </div>
             </div>
 
-            {/* Cart Items */}
-            <div className="lg:block hidden scrollbar w-full h-[85vh] overflow-y-scroll pb-14 py-6 px-6 bg-white shadow-2xl">
-              <h2 className="text-[35px] border-b border-gray-200 pb-3 font-bold text-center mb-8 capitalize">
-                Your Cart
+            {/* ================= RIGHT: CART ================= */}
+            <div className="h-[85vh] my-10 overflow-y-scroll scrollbar bg-white rounded-3xl border border-gray-200 shadow-sm py-10 px-5">
+
+              <h2 className="text-2xl font-semibold text-center mb-8">
+                Cart Summary
               </h2>
 
-              {cartData.length ? (
-                cartData.map((item) => {
-                  const { courseDetails } = item;
-                  return (
-                    <div
-                      key={item._id}
-                      className="bg-white mb-6 shadow-lg border border-gray-200 rounded-lg gap-6 items-center"
-                    >
-                      <Image
-                        src={courseDetails?.courseImage}
-                        alt={courseDetails?.courseName}
-                        width={600}
-                        height={160}
-                        className="w-full h-[160px] object-cover object-top rounded-t"
-                      />
-                      <div className="flex flex-col p-4 justify-between h-full">
-                        <h2 className="text-md w-fit px-3 py-[1px] rounded-full border-[1.8px] text-black capitalize mb-2">
-                          {item.main}
-                        </h2>
-                        <h3 className="text-2xl capitalize font-semibold mb-1">
-                          {courseDetails?.courseName}
-                        </h3>
-                        <p className="text-gray-600 text-sm mb-1">{courseDetails?.cousreHeadline}</p>
-                        <p className="text-lg font-bold text-gray-800 mb-1">Quantity: {item.quantity}</p>
-                        <p className="text-lg font-bold text-gray-800 mb-1">Price: ₹{courseDetails?.coursePrice}</p>
-                        <button
-                          onClick={() => removeFromCart(item._id)}
-                          className="cursor-pointer py-1.5 text-sm bg-gray-950 text-white rounded hover:bg-transparent hover:text-gray-950 mt-2 border border-transparent hover:border-gray-950 transition duration-300"
-                        >
-                          Remove From Cart
-                        </button>
-                      </div>
+              {cartData.length ? cartData.map(item => {
+                const { courseDetails } = item;
+                return (
+                  <div key={item._id} className="mb-6 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                    <Image
+                      src={courseDetails?.courseImage}
+                      alt={courseDetails?.courseName}
+                      width={600}
+                      height={160}
+                      className="h-[200px] w-full object-cover object-top"
+                    />
+                    <div className="p-5">
+                      <span className="inline-block text-xs border border-gray-300 rounded-full px-3 py-1 mb-2">
+                        {item.main}
+                      </span>
+                      <h3 className="text-lg font-semibold mb-1">
+                        {courseDetails?.courseName}
+                      </h3>
+                      <p className="text-gray-500 text-sm mb-2">
+                        {courseDetails?.cousreHeadline}
+                      </p>
+                      <p className="font-semibold mb-3">
+                        ₹{courseDetails?.coursePrice}
+                      </p>
+
+                      <button
+                        onClick={() => removeFromCart(item._id)}
+                        className="w-full rounded-full border border-gray-300 py-2 hover:bg-gray-100 transition"
+                      >
+                        Remove
+                      </button>
                     </div>
-                  );
-                })
-              ) : (
-                <div>
-                  <h3 className="text-center font-semibold text-3xl text-gray-400">
-                    No Courses Added In Your Cart Yet
-                  </h3>
-                  <Link href="/">
-                    <p className="w-full bg-black text-white text-center py-2 my-5 rounded border-2 cursor-pointer border-transparent hover:border-black hover:bg-white duration-300 hover:text-black">
-                      Explore Courses To Add
-                    </p>
-                  </Link>
-                </div>
+                  </div>
+                );
+              }) : (
+                <p className="text-center text-gray-400 mt-24">
+                  Your cart is empty
+                </p>
               )}
 
               {cartData.length > 0 && (
-                <div className="mt-8 border-t border-gray-200 pt-6 text-center md:flex-row items-center justify-between">
-                  <p className="text-3xl text-black mb-5">
-                    Total Price: <span className="font-bold text-gray-950">₹{totalAmountInCart}</span>
+                <div className="mt-8 border-t border-gray-200 pt-6">
+                  <p className="text-center text-3xl font-extrabold mb-4">
+                    Total: ₹{totalAmountInCart}/-
                   </p>
                   <Link href="/order">
-                    <button className="hover:bg-white w-full hover:text-gray-900 font-bold px-10 py-3 bg-gray-900 text-white border-transparent shadow-lg border-2 hover:border-gray-950 uppercase cursor-pointer transition duration-200 text-base rounded-lg">
-                      Confirm Order
+                    <button className="
+                    w-full
+                    rounded-full
+                    bg-gradient-to-b from-[#1f1f1f] to-black
+                    text-white
+                    py-3.5
+                    font-semibold
+                    shadow-md
+                    hover:shadow-lg
+                    transition
+                    cursor-pointer
+                  ">
+                      Secure Checkout →
                     </button>
                   </Link>
                 </div>
               )}
+
             </div>
           </div>
         </div>
       </section>
     </div>
   );
+
 }
