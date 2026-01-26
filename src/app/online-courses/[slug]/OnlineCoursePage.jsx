@@ -22,6 +22,7 @@ export default function OnlineCoursePage({ params }) {
   const [onlineCourseData, setOnlineCourseData] = useState([]);
   const [staticPath, setStaticPath] = useState("");
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
+  const tabs = ["recordings", "study materials", "description"];
 
   const specificCourseData = onlineCourseData.filter(
     (item) => item.courseName == slug,
@@ -32,7 +33,6 @@ export default function OnlineCoursePage({ params }) {
 
   const [currentFaqId, setCurrentFaqId] = useState(null);
   const [activeTab, setActiveTab] = useState("recordings");
-  const tabs = ["recordings", "study materials", "description"];
   const [showAll, setShowAll] = useState(false);
 
   const fetchAllOnlineCourses = () => {
@@ -44,6 +44,8 @@ export default function OnlineCoursePage({ params }) {
         setStaticPath(finalRes.staticPath);
       });
   };
+
+
 
   useEffect(() => {
     fetchAllOnlineCourses();
@@ -129,6 +131,7 @@ export default function OnlineCoursePage({ params }) {
 
   return (
     <>
+  
       <div className="w-full overflow-x-hidden bg-white text-black">
         {}
         <section
@@ -301,6 +304,205 @@ export default function OnlineCoursePage({ params }) {
           </div>
         </section>
 
+
+        {/* recording section */}
+            <section id="recording-section" className="pb-12 my-10 bg-white">
+              <div className="max-w-[1320px] mx-auto px-4">
+                {/* Heading */}
+                <div className="mb-10">
+                  <h2 className="text-4xl text-black font-extrabold mb-2">
+                    Course Overview
+                  </h2>
+                  <p className="text-gray-600 text-lg">
+                    Explore recordings, study materials, and detailed course
+                    content
+                  </p>
+                </div>
+
+                {/* Tabs */}
+                <div className="flex flex-wrap gap-3 mb-10 border-b border-gray-200 pb-4">
+                  {tabs?.map((item, index) => (
+                    <button
+                      key={index}
+                      onClick={() => setActiveTab(item)}
+                      className={`px-6 py-2.5 rounded-full text-sm font-medium capitalize transition
+            ${
+              item === activeTab
+                ? "bg-black text-white shadow-md"
+                : "bg-gray-100 text-gray-700 hover:bg-black hover:text-white"
+            }`}
+                    >
+                      {item}
+                    </button>
+                  ))}
+                </div>
+
+                {/* ================= RECORDINGS ================= */}
+                {activeTab === "recordings" && (
+                  <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full text-left">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            {["Sr. No", "Title", "Duration", "Action"].map(
+                              (head, i) => (
+                                <th
+                                  key={i}
+                                  className="py-4 px-6 text-sm font-semibold text-gray-700 border-b border-gray-300"
+                                >
+                                  {head}
+                                </th>
+                              ),
+                            )}
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {specificCourseData?.courseRecordingTitle?.map(
+                            (title, index) => {
+                              const duration =
+                                specificCourseData?.courseRecordingDuration?.[
+                                  index
+                                ] || "N/A";
+                              const url =
+                                specificCourseData?.courseRecordingUrl?.[
+                                  index
+                                ] || "#";
+
+                              return (
+                                <tr
+                                  key={index}
+                                  className="hover:bg-gray-50 transition"
+                                >
+                                  <td className="py-4 px-6 border-b border-gray-300">
+                                    {index + 1}
+                                  </td>
+                                  <td className="py-4 px-6 border-b border-gray-300 font-medium">
+                                    {title}
+                                  </td>
+                                  <td className="py-4 px-6 border-b border-gray-300 text-gray-600">
+                                    {duration} min
+                                  </td>
+                                  <td className="py-4 px-6 border-b border-gray-300">
+                                    <a
+                                      href={url}
+                                      target="_blank"
+                                      rel="noopener noreferrer"
+                                      className={`font-semibold ${
+                                        index < 2
+                                          ? "text-green-600 hover:underline"
+                                          : "text-blue-600 hover:underline"
+                                      }`}
+                                    >
+                                      {index < 2 ? "Preview" : "Play"}
+                                    </a>
+                                  </td>
+                                </tr>
+                              );
+                            },
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+
+                    {/* Show More */}
+                    <div className="py-6 text-center">
+                      <button
+                        onClick={() => setShowAll(!showAll)}
+                        className="text-black font-medium hover:underline"
+                      >
+                        {showAll ? "Show Less" : "Show More"}
+                      </button>
+                    </div>
+                  </div>
+                )}
+
+                {/* ================= STUDY MATERIAL ================= */}
+                {activeTab === "study materials" && (
+                  <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
+                    <div className="overflow-x-auto">
+                      <table className="min-w-full text-left">
+                        <thead className="bg-gray-50">
+                          <tr>
+                            <th className="py-4 px-6 font-semibold border-b border-gray-300">
+                              Sr. No
+                            </th>
+                            <th className="py-4 px-6 font-semibold border-b border-gray-300">
+                              Material Name
+                            </th>
+                            <th className="py-4 px-6 font-semibold border-b border-gray-300 text-center">
+                              Download
+                            </th>
+                          </tr>
+                        </thead>
+
+                        <tbody>
+                          {specificCourseData?.courseStudyMaterialName?.map(
+                            (materialName, index) => {
+                              const file =
+                                specificCourseData?.courseStudyMaterials?.[
+                                  index
+                                ];
+                              const fileUrl = `http://localhost:9200/uploads/coursesImages/${file}`;
+
+                              return (
+                                <tr
+                                  key={index}
+                                  className={`transition hover:bg-gray-50 ${
+                                    index > 1 ? "opacity-50" : "opacity-100"
+                                  }`}
+                                >
+                                  <td className="py-4 px-6 border-b border-gray-300 ">
+                                    {index + 1}
+                                  </td>
+                                  <td className="py-4 px-6 border-b border-gray-300 font-medium">
+                                    {materialName}
+                                  </td>
+                                  <td className="py-4 px-6 border-b border-gray-300 text-center">
+                                    <a
+                                      href={fileUrl}
+                                      download
+                                      className="inline-block bg-black text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-black/90 transition"
+                                    >
+                                      Download
+                                    </a>
+                                  </td>
+                                </tr>
+                              );
+                            },
+                          )}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
+
+                {/* ================= DESCRIPTION ================= */}
+                {activeTab === "description" && (
+                  <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
+                    <h3 className="text-2xl font-bold mb-6">
+                      What You’ll Learn
+                    </h3>
+
+                    <ul className="space-y-5">
+                      {specificCourseData?.courseLearnPoints?.map(
+                        (point, index) => (
+                          <li key={index} className="flex items-start gap-4">
+                            <div className="w-7 h-7 rounded-full bg-black text-white flex items-center justify-center text-sm font-semibold">
+                              {index + 1}
+                            </div>
+                            <p className="text-gray-700 leading-relaxed">
+                              {point}
+                            </p>
+                          </li>
+                        ),
+                      )}
+                    </ul>
+                  </div>
+                )}
+              </div>
+            </section>
+
         {/* cards section  */}
         <section className="relative bg-white py-8 px-6 md:px-12 overflow-hidden">
           {/* subtle background accent */}
@@ -308,7 +510,7 @@ export default function OnlineCoursePage({ params }) {
 
           <div className="relative max-w-7xl mx-auto">
             {/* section heading */}
-            <div className="max-w-2xl mb-16">
+            <div className="max-w-2xl mb-8">
               <h2 className="text-3xl md:text-4xl font-extrabold text-black leading-tight">
                 Shaping India's Future
               </h2>

@@ -18,6 +18,8 @@ import { useEffect, useState } from "react";
 export default function FooterNew() {
   const [onlineCourseData, setOnlineCourseData] = useState([]);
   const [offlineCourseData, setOfflineCourseData] = useState([]);
+  const [studyMaterialData, setstudyMaterialData] = useState([]);
+  const [studyMaterialCategories, setStudyMaterialCategories] = useState([]);
 
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -44,6 +46,44 @@ export default function FooterNew() {
     offlineCourseDataFetch();
   }, []);
 
+  const getAllStudyMaterials = async () => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}/study-material/view-all`);
+      if (res.data.status == 1) setstudyMaterialData(res.data.result);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const fetchStudyMaterialCategory = async () => {
+    try {
+      const response = await axios.get(
+        `${apiBaseUrl}/study-material/view-categories`,
+      );
+
+      if (response.data.status === 1) {
+        setStudyMaterialCategories(response.data.result);
+      } else {
+        Swal.fire({
+          icon: "warning",
+          title: "Warning",
+          text: response.data.msg || "No categories found",
+        });
+        setStudyMaterialCategories([]);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    getAllStudyMaterials();
+  }, []);
+
+  useEffect(() => {
+    fetchStudyMaterialCategory();
+  }, []);
+
   let topColleges = [
     { title: "top College of Architecture", slug: "architecture" },
     { title: "top College of Design", slug: "design" },
@@ -67,16 +107,19 @@ export default function FooterNew() {
 
                 {onlineCourseData?.map((item, index) => {
                   return (
-                    <Link key={index}
+                    <Link
+                      key={index}
                       href={`/online-courses/${item.courseName
                         .toLowerCase()
                         .replace(/[^a-zA-Z0-9]/g, "-")}`}
-                    ><li
-                      key={index}
-                      className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black"
                     >
+                      <li
+                        key={index}
+                        className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black"
+                      >
                         {item.courseName}
-                      </li></Link>
+                      </li>
+                    </Link>
                   );
                 })}
               </ul>
@@ -87,14 +130,18 @@ export default function FooterNew() {
 
                 {offlineCourseData?.map((item, index) => {
                   return (
-                    <Link href={`/offline-courses/${item.courseName
-                      .toLowerCase()
-                      .replace(/[^a-zA-Z0-9]/g, "-")}`}><li
+                    <Link
+                      href={`/offline-courses/${item.courseName
+                        .toLowerCase()
+                        .replace(/[^a-zA-Z0-9]/g, "-")}`}
+                    >
+                      <li
                         key={index}
                         className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black"
                       >
                         {item.courseName}
-                      </li></Link>
+                      </li>
+                    </Link>
                   );
                 })}
               </ul>
@@ -103,79 +150,40 @@ export default function FooterNew() {
                   study materials
                 </li>
 
-                <li className="my-2 text-[16px] cursor-pointer duration-300 capitalize text-black font-semibold">
-                  architecture
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nata ug
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  jee mains ug
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  combo nata jee mains ug
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  gate pg
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer duration-300 capitalize text-black font-semibold">
-                  design
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nift ug
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nid ug
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  u-ceed ug
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  combo nift nid ug
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  combo nift nid u-ceed ug
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nift pg
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nid pg
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  ceed pg
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  combo nid ceed pg
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  combo need ceed nift pg
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer duration-300 capitalize text-black font-semibold">
-                  fashion technology
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nift ug
-                </li>
-
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  fddi ug
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nift pg
-                </li>
-                <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
-                  nid pg
-                </li>
+                {studyMaterialCategories.map((category, index) => {
+                  const filteredMaterials = studyMaterialData.filter(
+                    (material) =>
+                      material.materialCategory?._id.toString() ===
+                      category._id.toString(),
+                  );
+                  return (
+                    <ul key={index} className="">
+                      <li className="my-2 text-[16px] cursor-pointer duration-300 capitalize text-black font-semibold">
+                        {category.studyCategoryName}
+                      </li>
+                      <ul>
+                        {filteredMaterials.length > 0 ? (
+                          filteredMaterials.map((material) => (
+                            <Link
+                              href={`/study-materials/notes/${material.materialSlug}`}
+                            >
+                              <li
+                                key={material._id}
+                                className="cursor-pointer hover:text-black text-gray-700"
+                              >
+                                {material.materialTitle}
+                              </li>
+                            </Link>
+                          ))
+                        ) : (
+                          <li className="text-gray-400 italic">
+                            No materials found
+                          </li>
+                        )}
+                      </ul>
+                    </ul>
+                  );
+                })}
               </ul>
               <ul>
                 <li className="capitalize text-[20px] mb-3 font-semibold">
@@ -201,7 +209,6 @@ export default function FooterNew() {
                 <li className="my-2 text-[16px] cursor-pointer text-gray-700 duration-300 capitalize hover:text-black">
                   fddi
                 </li>
-
 
                 <li className="my-2 text-[16px] cursor-pointer duration-300 capitalize text-black font-semibold">
                   architecture aptitude
