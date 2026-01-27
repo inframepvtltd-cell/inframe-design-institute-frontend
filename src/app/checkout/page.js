@@ -1,45 +1,86 @@
 "use client";
-import { useEffect, useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
-import { useSelector } from "react-redux";
-import Swal from "sweetalert2";
+
 import axios from "axios";
+import Link from "next/link";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import Swal from "sweetalert2";
+import { cartDataFunc } from "../redux/slices/cartSlice";
 
-import { Autoplay, Navigation, Pagination } from "swiper/modules";
-// Swiper Imports
-import { Swiper, SwiperSlide } from "swiper/react";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/pagination";
-
-export default function Checkout() {
+export default function CartPage() {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
-
   const token = useSelector((store) => store.loginStore.token);
-  const userData = useSelector((store) => store.loginStore.user);
+  const dispatch = useDispatch();
+
+  const [staticPath, setStaticPath] = useState("");
   const cartData = useSelector((store) => store.cartStore.cartAllData);
 
+  // Total amount
   const totalAmountInCart = cartData.reduce(
-    (prev, curr) => prev + Number(curr.courseDetails?.coursePrice),
-    0
+    (prev, curr) =>
+      prev + Number(curr.courseDetails?.coursePrice) * curr.quantity,
+    0,
   );
+  const totalQty = cartData.reduce((sum, item) => sum + item.quantity, 0);
 
-  const [onlineCourseData, setOnlineCourseData] = useState([]);
-  const [offlineCourseData, setOfflineCourseData] = useState([]);
-
-  const fetchAllOnlineCourses = () => {
-    axios
-      .get(`${apiBaseUrl}/course/view-online`)
-      .then((res) => res.data)
-      .then((finalRes) => setOnlineCourseData(finalRes.onlineCourseData));
+  // Fetch static path for course images
+  const fetchAllOnlineCourses = async () => {
+    try {
+      const res = await axios.get(`${apiBaseUrl}/course/view-online`);
+      setStaticPath(res.data.staticPath);
+    } catch (err) {
+      console.error("Failed to fetch courses", err);
+    }
   };
 
-  const fetchAllOfflineCourses = () => {
-    axios
-      .get(`${apiBaseUrl}/course/view-offline`)
-      .then((res) => res.data)
-      .then((finalRes) => setOfflineCourseData(finalRes.offlineCourseData));
+  const removeFromCart = async (courseId) => {
+    const result = await Swal.fire({
+      title: "Are You Sure?",
+      text: "Do you really want to remove this from cart?",
+      icon: "warning",
+      iconColor: "black",
+      background: "white",
+      color: "black",
+      showCancelButton: true,
+      confirmButtonColor: "black",
+      cancelButtonColor: "gray",
+      confirmButtonText: "Yes",
+    });
+
+    if (result.isConfirmed) {
+      try {
+        const res = await axios.post(
+          `${apiBaseUrl}/cart/remove-from-cart`,
+          { courseId },
+          {
+            headers: { Authorization: `Bearer ${token}` },
+          },
+        );
+
+        if (res.data.status === 1) {
+          Swal.fire({
+            title: "Item Removed Successfully!",
+            icon: "success",
+            iconColor: "black",
+            color: "black",
+            confirmButtonColor: "black",
+          });
+          window.location.reload();
+          // dispatch(cartDataFunc([])); // Update Redux cart
+        } else {
+          Swal.fire({
+            title: "Something went wrong",
+            text: "Try again later",
+            icon: "error",
+            iconColor: "black",
+            color: "black",
+            confirmButtonColor: "black",
+          });
+        }
+      } catch (err) {
+        console.error(err);
+      }
+    }
   };
 
   useEffect(() => {
@@ -47,332 +88,204 @@ export default function Checkout() {
   }, []);
 
   useEffect(() => {
-    fetchAllOfflineCourses();
-  }, [])
+    const script = document.createElement("script");
+    script.src = "https://checkout.razorpay.com/v1/checkout.js";
+    script.async = true;
+    document.body.appendChild(script);
+  }, []);
 
-  const addToCart = ({ itemId, main }) => {
-    if (!token) {
-      Swal.fire({
-        title: "Please login to Add To Cart",
-        text: "You must be logged in to add to cart.",
-        icon: "warning",
-        iconColor: "black",
-        background: "white",
-        color: "black",
-        confirmButtonText: "OK",
+  // Razorpay payment
+  const razorPayInt = async () => {
+    if (!cartData.length) return Swal.fire("Your cart is empty!");
+
+    try {
+      const res = await fetch(`${apiBaseUrl}/razorpay/create-order`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          amount: totalAmountInCart, // amount in rupees
+        }),
       });
-      return;
-    }
 
-    const obj = { itemId, userData, main };
-    axios
-      .post(`${apiBaseUrl}/cart/add-to-cart`, obj, {
-        headers: { Authorization: `Bearer ${token}` },
-      })
-      .then((res) => res.data)
-      .then((finalRes) => {
-        if (finalRes.status === 1) {
-          Swal.fire({
-            title: "Added In Cart Successfully",
-            icon: "success",
-            iconColor: "black",
-            background: "white",
-            color: "black",
-          }).then(() => window.location.reload());
-        } else {
-          Swal.fire({
-            title: "Something went wrong",
-            icon: "warning",
-            text: "Try again later!",
-            iconColor: "black",
-            background: "white",
-            color: "black",
-          });
-        }
-      });
-  };
+      const data = await res.json();
 
-  const removeFromCart = (courseId) => {
-    Swal.fire({
-      title: "Are You Sure",
-      text: "Do you really want to remove this from cart?",
-      icon: "warning",
-      iconColor: "black",
-      background: "white",
-      color: "black",
-      showConfirmButton: true,
-      confirmButtonColor: "black",
-      showCancelButton: true,
-      cancelButtonColor: "gray",
-      confirmButtonText: "Yes",
-    }).then((res) => {
-      if (res.isConfirmed) {
-        axios
-          .post(
-            `${apiBaseUrl}/cart/remove-from-cart`,
-            { courseId },
-            { headers: { Authorization: `Bearer ${token}` } }
-          )
-          .then((res) => res.data)
-          .then((finalRes) => {
-            if (finalRes.status === 1) {
-              Swal.fire({
-                title: "Item Removed Successfully!",
-                icon: "success",
-                iconColor: "black",
-                color: "black",
-                confirmButtonColor: "black",
-              }).then(() => window.location.reload());
-            } else {
-              Swal.fire({
-                title: "Something went wrong",
-                text: "Try again later",
-                icon: "error",
-                iconColor: "black",
-                color: "black",
-                confirmButtonColor: "black",
-              });
-            }
-          });
+      if (!res.ok || !data.success) {
+        return Swal.fire("Failed to create order. Try again!");
       }
-    });
+
+      const options = {
+        key: process.env.NEXT_PUBLIC_RAZORPAY_KEY,
+        amount: data.amount, // in paise from backend
+        currency: "INR",
+        order_id: data.orderId,
+        name: "Course Platform",
+        description: "Course Purchase",
+        handler: async function (response) {
+          try {
+            const paymentRes = await fetch(
+              `${apiBaseUrl}/razorpay/verify-payment`,
+              {
+                method: "POST",
+                headers: {
+                  "Content-Type": "application/json",
+                  Authorization: `Bearer ${token}`,
+                },
+                body: JSON.stringify({
+                  razorpay_payment_id: response.razorpay_payment_id,
+                  razorpay_order_id: response.razorpay_order_id,
+                  razorpay_signature: response.razorpay_signature,
+                  id: token.userId || token.id, // pass user id for cart clear
+                }),
+              },
+            );
+
+            const paymentData = await paymentRes.json();
+
+            if (paymentData.success) {
+              Swal.fire("Payment Successful 🎉");
+              dispatch(cartDataFunc([])); // clear Redux cart
+              window.location.href = "/order-success";
+            } else {
+              Swal.fire("Payment verification failed. Contact support.");
+            }
+          } catch (err) {
+            console.error("Payment Handler Error:", err);
+            Swal.fire("Something went wrong during payment verification");
+          }
+        },
+        modal: {
+          ondismiss: function () {
+            Swal.fire("Payment Cancelled");
+          },
+        },
+        theme: { color: "#000000" },
+      };
+
+      const razor = new window.Razorpay(options);
+      razor.open();
+    } catch (error) {
+      console.error("Razorpay Error:", error);
+      Swal.fire("Something went wrong, try again!");
+    }
   };
 
-  const swiperBreakpoints = {
-    480: { slidesPerView: 1, spaceBetween: 10 },
-    768: { slidesPerView: 1, spaceBetween: 15 },
-    992: { slidesPerView: 2, spaceBetween: 20 },
-    1200: { slidesPerView: 3, spaceBetween: 25 },
-  };
   return (
-    <div className="w-full bg-[#f7f8fa]">
-      <section className="lg:block hidden w-full h-[85vh] overflow-hidden">
-        <div className="max-w-[1320px] mx-auto px-5 text-gray-900">
+    <div className="w-full  bg-gradient-to-b from-gray-50 to-white py-14">
+      <div className="max-w-[1320px] shadow-2xl mx-auto bg-white/90 backdrop-blur rounded-2xl p-8">
+        <h1 className="text-4xl font-extrabold tracking-tight text-black mb-8">
+          Your Cart
+        </h1>
 
-          <div className="grid lg:grid-cols-[70%_auto] gap-6">
+        <div className="overflow-x-auto">
+          {cartData.length > 0 ? (
+            <table className="w-full border-separate border-spacing-y-3">
+              <thead>
+                <tr className="text-sm text-gray-500 uppercase tracking-wide">
+                  <th className="p-3 text-center">#</th>
+                  <th className="p-3 text-center">Course</th>
+                  <th className="p-3 text-left">Details</th>
+                  <th className="p-3 text-center">Price</th>
+                  <th className="p-3 text-center">Qty</th>
+                  <th className="p-3 text-center">Total</th>
+                  <th className="p-3 text-center">Action</th>
+                </tr>
+              </thead>
 
-            {/* ================= LEFT: COURSES ================= */}
-            <div className="py-6 h-[85vh] overflow-y-scroll scrollbar pr-3">
+              <tbody>
+                {cartData.map((item, index) => (
+                  <tr
+                    key={item._id}
+                    className="bg-white text-lg shadow-sm rounded-xl transition hover:shadow-md"
+                  >
+                    <td className="p-4 text-center font-medium text-gray-600">
+                      {index + 1}
+                    </td>
 
-              <h2 className="text-3xl font-semibold mb-6 border-b border-gray-200 pb-3">
-                Recommended Courses
-              </h2>
+                    <td className="p-4 text-center">
+                      <img
+                        src={
+                          item.courseDetails?.courseImage ||
+                          `${staticPath}/${item.courseDetails?.courseImage}`
+                        }
+                        alt={item.courseDetails?.courseName}
+                        className="w-16 h-16 rounded-lg object-cover mx-auto"
+                      />
+                    </td>
 
-              {/* ===== ONLINE COURSES ===== */}
-              <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6 mb-8">
-                <h3 className="text-xl font-medium mb-6">
-                  Online Courses
-                </h3>
-
-                <Swiper
-                  modules={[Autoplay]}
-                  autoplay={{ delay: 1000 }}
-                  loop
-                  breakpoints={swiperBreakpoints}
-                >
-                  {onlineCourseData.map(item => (
-                    <SwiperSlide key={item._id}>
-                      <div className="
-                      bg-white
-                      rounded-3xl
-                      border border-gray-200
-                      shadow-sm
-                      hover:shadow-md
-                      transition
-                      overflow-hidden
-                      flex flex-col
-                      h-[600px]
-                    ">
-                        <Image
-                          src={item.courseImage}
-                          alt={item.courseName}
-                          width={800}
-                          height={350}
-                          className="h-[320px] w-full object-cover"
-                        />
-
-                        <div className="p-6 flex flex-col justify-between flex-1">
-                          <div>
-                            <Link href={`/online-courses/${item.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}>
-                              <h4 className="text-lg font-semibold mb-2 hover:text-gray-700">
-                                {item.courseName.replace(/[^a-zA-Z0-9]/g, " ")}
-                              </h4>
-                            </Link>
-
-                            <p className="text-gray-500 text-sm mb-4">
-                              {item.cousreHeadline}
-                            </p>
-
-                            <p className="text-2xl font-semibold">
-                              ₹{item.coursePrice}
-                            </p>
-                          </div>
-
-                          <div className="grid grid-cols-1 gap-2 mt-6">
-                            <button
-                              onClick={() => addToCart({ itemId: item._id, main: "online course" })}
-                              className="
-                              rounded-full
-                              border border-gray-300
-                              py-2.5
-                              font-medium
-                              hover:bg-gray-100
-                              transition
-                              px-2
-                            "
-                            >
-                              Add to Cart
-                            </button>
-
-                            <button
-                              className="
-                              rounded-full
-                              bg-gradient-to-b from-[#1f1f1f] to-black
-                              text-white
-                              py-2.5
-                              font-medium
-                              shadow-sm shadow-black/20
-                              hover:shadow-md
-                              transition
-                            "
-                            >
-                              Buy Now
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-
-              {/* ===== OFFLINE COURSES (same theme) ===== */}
-              <div className="bg-white rounded-3xl border border-gray-200 shadow-sm p-6">
-                <h3 className="text-xl font-medium mb-6">
-                  Offline Courses
-                </h3>
-
-                <Swiper modules={[Autoplay]} autoplay={{ delay: 1000 }} loop breakpoints={swiperBreakpoints}>
-                  {offlineCourseData.map(item => (
-                    <SwiperSlide key={item._id}>
-                      <div className="bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition overflow-hidden h-[600px] flex flex-col">
-                        <Image
-                          src={item.courseImage}
-                          alt={item.courseName}
-                          width={800}
-                          height={350}
-                          className="h-[320px] w-full object-cover"
-                        />
-                        <div className="p-6 flex flex-col justify-between flex-1">
-                          <div>
-                            <h4 className="text-lg font-semibold mb-2">
-                              {item.courseName.replace(/[^a-zA-Z0-9]/g, " ")}
-                            </h4>
-                            <p className="text-gray-500 text-sm mb-4">
-                              {item.cousreHeadline}
-                            </p>
-                            <p className="text-xl font-semibold">
-                              ₹{item.coursePrice}
-                            </p>
-                          </div>
-
-                          <button className="
-                          w-full
-                          rounded-full
-                          bg-gradient-to-b from-[#1f1f1f] to-black
-                          text-white
-                          py-2.5
-                          font-medium
-                          shadow-sm
-                          hover:shadow-md
-                          transition
-                        ">
-                            Buy Now
-                          </button>
-                        </div>
-                      </div>
-                    </SwiperSlide>
-                  ))}
-                </Swiper>
-              </div>
-            </div>
-
-            {/* ================= RIGHT: CART ================= */}
-            <div className="h-[85vh] my-10 overflow-y-scroll scrollbar bg-white rounded-3xl border border-gray-200 shadow-sm py-10 px-5">
-
-              <h2 className="text-2xl font-semibold text-center mb-8">
-                Cart Summary
-              </h2>
-
-              {cartData.length ? cartData.map(item => {
-                const { courseDetails } = item;
-                return (
-                  <div key={item._id} className="mb-6 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
-                    <Image
-                      src={courseDetails?.courseImage}
-                      alt={courseDetails?.courseName}
-                      width={600}
-                      height={160}
-                      className="h-[200px] w-full object-cover object-top"
-                    />
-                    <div className="p-5">
-                      <span className="inline-block text-xs border border-gray-300 rounded-full px-3 py-1 mb-2">
-                        {item.main}
-                      </span>
-                      <h3 className="text-lg font-semibold mb-1">
-                        {courseDetails?.courseName}
-                      </h3>
-                      <p className="text-gray-500 text-sm mb-2">
-                        {courseDetails?.cousreHeadline}
+                    <td className="p-4">
+                      <p className="font-semibold text-gray-900">
+                        {item.courseDetails?.courseName}
                       </p>
-                      <p className="font-semibold mb-3">
-                        ₹{courseDetails?.coursePrice}
+                      <p className="text-sm text-gray-500 mt-1">
+                        {item.courseDetails?.courseHeadline}
                       </p>
+                    </td>
 
+                    <td className="p-4 text-center text-gray-700">
+                      ₹{item.courseDetails?.coursePrice}
+                    </td>
+
+                    <td className="p-4 text-center font-medium">
+                      {item.quantity}
+                    </td>
+
+                    <td className="p-4 text-center font-semibold text-gray-900">
+                      ₹{item.courseDetails?.coursePrice * item.quantity}
+                    </td>
+
+                    <td className="p-4 text-center">
                       <button
                         onClick={() => removeFromCart(item._id)}
-                        className="w-full rounded-full border border-gray-300 py-2 hover:bg-gray-100 transition"
+                        className="rounded-full border border-black px-4 py-1.5 text-sm text-black transition hover:bg-gradient-to-b from-[#1f1f1f] to-black cursor-pointer duration-200 hover:text-white"
                       >
                         Remove
                       </button>
-                    </div>
-                  </div>
-                );
-              }) : (
-                <p className="text-center text-gray-400 mt-24">
-                  Your cart is empty
-                </p>
-              )}
+                    </td>
+                  </tr>
+                ))}
+              </tbody>
 
-              {cartData.length > 0 && (
-                <div className="mt-8 border-t border-gray-200 pt-6">
-                  <p className="text-center text-3xl font-extrabold mb-4">
-                    Total: ₹{totalAmountInCart}/-
-                  </p>
-                  <Link href="/order">
-                    <button className="
-                    w-full
-                    rounded-full
-                    bg-gradient-to-b from-[#1f1f1f] to-black
-                    text-white
-                    py-3.5
-                    font-semibold
-                    shadow-md
-                    hover:shadow-lg
-                    transition
-                    cursor-pointer
-                  ">
-                      Secure Checkout →
-                    </button>
-                  </Link>
-                </div>
-              )}
-
+              <tfoot>
+                <tr className="bg-gray-50 rounded-xl">
+                  <td colSpan={4} className="p-4 text-right font-semibold">
+                    Total
+                  </td>
+                  <td className="p-4 text-center font-semibold">{totalQty}</td>
+                  <td className="p-4 text-center font-extrabold text-2xl text-black">
+                    ₹{totalAmountInCart}
+                  </td>
+                  <td />
+                </tr>
+              </tfoot>
+            </table>
+          ) : (
+            <div className="text-center py-16">
+              <h3 className="text-3xl font-semibold text-gray-400 mb-4">
+                Your cart is empty
+              </h3>
+              <Link href="/">
+                <span className="inline-block rounded-full bg-black px-8 py-3 text-white font-medium transition hover:bg-white hover:text-black border border-black">
+                  Explore Courses
+                </span>
+              </Link>
             </div>
-          </div>
+          )}
+
+          {cartData.length > 0 && (
+            <div className="flex justify-end mt-10">
+              <button
+                onClick={razorPayInt}
+                className="rounded-full bg-gradient-to-b from-[#1f1f1f] to-black px-10 py-3 text-white font-semibold shadow-lg transition hover:bg-white hover:text-black border border-black hover:shadow-xl"
+              >
+                Confirm Payment
+              </button>
+            </div>
+          )}
         </div>
-      </section>
+      </div>
     </div>
   );
-
 }

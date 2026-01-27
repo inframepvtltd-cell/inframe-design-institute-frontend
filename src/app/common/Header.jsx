@@ -50,14 +50,14 @@ export default function Header() {
   const [offlineCourseCategories, setOfflineCourseCategories] = useState([]);
   const [onlineCourseData, setOnlineCourseData] = useState();
   const [offlineCourseData, setOfflineCourseData] = useState([]);
-    const [studyMaterialData, setstudyMaterialData] = useState([]);
+  const [studyMaterialData, setstudyMaterialData] = useState([]);
   const [studyMaterialCategories, setStudyMaterialCategories] = useState([]);
 
   const router = useRouter();
 
   const token = useSelector((store) => store.loginStore.token);
   const LoginUsername = useSelector((store) =>
-    store.loginStore.user ? store.loginStore.user.userName : "Loading...",
+    store.loginStore.user ? store.loginStore.user.userName : "My Account",
   );
 
   const cartData = useSelector((store) => store.cartStore.cartAllData);
@@ -92,7 +92,7 @@ export default function Header() {
   }, []);
 
   useEffect(() => {
-    if (path === "checkout" && !token) {
+    if (path === "cart" && !token) {
       router.push("/");
     }
   }, [path, token, router]);
@@ -118,7 +118,6 @@ export default function Header() {
   useEffect(() => {
     onlineCourseDataFetch();
   }, []);
-
 
   const fetchStudyMaterialCategory = async () => {
     try {
@@ -157,7 +156,6 @@ export default function Header() {
   useEffect(() => {
     fetchOnlineCategory();
   }, []);
-
 
   const getAllStudyMaterials = async () => {
     try {
@@ -290,7 +288,6 @@ export default function Header() {
       }
     });
   };
-
 
   return (
     <header className="sticky top-0 z-[100] bg-white">
@@ -611,71 +608,87 @@ export default function Header() {
             </ul>
 
             {token ? (
-              <button
+              <div
                 onClick={() => setProfileMenu(!profileMenu)}
-                className="border-2 rounded-full cursor-pointer border-gray-300 text-gray-950  flex gap-[4px] items-center capitalize duration-200 px-4 py-2 relative bg-white shadow-2xl "
+                className="relative flex items-center gap-2 cursor-pointer rounded-full border border-gray-200 bg-white/90 backdrop-blur-md px-5 py-2 text-gray-900 shadow-lg hover:shadow-xl transition-all duration-300"
               >
-                {LoginUsername} <FaAngleDown className="" />
+                {/* Username */}
+                <span className="font-medium  py-0.5 capitalize tracking-wide">
+                  {LoginUsername}
+                </span>
+
+                <FaAngleDown
+                  className={`text-sm transition-transform duration-300 ${
+                    profileMenu ? "rotate-180" : ""
+                  }`}
+                />
+
+                {/* Cart badge */}
                 {cartData?.length >= 1 && (
-                  <span className="bg-gray-950 text-white w-6 rounded-full text-center absolute -top-2 -right-2">
-                    {cartData?.length}
+                  <span className="absolute -top-1.5 -right-1.5 flex h-5 w-5 items-center justify-center rounded-full bg-black text-xs text-white shadow-md">
+                    {cartData.length}
                   </span>
                 )}
+
+                {/* Dropdown */}
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className={`${
+                  className={`absolute right-0 top-[140%] w-56 rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl ring-1 ring-black/5 transition-all duration-300 origin-top ${
                     profileMenu
-                      ? "opacity-100 -translate-y-0"
-                      : "opacity-0 -translate-y-3"
-                  } w-[220px] h-auto absolute top-[168%] -left-10 bg-white shadow-2xl shadow-black origin-top duration-300 transition-all ease-in-out z-30`}
+                      ? "scale-100 opacity-100 translate-y-0"
+                      : "scale-95 opacity-0 -translate-y-2 pointer-events-none"
+                  }`}
                 >
-                  <ul className="text-start p-5">
-                    <li
-                      onClick={(e) => e.stopPropagation()}
-                      className="text-gray-500 my-[10px] hover:text-gray-950 duration-300 border-b border-gray-100 pb-2 flex items-center gap-1"
-                    >
-                      <CiUser /> {LoginUsername}
-                    </li>
-                    <Link href={"/checkout"}>
+                  <ul className="p-4 text-sm">
+                    {/* Profile */}
+                    {/* <li className="mb-3 flex items-center gap-2 rounded-xl px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-gray-900 transition">
+                      <CiUser className="text-lg" />
+                      <span className="font-medium">{LoginUsername}</span>
+                    </li> */}
+
+                    {/* Cart */}
+                    <Link href="/cart">
                       <li
                         onClick={(e) => {
                           e.stopPropagation();
                           setCartOpen(false);
                         }}
-                        className="text-gray-500 my-[10px] hover:text-green-500 duration-300 border-b border-gray-100 pb-2 flex items-center gap-2"
+                        className="mb-3 flex items-center justify-between rounded-xl px-3 py-2 text-gray-600 hover:bg-gray-50 hover:text-black transition"
                       >
-                        <span
-                          onClick={(e) => e.stopPropagation()}
-                          className="flex items-center gap-1"
-                        >
-                          <CiShoppingCart /> cart
+                        <span className="flex items-center gap-2">
+                          <CiShoppingCart className="text-lg" />
+                          Cart
                         </span>
+
                         {cartData?.length >= 1 && (
-                          <span className="bg-gray-100 animate-pulse text-black w-6 rounded-full text-center">
-                            {cartData?.length}
+                          <span className="flex h-6 w-6 items-center justify-center rounded-full bg-gray-900 text-xs text-white">
+                            {cartData.length}
                           </span>
                         )}
                       </li>
                     </Link>
+
+                    {/* Logout */}
                     <li
                       onClick={(e) => {
                         e.stopPropagation();
                         logoutAccount();
                       }}
-                      className="text-gray-500 my-[10px] hover:text-red-600 duration-300 border-b border-gray-100 pb-2 flex items-center gap-1"
+                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-gray-600 hover:bg-red-50 hover:text-red-600 transition"
                     >
-                      <CiLogout /> Logout
+                      <CiLogout className="text-lg" />
+                      Logout
                     </li>
                   </ul>
                 </div>
-              </button>
+              </div>
             ) : (
               <button
                 onClick={() => {
                   setActivePage("login");
                   setMegaMenuOpen(false);
                 }}
-                className="bg-gray-950 text-white duration-300 cursor-pointer px-[25px] rounded-full hover:bg-white border-[2] border-black hover:text-black font-semibold py-[8px] text-[16px]"
+                className="rounded-full bg-black px-7 py-2.5 text-[15px] font-semibold text-white shadow-lg transition-all duration-300 hover:bg-white hover:text-black hover:shadow-xl border border-black"
               >
                 Sign in
               </button>
