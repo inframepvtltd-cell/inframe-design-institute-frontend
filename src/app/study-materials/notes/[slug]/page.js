@@ -155,7 +155,7 @@ export default function StudyMaterialPage() {
                     src="https://www.inframedesigninstitute.inframecollege.org/assets/upload/images/NATA%20JEE%20B.ARCH-10.jpg"
                     alt="NIFT Pack"
                   />
-                  <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-purple-500 to-pink-500"></div>
+                  <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-orange-500 to-pink-500"></div>
                 </div>
                 <div className="p-5 lg:p-6">
                   <p className="text-xl lg:text-2xl font-bold mb-1 capitalize text-black">
@@ -295,7 +295,7 @@ export default function StudyMaterialPage() {
                   {[...Array(5)].map((_, idx) => (
                     <svg
                       key={idx}
-                      className="w-5 h-5 text-yellow-400 mr-1"
+                      className="w-5 h-5 text-orange-400 mr-1"
                       fill="currentColor"
                       viewBox="0 0 20 20"
                       xmlns="http://www.w3.org/2000/svg"
@@ -316,6 +316,26 @@ export default function StudyMaterialPage() {
                 </p>
               </div>
             ))}
+          </div>
+        </section>
+
+        {/* 10. Final CTA */}
+        <section className="bg-orange-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
+          <h2 className="text-[40px] font-extrabold mb-5 capitalize">
+            Are you ready to Purchase this material
+          </h2>
+          <p className="text-black text-2xl mb-6">
+            Get started today with expert-backed materials designed to help you
+            succeed.
+          </p>
+          <div className="relative inline-block">
+            {/* Glow Effect Behind the Button */}
+            <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
+
+            {/* Actual Button */}
+            <button className="relative z-10 bg-orange-700 hover:bg-orange-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-orange-500 hover:text-white  duration-300 transition">
+              Buy Now for ₹{specificCourseData?.materialPrice}/-
+            </button>
           </div>
         </section>
 
@@ -383,33 +403,6 @@ export default function StudyMaterialPage() {
               </div>
             </div>
           </div>
-        </section>
-
-        {/* 10. Final CTA */}
-        <section className="bg-black text-white text-center py-16 px-6 lg:my-24">
-          <h2 className="lg:text-4xl text-3xl font-extrabold mb-6">
-            Ready to Purchase This Material?
-          </h2>
-          <p className="text-gray-300 text-xl lg:text-xl mb-10 max-w-3xl mx-auto">
-            Get instant access to expert-backed study materials designed to help
-            you succeed and stay ahead in your preparation.
-          </p>
-
-          <div className="inline-flex flex-col md:flex-row justify-center gap-6">
-            {/* Buy Now Button */}
-            <button className="bg-white text-black text-xl lg:text-xl px-10 py-4 rounded-full font-semibold shadow-xl transform hover:-translate-y-1 hover:scale-105 transition-all duration-300">
-              Buy Now for ₹{specificCourseData?.materialPrice}/-
-            </button>
-
-            {/* Add to Cart Button */}
-            <button className="bg-transparent border-2 border-white text-white text-xl lg:text-xl px-10 py-4 rounded-full font-semibold shadow hover:bg-white hover:text-black transform hover:-translate-y-1 hover:scale-105 transition-all duration-300">
-              Add to Cart
-            </button>
-          </div>
-
-          <p className="mt-6 text-gray-400 text-sm">
-            100% secure purchase. Instant PDF access after payment.
-          </p>
         </section>
       </div>
 

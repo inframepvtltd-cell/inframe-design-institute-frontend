@@ -446,25 +446,25 @@ export default function OfflineCoursePage({ params }) {
         </div>
       </section>
 
-      {/* 10. Final CTA */}
-      <section className="bg-black text-white text-center py-12 px-4 lg:my-[40] my-[30px]">
-        <h2 className="text-[40px] font-extrabold mb-5 capitalize">
-          Are you ready to learn this course ?{" "}
-        </h2>
-        <p className="text-gray-300 text-2xl mb-6">
-          Get started today with expert-backed materials designed to help you
-          succeed.
-        </p>
-        <div className="relative inline-block">
-          {/* Glow Effect Behind the Button */}
-          <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
+     {/* 10. Final CTA */}
+        <section className="bg-purple-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
+          <h2 className="text-[40px] font-extrabold mb-5 capitalize">
+            Are you ready to learn this course ?{" "}
+          </h2>
+          <p className="text-black text-2xl mb-6">
+            Get started today with expert-backed materials designed to help you
+            succeed.
+          </p>
+          <div className="relative inline-block">
+            {/* Glow Effect Behind the Button */}
+            <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
 
-          {/* Actual Button */}
-          <button className="relative z-10 bg-white text-xl cursor-pointer text-black px-6 py-3 rounded-full font-medium hover:bg-black hover:text-white border-2 hover:border-white border-transparent duration-300 transition">
-            Buy Now for ₹{specificCourseData?.coursePrice}/-
-          </button>
-        </div>
-      </section>
+            {/* Actual Button */}
+            <button className="relative z-10 bg-purple-700 hover:bg-purple-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-purple-500 hover:text-white  duration-300 transition">
+              Buy Now for ₹{specificCourseData?.coursePrice}/-
+            </button>
+          </div>
+        </section>
 
       <section className="w-full bg-[#f7f7f7] py-16 px-4">
         <div className="max-w-[1320px] mx-auto">

@@ -8,7 +8,7 @@ import { usePathname } from 'next/navigation'
 
 export default function MainLayout({ children }) {
     const pathname = usePathname();
-    const hideFooter = pathname.includes('checkout') || pathname.includes('study-materials/books/nift-nid-nata-uceed-study-material-books-in-india')
+    const hideFooter = pathname.includes('cart') || pathname.includes('study-materials/books/nift-nid-nata-uceed-study-material-books-in-india')
     const hideHeader = pathname.includes('study-materials/books/nift-nid-nata-uceed-study-material-books-in-india')
 
     return (
