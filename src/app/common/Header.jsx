@@ -375,7 +375,7 @@ export default function Header() {
                               filteredCourses.map((course) => (
                                 <li key={course._id}>
                                   <Link
-                                    href={`/offline-courses/${course.courseName
+                                    href={`/online-courses/${course.courseName
                                       .toLowerCase()
                                       .replace(/[^a-zA-Z0-9]/g, "-")}`}
                                     className="
