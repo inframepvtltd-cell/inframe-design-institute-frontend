@@ -311,15 +311,13 @@ export default function Header() {
             </Link>
             <div
               onClick={() => setMegaMenuOpen(!MegaMenuOpen)}
-              className={`${
-                MegaMenuOpen ? "bg-black text-white" : "bg-white text-black"
-              } flex items-center  gap-2 border-[2px] border-black rounded-full px-[15px] py-[8px] text-black    cursor-pointer  font-semibold duration-300 hover:bg-black hover:text-white hover:border-transparent`}
+              className={`${MegaMenuOpen ? "bg-black text-white" : "bg-white text-black"
+                } flex items-center  gap-2 border-[2px] border-black rounded-full px-[15px] py-[8px] text-black    cursor-pointer  font-semibold duration-300 hover:bg-black hover:text-white hover:border-transparent`}
             >
               All Courses{" "}
               <FaAngleDown
-                className={`${
-                  MegaMenuOpen ? "rotate-180" : "rotate-0"
-                } duration-200`}
+                className={`${MegaMenuOpen ? "rotate-180" : "rotate-0"
+                  } duration-200`}
               />
               {allContentLoaded && (
                 <MegaMenu
@@ -346,137 +344,171 @@ export default function Header() {
               <li className="text-[16px] font-semibold hover:bg-gray-100 px-[10px] py-[35px] duration-300 cursor-pointer capitalize text-gray-500 group ">
                 online Course
                 <div
-                  className={`invisible opacity-0 group-hover:opacity-100 origin-top transition-all brightness-110 duration-300 ease-in-out group-hover:visible absolute top-[100%] left-1/2 -translate-x-1/2 w-[1020px] h-auto bg-white shadow-2xl border-[1px] border-gray-300 grid grid-cols-4 gap-4 p-7 rounded-b-[35px] z-50`}
+                  className="
+    invisible opacity-0 group-hover:opacity-100
+    origin-top transition-all duration-300 ease-in-out
+    group-hover:visible absolute top-full left-1/2 -translate-x-1/2
+    w-[1040px] bg-white rounded-b-[35px] shadow-2xl z-50 p-8 grid grid-cols-4 gap-6
+    ring-1 ring-gray-200 hover:ring-gray-400
+    after:absolute after:top-0 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-4 after:h-4 after:bg-white after:rotate-45
+  "
                 >
                   {Array.isArray(onlineCourseCategories) &&
                     onlineCourseCategories.map((subCat) => {
                       const filteredCourses = Array.isArray(onlineCourseData)
                         ? onlineCourseData.filter(
-                            (course) =>
-                              course.courseCategory?._id === subCat._id,
-                          )
+                          (course) => course.courseCategory?._id === subCat._id
+                        )
                         : [];
+
                       return (
-                        <ul
+                        <div
                           key={subCat._id}
-                          className="border-r-[1px] border-[#e1e1e1]"
+                          className="flex flex-col bg-gray-50 rounded-xl p-5 hover:shadow-xl transition-shadow duration-300 border border-gray-100"
                         >
-                          <li className="text-[20px] capitalize text-black mb-2">
+                          <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <span className="w-3 h-3 bg-orange-500 rounded-full animate-pulse"></span>
                             {subCat.categoryName}
-                          </li>
-                          <ul>
+                          </h3>
+                          <ul className="flex flex-col gap-3">
                             {filteredCourses.length > 0 ? (
                               filteredCourses.map((course) => (
-                                <Link
-                                  key={course._id}
-                                  href={`/online-courses/${course.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}
-                                >
-                                  <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
+                                <li key={course._id}>
+                                  <Link
+                                    href={`/offline-courses/${course.courseName
+                                      .toLowerCase()
+                                      .replace(/[^a-zA-Z0-9]/g, "-")}`}
+                                    className="
+                      text-gray-600 hover:text-orange-600 font-medium
+                      hover:translate-x-2 transition-all duration-300
+                    "
+                                  >
                                     {course.courseName}
-                                  </li>
-                                </Link>
+                                  </Link>
+                                </li>
                               ))
                             ) : (
-                              <li className="ml-2 my-[10px] text-gray-400 italic">
-                                No courses found
-                              </li>
+                              <li className="text-gray-400 italic">No courses found</li>
                             )}
                           </ul>
-                        </ul>
+                        </div>
                       );
                     })}
                 </div>
+
+
               </li>
 
               <li className="text-[16px] font-semibold hover:bg-gray-100 px-[10px] py-[35px] duration-300 cursor-pointer capitalize text-gray-500 group ">
                 offline Course
                 <div
-                  className={`invisible opacity-0 group-hover:opacity-100 origin-top transition-all brightness-110 duration-300 ease-in-out group-hover:visible absolute top-[100%] left-1/2 -translate-x-1/2 w-[1020px] h-auto bg-white shadow-2xl border-[1px] border-gray-300 grid grid-cols-4 gap-4 p-7 rounded-b-[35px] z-50`}
+                  className="
+    invisible opacity-0 group-hover:opacity-100
+    origin-top transition-all duration-300 ease-in-out
+    group-hover:visible absolute top-full left-1/2 -translate-x-1/2
+    w-[1040px] bg-white rounded-b-[35px] shadow-2xl z-50 p-8 grid grid-cols-3 gap-6
+    ring-1 ring-gray-200 hover:ring-gray-400
+    after:absolute after:top-0 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-4 after:h-4 after:bg-white after:rotate-45
+  "
                 >
                   {Array.isArray(offlineCourseCategories) &&
                     offlineCourseCategories.map((subCat) => {
                       const filteredCourses = Array.isArray(offlineCourseData)
                         ? offlineCourseData.filter(
-                            (course) =>
-                              course.courseCategory?._id === subCat._id,
-                          )
+                          (course) => course.courseCategory?._id === subCat._id
+                        )
                         : [];
 
                       return (
-                        <ul
+                        <div
                           key={subCat._id}
-                          className="border-r-[1px] border-[#e1e1e1]"
+                          className="flex flex-col bg-gray-50 rounded-xl p-5 hover:shadow-xl transition-shadow duration-300 border border-gray-100"
                         >
-                          <li className="text-[20px] capitalize text-black mb-2">
+                          <h3 className="text-lg font-bold text-gray-900 mb-4 flex items-center gap-2">
+                            <span className="w-3 h-3 bg-green-500 rounded-full animate-pulse"></span>
                             {subCat.categoryName}
-                          </li>
-                          <ul>
+                          </h3>
+                          <ul className="flex flex-col gap-3">
                             {filteredCourses.length > 0 ? (
                               filteredCourses.map((course) => (
-                                <Link
-                                  key={course._id}
-                                  href={`/offline-courses/${course.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}
-                                >
-                                  <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
+                                <li key={course._id}>
+                                  <Link
+                                    href={`/offline-courses/${course.courseName
+                                      .toLowerCase()
+                                      .replace(/[^a-zA-Z0-9]/g, "-")}`}
+                                    className="
+                      text-gray-600 hover:text-green-600 font-medium
+                      hover:translate-x-2 transition-all duration-300
+                    "
+                                  >
                                     {course.courseName}
-                                  </li>
-                                </Link>
+                                  </Link>
+                                </li>
                               ))
                             ) : (
-                              <li className="ml-2 my-[10px] text-gray-400 italic">
-                                No courses found
-                              </li>
+                              <li className="text-gray-400 italic">No courses found</li>
                             )}
                           </ul>
-                        </ul>
+                        </div>
                       );
                     })}
                 </div>
+
               </li>
 
               <li className="text-[16px] font-semibold hover:bg-gray-100 px-[10px] py-[35px] duration-300 cursor-pointer capitalize text-gray-500 group">
                 Study Materials
-                <div className="invisible opacity-0 group-hover:opacity-100 origin-top transition-all brightness-110 duration-300 ease-in-out group-hover:visible absolute top-[100%] left-1/2 -translate-x-1/2 w-[1020px] h-auto bg-white shadow-2xl border-[1px] border-gray-300 grid grid-cols-4 gap-4 p-7 rounded-b-[35px] z-50">
+                <div
+                  className="
+    invisible opacity-0 group-hover:opacity-100
+    origin-top transition-all duration-300 ease-in-out
+    group-hover:visible absolute top-full left-1/2 -translate-x-1/2
+    w-[1040px] bg-white rounded-b-[30px] shadow-2xl z-50 p-8 grid grid-cols-3 gap-6
+    ring-1 ring-gray-200 hover:ring-gray-300
+    after:absolute after:top-0 after:left-1/2 after:-translate-x-1/2 after:-translate-y-1/2 after:w-4 after:h-4 after:bg-white after:rotate-45
+  "
+                >
                   {Array.isArray(studyMaterialCategories) &&
-                    studyMaterialCategories.map((categoryName, index) => {
-                      const filterdMaterials = Array.isArray(studyMaterialData)
-                        ? studyMaterialData?.filter(
-                            (material) =>
-                              (
-                                material.materialCategory?._id || ""
-                              ).toString() === categoryName._id.toString(),
-                          )
+                    studyMaterialCategories.map((subCat) => {
+                      const filteredCourses = Array.isArray(studyMaterialData)
+                        ? studyMaterialData.filter(
+                          (material) => material.materialCategory?._id === subCat._id
+                        )
                         : [];
+
                       return (
-                        <ul
-                          key={index}
-                          className="border-r-[1px] border-[#e1e1e1]"
+                        <div
+                          key={subCat._id}
+                          className="flex flex-col bg-gradient-to-tr from-white to-gray-50 rounded-2xl p-5 hover:shadow-xl transition-all duration-300 border border-gray-100"
                         >
-                          <li className="text-[20px] capitalize text-black mb-2">
-                            {categoryName.studyCategoryName}
-                          </li>
-                          <ul>
-                            {filterdMaterials.length > 0 ? (
-                              filterdMaterials.map((material, matind) => (
-                                <Link
-                                  key={matind}
-                                  href={`/study-materials/notes/${material.materialSlug}`}
-                                >
-                                  <li className="ml-2 my-[10px] text-gray-600 hover:text-black duration-300">
+                          <h3 className="text-lg font-semibold text-gray-900 mb-4 flex items-center gap-2">
+                            <span className="w-3 h-3 bg-blue-500 rounded-full animate-pulse"></span>
+                            {subCat.studyCategoryName}
+                          </h3>
+                          <ul className="flex flex-col gap-3">
+                            {filteredCourses.length > 0 ? (
+                              filteredCourses.map((material) => (
+                                <li key={material._id}>
+                                  <Link
+                                    href={`/study-materials/notes/${material.materialSlug}`}
+                                    className="
+                      text-gray-700 hover:text-blue-600 font-medium
+                      hover:translate-x-2 transition-all duration-300
+                    "
+                                  >
                                     {material.materialTitle}
-                                  </li>
-                                </Link>
+                                  </Link>
+                                </li>
                               ))
                             ) : (
-                              <li className="ml-2 my-[10px] text-gray-400 italic">
-                                No Materials found
-                              </li>
+                              <li className="text-gray-400 italic">No study materials found</li>
                             )}
                           </ul>
-                        </ul>
+                        </div>
                       );
                     })}
                 </div>
+
               </li>
 
               <li className="text-[16px] font-semibold hover:bg-gray-100 px-[10px] py-[35px] duration-300 cursor-pointer capitalize text-gray-500 group ">
@@ -618,9 +650,8 @@ export default function Header() {
                 </span>
 
                 <FaAngleDown
-                  className={`text-sm transition-transform duration-300 ${
-                    profileMenu ? "rotate-180" : ""
-                  }`}
+                  className={`text-sm transition-transform duration-300 ${profileMenu ? "rotate-180" : ""
+                    }`}
                 />
 
                 {/* Cart badge */}
@@ -633,11 +664,10 @@ export default function Header() {
                 {/* Dropdown */}
                 <div
                   onClick={(e) => e.stopPropagation()}
-                  className={`absolute right-0 top-[140%] w-56 rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl ring-1 ring-black/5 transition-all duration-300 origin-top ${
-                    profileMenu
-                      ? "scale-100 opacity-100 translate-y-0"
-                      : "scale-95 opacity-0 -translate-y-2 pointer-events-none"
-                  }`}
+                  className={`absolute right-0 top-[140%] w-56 rounded-2xl bg-white/95 backdrop-blur-xl shadow-2xl ring-1 ring-black/5 transition-all duration-300 origin-top ${profileMenu
+                    ? "scale-100 opacity-100 translate-y-0"
+                    : "scale-95 opacity-0 -translate-y-2 pointer-events-none"
+                    }`}
                 >
                   <ul className="p-4 text-sm">
                     {/* Profile */}
@@ -750,9 +780,8 @@ export default function Header() {
           </div>
         </div>
         <div
-          className={`${
-            mobileMenu ? "left-0" : "-left-[100%]"
-          } duration-300 fixed top-0 w-[100%] h-[150vh] bg-white px-3 py-8`}
+          className={`${mobileMenu ? "left-0" : "-left-[100%]"
+            } duration-300 fixed top-0 w-[100%] h-[150vh] bg-white px-3 py-8`}
         >
           <div className="flex justify-between pr-[6px]">
             <Link href={"/"}>
@@ -840,9 +869,8 @@ export default function Header() {
 
         {/* hover mega menu functionality */}
         <div
-          className={`${
-            subCategoryMenu ? "left-0" : "left-[-100%]"
-          } fixed top-0 left-0 w-full h-screen bg-white py-2 px-3 overflow-y-scroll duration-300 scrollbar`}
+          className={`${subCategoryMenu ? "left-0" : "left-[-100%]"
+            } fixed top-0 left-0 w-full h-screen bg-white py-2 px-3 overflow-y-scroll duration-300 scrollbar`}
         >
           {/* Header */}
           <div className="mb-6">
@@ -927,11 +955,10 @@ export default function Header() {
         {/* WhatsApp Popup */}
         <div
           onClick={(e) => e.stopPropagation()}
-          className={`${
-            contactModel
-              ? "opacity-100 scale-100 pointer-events-auto"
-              : "opacity-0 scale-0 pointer-events-none"
-          } transition-all duration-300 ease-in-out w-[300px] h-auto rounded-[10px] origin-bottom-right shadow-lg shadow-gray-500 bg-white z-[110] absolute -top-[300%] right-[60px]`}
+          className={`${contactModel
+            ? "opacity-100 scale-100 pointer-events-auto"
+            : "opacity-0 scale-0 pointer-events-none"
+            } transition-all duration-300 ease-in-out w-[300px] h-auto rounded-[10px] origin-bottom-right shadow-lg shadow-gray-500 bg-white z-[110] absolute -top-[300%] right-[60px]`}
         >
           {/* Header */}
           <div className="w-full bg-[#08993e] text-white flex items-center gap-2 px-4 py-3 rounded-t-[10px] text-[22px] font-semibold">
@@ -971,9 +998,8 @@ export default function Header() {
 
       {/* {cart work} */}
       <div
-        className={`${
-          cartOpen ? "translate-x-0" : "translate-x-full"
-        } w-full h-[100vh] z-[100] fixed overflow-scroll top-0 bg-white p-7  duration-300 transition-all ease-in-out`}
+        className={`${cartOpen ? "translate-x-0" : "translate-x-full"
+          } w-full h-[100vh] z-[100] fixed overflow-scroll top-0 bg-white p-7  duration-300 transition-all ease-in-out`}
       >
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-[35px] border-b border-gray-200 font-bold text-start capitalize">
