@@ -132,13 +132,13 @@ export default function OnlineCoursePage({ params }) {
     <>
       <div className="w-full overflow-x-hidden bg-white text-black">
         <section
-          className="relative w-full min-h-[48vh] overflow-hidden"
+          className="relative w-full min-h-[50vh] overflow-hidden"
         >
           <img
             loading="lazy"
             src={specificCourseData?.courseHeroImage}
             alt="Course Hero"
-            className="object-cover object-center w-full h-[45vh]"
+            className="object-cover object-center w-full"
           />
         </section>
         {/* <section className="w-[100%] lg:mt-[40px]">

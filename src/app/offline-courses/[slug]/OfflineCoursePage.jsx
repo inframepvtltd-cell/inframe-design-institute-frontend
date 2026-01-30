@@ -33,45 +33,6 @@ export default function OfflineCoursePage({ params }) {
 
   const [currentFaqId, setCurrentFaqId] = useState(null);
 
-  // const addToCart = ({ itemId, main }) => {
-  //     if (!token || token === ' ' || token == undefined) {
-  //         Swal.fire({
-  //             title: 'Please login to Add To Cart',
-  //             text: 'You must be logged in to add to cart.',
-  //             icon: 'warning',
-  //             iconColor: 'black',
-  //             background: 'white',
-  //             color: 'black',
-  //             confirmButtonText: 'OK'
-  //         });
-  //     } else {
-  //         const obj = { itemId, userData, main };
-  //         axios.post(`${apiBaseUrl}/cart/add-to-cart`, obj, {
-  //             headers: { Authorization: `Bearer ${token}` }
-  //         })
-  //             .then((res) => res.data)
-  //             .then((finalRes) => {
-  //                 if (finalRes.status == 1) {
-  //                     Swal.fire({
-  //                         title: 'Added In Cart Successfully',
-  //                         icon: 'success',
-  //                         iconColor: 'black',
-  //                         background: "white",
-  //                         color: 'black'
-  //                     }).then(() => window.location.reload());
-  //                 } else {
-  //                     Swal.fire({
-  //                         title: 'Something went wrong',
-  //                         icon: 'warning',
-  //                         text: 'Try again later !',
-  //                         iconColor: 'black',
-  //                         background: "white",
-  //                         color: 'black'
-  //                     });
-  //                 }
-  //             });
-  //     }
-  // }
 
   const fetchAllOfflineCourses = () => {
     axios
@@ -120,33 +81,14 @@ export default function OfflineCoursePage({ params }) {
     <div className="w-full bg-white text-gray-900">
       {/* Hero Section */}
       <section
-        className="w-full min-h-[60vh] flex lg:px-6 px-3 bg-cover bg-top relative"
-        style={{
-          backgroundImage: "url('/doubtSolving.JPG')",
-        }}
+        className="relative w-full min-h-[50vh] overflow-hidden"
       >
-        {/* 🔹 Gradient Overlay (z-10) */}
-        <div className="absolute inset-0 bg-linear-to-r from-black via-black/50 to-transparent z-10"></div>
-
-        {/* 🔹 Text Content (z-20) */}
-        <div className="w-[1320px] mx-auto">
-          <div className="text-white  py-12 relative z-20">
-            <h2 className="text-[50px] font-bold capitalize">
-              {specificCourseData?.courseName?.replace(/[^a-zA-Z0-9]/g, " ")}
-            </h2>
-            <p className="text-[25px] mt-3 capitalize">
-              {specificCourseData?.cousreHeadline}
-            </p>
-            <button
-              onClick={scrollMoment}
-              className="bg-white font-medium hover:bg-transparent hover:border-white border-transparent border-2 duration-300  hover:text-white text-gray-900  rounded-full py-[10] px-10 mt-5 text-[18px] cursor-pointer grid grid-cols-[95%_auto] items-center group"
-            >
-              {" "}
-              View Course Overview{" "}
-              <FaLongArrowAltDown className="opacity-0 -translate-y-4  group-hover:opacity-100 group-hover:translate-y-0 transition-all ease-in-out duration-300" />{" "}
-            </button>
-          </div>
-        </div>
+        <img
+          loading="lazy"
+          src={specificCourseData?.courseHeroImage}
+          alt="Course Hero"
+          className="object-cover object-center w-full"
+        />
       </section>
 
       {/* Course Details */}
@@ -446,25 +388,25 @@ export default function OfflineCoursePage({ params }) {
         </div>
       </section>
 
-     {/* 10. Final CTA */}
-        <section className="bg-purple-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
-          <h2 className="text-[40px] font-extrabold mb-5 capitalize">
-            Are you ready to learn this course ?{" "}
-          </h2>
-          <p className="text-black text-2xl mb-6">
-            Get started today with expert-backed materials designed to help you
-            succeed.
-          </p>
-          <div className="relative inline-block">
-            {/* Glow Effect Behind the Button */}
-            <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
+      {/* 10. Final CTA */}
+      <section className="bg-purple-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
+        <h2 className="text-[40px] font-extrabold mb-5 capitalize">
+          Are you ready to learn this course ?{" "}
+        </h2>
+        <p className="text-black text-2xl mb-6">
+          Get started today with expert-backed materials designed to help you
+          succeed.
+        </p>
+        <div className="relative inline-block">
+          {/* Glow Effect Behind the Button */}
+          <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
 
-            {/* Actual Button */}
-            <button className="relative z-10 bg-purple-700 hover:bg-purple-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-purple-500 hover:text-white  duration-300 transition">
-              Buy Now for ₹{specificCourseData?.coursePrice}/-
-            </button>
-          </div>
-        </section>
+          {/* Actual Button */}
+          <button className="relative z-10 bg-purple-700 hover:bg-purple-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-purple-500 hover:text-white  duration-300 transition">
+            Buy Now for ₹{specificCourseData?.coursePrice}/-
+          </button>
+        </div>
+      </section>
 
       <section className="w-full bg-[#f7f7f7] py-16 px-4">
         <div className="max-w-[1320px] mx-auto">
@@ -519,11 +461,10 @@ export default function OfflineCoursePage({ params }) {
 
                       {/* Answer */}
                       <div
-                        className={`grid transition-all duration-300 ease-out ${
-                          isOpen
-                            ? "grid-rows-[1fr] opacity-100 pb-5"
-                            : "grid-rows-[0fr] opacity-0"
-                        }`}
+                        className={`grid transition-all duration-300 ease-out ${isOpen
+                          ? "grid-rows-[1fr] opacity-100 pb-5"
+                          : "grid-rows-[0fr] opacity-0"
+                          }`}
                       >
                         <div className="overflow-hidden text-gray-300 text-sm lg:text-base leading-relaxed">
                           {answer}
