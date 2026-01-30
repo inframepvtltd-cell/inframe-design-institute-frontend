@@ -8,116 +8,64 @@ import { Autoplay } from "swiper/modules";
 export default function Testimonials() {
     const [activeVideoIndex, setActiveVideoIndex] = useState(null);
 
-    const data = [
-        {
-            name: 'Arpit Choudhary',
-            description: "I've completed my NATA course from Inframe. It really helped me understand architectural design better.",
-            src: '/testimonial0.mp4',
-            thumbnail: '/testimonial0tb.png',
-        },
-        {
-            name: 'Mahi Khatri',
-            description: "I did my NIFT foundation course at Inframe. Their guidance gave me confidence to crack the entrance.",
-            src: '/testimonial1.mp4',
-            thumbnail: '/testimonial1tb.png',
-        },
-        {
-            name: 'Diwanakr',
-            description: "I've prepared for NATA with Inframe. The mentors' support made all the difference in my success.",
-            src: '/testimonial2.mp4',
-            thumbnail: '/testimonial2tb.png',
-        },
-        {
-            name: 'Arpit Choudhary',
-            description: "I've completed my NATA course from Inframe. It really helped me understand architectural design better.",
-            src: '/testimonial0.mp4',
-            thumbnail: '/testimonial0tb.png',
-        },
-        {
-            name: 'Mahi Khatri',
-            description: "I took NATA coaching at Inframe. Their techniques boosted my drawing skills significantly.",
-            src: '/testimonial1.mp4',
-            thumbnail: '/testimonial1tb.png',
-        },
-        {
-            name: 'Diwanakr',
-            description: "I've done my NIFT course from Inframe. The expert feedback pushed me to improve every day.",
-            src: '/testimonial2.mp4',
-            thumbnail: '/testimonial2tb.png',
-        },
+    const videos = [
+        "https://www.youtube.com/embed/D4gjVOXf9Io",
+        "https://www.youtube.com/embed/nQPYYIMWUFk",
+        "https://www.youtube.com/embed/8eEjcuKTP9Q",
+        "https://www.youtube.com/embed/WGImQEWpfJE",
     ];
 
-    const toggleVideo = (index) => {
-        setActiveVideoIndex(activeVideoIndex === index ? null : index);
-    };
-
     return (
-        <div className="w-full bg-[#f8f8f8] py-10">
-            <div className="max-w-[1320px] mx-auto lg:px-6 px-3">
-                <h3 className="lg:text-[40px] text-[25px] capitalize text-start font-bold text-black">
-                    Happy student&#39;s Testimonials
-                </h3>
-                <div className="mb-[55px]">
-                    <p className="text-start mt-[10px] text-[20px] text-gray-800 font-normal">
-                        Explore how our platform has revolutionized the way our students learn and grow.
+        <div className="w-full bg-gradient-to-b from-[#f9fafb] my-5 to-[#f1f5f9] py-10">
+            <div className="max-w-[1320px] mx-auto lg:px-0 px-3">
+
+                {/* Section Header */}
+                <div className="max-w-[700px] mb-14">
+                    <h3 className="lg:text-[42px] text-[28px] font-extrabold text-black leading-tight">
+                        What Our Students Say
+                    </h3>
+
+                    <p className="mt-4 text-[18px] text-gray-600 leading-relaxed">
+                        Real stories from learners who transformed their careers with us.
                     </p>
                 </div>
 
+                {/* Slider */}
                 <Swiper
                     modules={[Autoplay]}
-                    spaceBetween={30}
-                    slidesPerView={1} // Default mobile
-                    loop={true}
-                    autoplay={{ delay: 5000 }}
+                    spaceBetween={32}
+                    loop
+                    autoplay={{ delay: 5000, disableOnInteraction: false }}
                     breakpoints={{
-                        640: { slidesPerView: 1 },  // Mobile
-                        768: { slidesPerView: 2 },  // Tablet
-                        1024: { slidesPerView: 4 }, // Desktop
+                        0: { slidesPerView: 1 },
+                        768: { slidesPerView: 2 },
+                        1024: { slidesPerView: 4 },
                     }}
                 >
-                    {data.map((item, index) => (
+                    {videos.map((video, index) => (
                         <SwiperSlide key={index}>
-                            <div className="bg-white relative p-0 rounded-[20px] cursor-pointer min-h-[500px] h-full overflow-hidden">
-                                {/* Video or Thumbnail */}
-                                {activeVideoIndex === index ? (
-                                    <div className="relative">
-                                        <video
-                                            className="w-full h-[500px] object-cover"
-                                            src={item.src}
-                                            muted
-                                            playsInline
-                                            preload="metadata"
-                                            autoPlay
-                                            onClick={() => toggleVideo(index)}
-                                        />
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-30"></div>
-                                    </div>
-                                ) : (
-                                    <div
-                                        className="relative w-full h-[500px] bg-cover bg-center"
-                                        style={{ backgroundImage: `url(${item.thumbnail})` }}
-                                        onClick={() => toggleVideo(index)}
-                                    >
-                                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white z-40 text-[50px]">
-                                            <FaPlay />
-                                        </div>
-                                        <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent z-30"></div>
-                                    </div>
-                                )}
+                            <div className="group relative rounded-3xl overflow-hidden  shadow-[0_20px_60px_-20px_rgba(0,0,0,0.25)] hover:-translate-y-2 transition-all duration-500">
 
-                                {/* Content over image at bottom */}
-                                <div className="absolute bottom-0 left-0 w-full z-40 px-4 py-5 text-white min-h-[210px] bg-gradient-to-t from-black/70 via-black/10 to-transparent">
-                                    <p className="flex items-center gap-2 text-[20px] text-amber-300 mb-2">
-                                        <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
-                                    </p>
-                                    <h4 className="text-[25px] font-semibold my-2">{item.name}</h4>
-                                    <p className="text-md text-gray-200">{item.description}</p>
+                                {/* Video Frame */}
+                                <div className="relative pt-[150%] overflow-hidden">
+                                    <iframe
+                                        src={video}
+                                        title={`Student testimonial ${index + 1}`}
+                                        className="absolute top-0 right-0 w-[130%] h-full rounded-3xl"
+                                        frameBorder="0"
+                                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                        allowFullScreen
+                                    />
                                 </div>
+
+                                {/* Subtle Premium Overlay */}
+                                <div className="pointer-events-none absolute inset-0 rounded-3xl ring-1 ring-black/5 group-hover:ring-black/10 transition" />
                             </div>
                         </SwiperSlide>
                     ))}
                 </Swiper>
             </div>
         </div>
+
     );
 }

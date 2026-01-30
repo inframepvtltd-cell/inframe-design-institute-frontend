@@ -16,6 +16,7 @@ import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
+import Image from "next/image";
 
 export default function OnlineCoursePage({ params }) {
   const slug = useParams().slug.replace(/[^a-zA-Z0-9+]/g, " ");
@@ -130,37 +131,16 @@ export default function OnlineCoursePage({ params }) {
   return (
     <>
       <div className="w-full overflow-x-hidden bg-white text-black">
-        {}
         <section
-          className="w-full min-h-[60vh] flex lg:px-6 px-3 bg-cover bg-top relative"
-          style={{
-            backgroundImage: "url('/doubtSolving.JPG')",
-          }}
+          className="relative w-full min-h-[48vh] overflow-hidden"
         >
-          {/* 🔹 Gradient Overlay (z-10) */}
-          <div className="absolute inset-0 bg-linear-to-r from-black via-black/50 to-transparent z-10"></div>
-
-          {/* 🔹 Text Content (z-20) */}
-          <div className="w-[1320px] mx-auto">
-            <div className="text-white  py-12 relative z-20">
-              <h2 className="text-[50px] font-bold capitalize">
-                {specificCourseData?.courseName?.replace(/[^a-zA-Z0-9]/g, " ")}
-              </h2>
-              <p className="text-[25px] mt-3 capitalize">
-                {specificCourseData?.cousreHeadline}
-              </p>
-              <button
-                onClick={scrollMoment}
-                className="bg-white font-medium hover:bg-transparent hover:border-white border-transparent border-2 duration-300  hover:text-white text-black  rounded-full py-[10] px-10 mt-5 text-[18px] cursor-pointer grid grid-cols-[95%_auto] items-center group"
-              >
-                {" "}
-                View Course Overview{" "}
-                <FaLongArrowAltDown className="opacity-0 -translate-y-4  group-hover:opacity-100 group-hover:translate-y-0 transition-all ease-in-out duration-300" />{" "}
-              </button>
-            </div>
-          </div>
+          <img
+            loading="lazy"
+            src={specificCourseData?.courseHeroImage}
+            alt="Course Hero"
+            className="object-cover object-center w-full h-[45vh]"
+          />
         </section>
-
         {/* <section className="w-[100%] lg:mt-[40px]">
         <img
           className="w-[100%] h-auto object-cover"
@@ -324,11 +304,10 @@ export default function OnlineCoursePage({ params }) {
                   key={index}
                   onClick={() => setActiveTab(item)}
                   className={`px-6 py-2.5 rounded-full text-sm font-medium capitalize transition
-            ${
-              item === activeTab
-                ? "bg-black text-white shadow-md"
-                : "bg-gray-100 text-gray-700 hover:bg-black hover:text-white"
-            }`}
+            ${item === activeTab
+                      ? "bg-black text-white shadow-md"
+                      : "bg-gray-100 text-gray-700 hover:bg-black hover:text-white"
+                    }`}
                 >
                   {item}
                 </button>
@@ -360,7 +339,7 @@ export default function OnlineCoursePage({ params }) {
                         (title, index) => {
                           const duration =
                             specificCourseData?.courseRecordingDuration?.[
-                              index
+                            index
                             ] || "N/A";
                           const url =
                             specificCourseData?.courseRecordingUrl?.[index] ||
@@ -385,11 +364,10 @@ export default function OnlineCoursePage({ params }) {
                                   href={url}
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  className={`font-semibold ${
-                                    index < 2
-                                      ? "text-green-600 hover:underline"
-                                      : "text-blue-600 hover:underline"
-                                  }`}
+                                  className={`font-semibold ${index < 2
+                                    ? "text-green-600 hover:underline"
+                                    : "text-blue-600 hover:underline"
+                                    }`}
                                 >
                                   {index < 2 ? "Preview" : "Play"}
                                 </a>
@@ -443,9 +421,8 @@ export default function OnlineCoursePage({ params }) {
                           return (
                             <tr
                               key={index}
-                              className={`transition hover:bg-gray-50 ${
-                                index > 1 ? "opacity-50" : "opacity-100"
-                              }`}
+                              className={`transition hover:bg-gray-50 ${index > 1 ? "opacity-50" : "opacity-100"
+                                }`}
                             >
                               <td className="py-4 px-6 border-b border-gray-300 ">
                                 {index + 1}
@@ -565,11 +542,10 @@ export default function OnlineCoursePage({ params }) {
                       key={index}
                       onClick={() => setActiveTab(item)}
                       className={`px-6 py-2.5 rounded-full text-sm font-medium capitalize transition
-            ${
-              item === activeTab
-                ? "bg-black text-white shadow-md"
-                : "bg-gray-100 text-gray-700 hover:bg-black hover:text-white"
-            }`}
+            ${item === activeTab
+                          ? "bg-black text-white shadow-md"
+                          : "bg-gray-100 text-gray-700 hover:bg-black hover:text-white"
+                        }`}
                     >
                       {item}
                     </button>
@@ -601,11 +577,11 @@ export default function OnlineCoursePage({ params }) {
                             (title, index) => {
                               const duration =
                                 specificCourseData?.courseRecordingDuration?.[
-                                  index
+                                index
                                 ] || "N/A";
                               const url =
                                 specificCourseData?.courseRecordingUrl?.[
-                                  index
+                                index
                                 ] || "#";
 
                               return (
@@ -627,11 +603,10 @@ export default function OnlineCoursePage({ params }) {
                                       href={url}
                                       target="_blank"
                                       rel="noopener noreferrer"
-                                      className={`font-semibold ${
-                                        index < 2
-                                          ? "text-green-600 hover:underline"
-                                          : "text-blue-600 hover:underline"
-                                      }`}
+                                      className={`font-semibold ${index < 2
+                                        ? "text-green-600 hover:underline"
+                                        : "text-blue-600 hover:underline"
+                                        }`}
                                     >
                                       {index < 2 ? "Preview" : "Play"}
                                     </a>
@@ -680,16 +655,15 @@ export default function OnlineCoursePage({ params }) {
                             (materialName, index) => {
                               const file =
                                 specificCourseData?.courseStudyMaterials?.[
-                                  index
+                                index
                                 ];
                               const fileUrl = `http://localhost:9200/uploads/coursesImages/${file}`;
 
                               return (
                                 <tr
                                   key={index}
-                                  className={`transition hover:bg-gray-50 ${
-                                    index > 1 ? "opacity-50" : "opacity-100"
-                                  }`}
+                                  className={`transition hover:bg-gray-50 ${index > 1 ? "opacity-50" : "opacity-100"
+                                    }`}
                                 >
                                   <td className="py-4 px-6 border-b border-gray-300 ">
                                     {index + 1}
@@ -1014,11 +988,10 @@ export default function OnlineCoursePage({ params }) {
 
                         {/* Answer */}
                         <div
-                          className={`grid transition-all duration-300 ease-out ${
-                            isOpen
-                              ? "grid-rows-[1fr] opacity-100 pb-5"
-                              : "grid-rows-[0fr] opacity-0"
-                          }`}
+                          className={`grid transition-all duration-300 ease-out ${isOpen
+                            ? "grid-rows-[1fr] opacity-100 pb-5"
+                            : "grid-rows-[0fr] opacity-0"
+                            }`}
                         >
                           <div className="overflow-hidden text-gray-300 text-sm lg:text-base leading-relaxed">
                             {answer}
