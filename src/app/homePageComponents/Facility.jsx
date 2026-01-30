@@ -6,6 +6,7 @@ import { FaChalkboardTeacher, FaBookOpen, FaTrophy } from 'react-icons/fa';
 import { Swiper, SwiperSlide } from 'swiper/react';
 import { Autoplay } from 'swiper/modules';
 import 'swiper/css';
+import Image from 'next/image';
 
 export default function Facility() {
 
@@ -16,7 +17,7 @@ export default function Facility() {
             description:
                 "Learn from seasoned professionals from top design institutes. Our passionate instructors ensure you're ready for every challenge.",
             icon: <FaChalkboardTeacher />,
-            src: '/bestFaculty.jpg'
+            src: 'https://res.cloudinary.com/dmppanizv/image/upload/v1769704673/bestFaculty_figmph.jpg'
         },
         {
             id: '2',
@@ -24,7 +25,7 @@ export default function Facility() {
             description:
                 'Access exclusive study resources curated by experts. Stay ahead with content tailored for NIFT, NID, NATA, and UCEED.',
             icon: <FaBookOpen />,
-            src: '/bestGuidence-min.jpg'
+            src: 'https://res.cloudinary.com/dmppanizv/image/upload/v1769704676/bestGuidence-min_gbl7lc.jpg'
         },
         {
             id: '3',
@@ -32,7 +33,7 @@ export default function Facility() {
             description:
                 'Join a legacy of 100% success stories. Our students make it to the top design schools — and so can you.',
             icon: <FaTrophy />,
-            src: '/bestResult-min.JPG'
+            src: 'https://res.cloudinary.com/dmppanizv/image/upload/v1769704677/bestResult-min_scn9k6.jpg'
         },
     ];
 
@@ -53,11 +54,22 @@ export default function Facility() {
                     {highlights.map((item) => (
                         <div
                             key={item.id}
-                            style={{ backgroundImage: `url(${item.src})` }}
-                            className="h-[500px] relative bg-cover bg-center rounded-3xl shadow-lg border border-red-100 flex items-end p-8"
+                            className="h-[500px] relative rounded-3xl shadow-lg border border-red-100 flex items-end p-8 overflow-hidden"
                         >
-                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent rounded-3xl" />
+                            {/* Image */}
+                            <Image
+                                loading='lazy'
+                                src={item.src}
+                                alt={item.heading}
+                                fill
+                                className="object-cover"
+                                sizes="(min-width: 1024px) 33vw, 100vw"
+                                quality={100}
+                            />
+                            {/* Gradient overlay */}
+                            <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/40 to-transparent" />
 
+                            {/* Content */}
                             <div className="relative z-10 max-w-lg">
                                 <h3 className="text-[30px] font-bold text-white mb-3">
                                     {item.heading}
