@@ -149,11 +149,11 @@ export default function BookaSession() {
                 className="w-full border border-gray-300 rounded-lg px-4 py-3 bg-white text-black  focus:outline-none focus:ring-[1px] focus:ring-gray-500"
                 required
               >
-                <option l value="">-- Select Exam Type --</option>
-                <option l value="nift">NIFT</option>
-                <option l value="nid">NID</option>
-                <option l value="uceed">UCEED</option>
-                <option l value="nata">NATA</option>
+                <option  >-- Select Exam Type --</option>
+                <option  value="nift">NIFT</option>
+                <option  value="nid">NID</option>
+                <option  value="uceed">UCEED</option>
+                <option  value="nata">NATA</option>
               </select>
             </div>
 
