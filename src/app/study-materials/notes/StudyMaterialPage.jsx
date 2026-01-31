@@ -1,6 +1,5 @@
 "use client";
 import React from 'react'
-import CourseNotFound from "@/app/common/CourseNotFound";
 import axios from "axios";
 import { useParams, usePathname } from "next/navigation";
 import { useEffect, useState } from "react";
@@ -9,6 +8,7 @@ import {
     FaMinusCircle,
     FaPlusCircle,
 } from "react-icons/fa";
+import CourseNotFound from '../../common/CourseNotFound';
 
 export default function StudyMaterialPage() {
     const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;

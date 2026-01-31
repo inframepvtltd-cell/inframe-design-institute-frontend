@@ -3,8 +3,8 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import FullScreenLoader from "@/app/components/loading";
 import axios from "axios";
+import FullScreenLoader from "../../components/Loading";
 
 export default function BlogPage() {
     const apibaseurl = process.env.NEXT_PUBLIC_API_URL;
