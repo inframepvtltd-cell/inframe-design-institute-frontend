@@ -11,6 +11,7 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
+import QuickPayment from "../../components/quickPayment";
 
 export default function TopCourses() {
 
@@ -128,9 +129,10 @@ export function OnlineCourses({ apiBaseUrl, addToCart }) {
                       className="bg-gray-200 hover:bg-gray-300 cursor-pointer py-[7px] text-[14px] w-full rounded-lg font-medium">
                       Add to Cart
                     </button>
-                    <button className="bg-gray-900 hover:bg-gray-800 cursor-pointer py-[7px] text-[14px] rounded-lg text-white font-medium">
+                    <QuickPayment price={"2"} courseName={"Design Page"} />              
+                          {/* <button className="bg-gray-900 hover:bg-gray-800 cursor-pointer py-[7px] text-[14px] rounded-lg text-white font-medium">
                       Buy Now
-                    </button>
+                    </button> */}
                   </div>
                 </div>
               </div>
