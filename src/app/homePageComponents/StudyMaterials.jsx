@@ -12,19 +12,19 @@ export default function StudyMaterials() {
       heading: "Webinars",
       description:
         "Access a curated collection of free webinars covering key academic topics, exam strategies, and study techniques. Perfect for self-learners, students, and competitive exam aspirants. Learn from qualified educators—anytime, anywhere.",
-      src: "https://static.pw.live/5eb393ee95fab7468a79d189/GLOBAL_CMS/f205f69d-b8b3-4f03-b28b-6c6bdd9eeb02.webp",
+      src: "https://static.pw.live/5eb393ee95fab7468a79d189/GLOBAL_CMS/3eb5198e-6f36-4df4-ad97-81716b80bab2.webp",
     },
     {
       heading: "Architecture Series",
       description:
         "Download free study materials on design, planning, and architecture theory. Learn at your own pace—no sign-up needed.",
-      src: "https://www.inframedesigninstitute.com/assets/upload/images/WhatsApp%20Image%202021-04-28%20at%2011.34.20%20PM.png",
+      src: "https://static.pw.live/5eb393ee95fab7468a79d189/GLOBAL_CMS/3eb5198e-6f36-4df4-ad97-81716b80bab2.webp",
     },
     {
       heading: "Free Question Papers",
       description:
         "Download subject-wise question papers for practice and self-study. Improve your preparation with quality resources.",
-      src: "/study-materials/2.jpg",
+      src: "https://static.pw.live/5eb393ee95fab7468a79d189/GLOBAL_CMS/3eb5198e-6f36-4df4-ad97-81716b80bab2.webp",
     },
     {
       heading: "Current Affairs",
@@ -37,7 +37,7 @@ export default function StudyMaterials() {
   return (
     <div className="w-full lg:my-[40px] my-[30px]">
       <div className="max-w-[1320px] lg:p-0 p-3 mx-auto lg:px-6 px-3">
-        <h3 className="lg:text-[40px] text-[25px] capitalize text-start font-bold text-black">
+        <h3 className="lg:text-4xl text-3xl capitalize text-start font-bold text-black">
           Free Resources
         </h3>
         <p className="text-start text-[20px] mt-[10px]">

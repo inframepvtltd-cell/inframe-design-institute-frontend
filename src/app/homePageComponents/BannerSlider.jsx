@@ -23,33 +23,33 @@ export default function BannerSlider() {
   if (sliderData.length === 0) return null;
 
   return (
-    <div className="w-full">
-      <Swiper
-        modules={[Autoplay]}
-        autoplay={{
-          delay: 3000,
-          disableOnInteraction: false,
-        }}
-        loop={true}
-        speed={500}
-        slidesPerView={1}
-        className="w-full"
-      >
-        {sliderData.map((item, index) => (
-          <SwiperSlide key={index}>
-            <div className="relative w-full h-[70vh]">
+   <div className="w-full">
+  <Swiper
+    modules={[Autoplay]}
+    autoplay={{
+      delay: 3000,
+      disableOnInteraction: false,
+    }}
+    loop={true}
+    speed={500}
+    slidesPerView={1}
+    className="w-full"
+  >
+    {sliderData.map((item, index) => (
+      <SwiperSlide key={index}>
+        <div className="relative w-full h-[50vh] sm:h-[60vh] md:h-[65vh] lg:h-[70vh] xl:h-[75vh] 2xl:h-[80vh]">
+          {/* Image */}
+          <img
+            loading="lazy"
+            src={item.sliderImage}
+            alt="Banner"
+            className="w-full h-full object-cover object-center"
+          />
+        </div>
+      </SwiperSlide>
+    ))}
+  </Swiper>
+</div>
 
-              {/* Image */}
-              <img
-              loading="lazy"
-                src={item.sliderImage}
-                alt="Banner"
-                className="w-full h-full object-center object-cover"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
-    </div>
   );
 }

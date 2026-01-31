@@ -131,6 +131,7 @@ export default function FooterNew() {
                 {offlineCourseData?.map((item, index) => {
                   return (
                     <Link
+                      key={index}
                       href={`/offline-courses/${item.courseName
                         .toLowerCase()
                         .replace(/[^a-zA-Z0-9]/g, "-")}`}
@@ -163,8 +164,9 @@ export default function FooterNew() {
                       </li>
                       <ul>
                         {filteredMaterials.length > 0 ? (
-                          filteredMaterials.map((material) => (
+                          filteredMaterials.map((material,index) => (
                             <Link
+                            key={index}
                               href={`/study-materials/notes/${material.materialSlug}`}
                             >
                               <li

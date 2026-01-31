@@ -155,7 +155,7 @@ export default function StudyMaterialPage() {
                                         src="https://www.inframedesigninstitute.inframecollege.org/assets/upload/images/NATA%20JEE%20B.ARCH-10.jpg"
                                         alt="NIFT Pack"
                                     />
-                                    <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-orange-500 to-pink-500"></div>
+                                    <div className="absolute bottom-0 left-0 w-full h-1.5 bg-gradient-to-r from-blue-500 via-blue-500 to-pink-500"></div>
                                 </div>
                                 <div className="p-5 lg:p-6">
                                     <p className="text-xl lg:text-xl font-medium mb-1 capitalize text-black">
@@ -303,7 +303,7 @@ export default function StudyMaterialPage() {
                                     {[...Array(5)].map((_, idx) => (
                                         <svg
                                             key={idx}
-                                            className="w-5 h-5 text-orange-400 mr-1"
+                                            className="w-5 h-5 text-amber-400 mr-1"
                                             fill="currentColor"
                                             viewBox="0 0 20 20"
                                             xmlns="http://www.w3.org/2000/svg"
@@ -328,7 +328,7 @@ export default function StudyMaterialPage() {
                 </section>
 
                 {/* 10. Final CTA */}
-                <section className="bg-orange-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
+                <section className="bg-blue-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
                     <h2 className="text-[40px] font-extrabold mb-5 capitalize">
                         Are you ready to Purchase this material
                     </h2>
@@ -341,7 +341,7 @@ export default function StudyMaterialPage() {
                         <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
 
                         {/* Actual Button */}
-                        <button className="relative z-10 bg-orange-700 hover:bg-orange-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-orange-500 hover:text-white  duration-300 transition">
+                        <button className="relative z-10 bg-blue-700 hover:bg-blue-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-blue-500 hover:text-white  duration-300 transition">
                             Buy Now for ₹{specificCourseData?.materialPrice}/-per year
                         </button>
                     </div>

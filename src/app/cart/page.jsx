@@ -12,6 +12,7 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+import UserControl from "../common/UserControl";
 
 export default function Checkout() {
   const apiBaseUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -137,13 +138,26 @@ export default function Checkout() {
       }
     });
   };
-
+  const [activePage, setActivePage] = useState('')
+  { activePage && !token && <UserControl activePage={activePage} setActivePage={setActivePage} /> }
   const swiperBreakpoints = {
     480: { slidesPerView: 1, spaceBetween: 10 },
     768: { slidesPerView: 1, spaceBetween: 15 },
     992: { slidesPerView: 2, spaceBetween: 20 },
     1200: { slidesPerView: 3, spaceBetween: 25 },
   };
+
+  const handleBtn = () => {
+    setActivePage('login')
+    if (token) {
+      //razorypay setupta
+      alert('razorypay setup inplement')
+      return
+    }
+    else {
+      setActivePage('login')
+    }
+  }
   return (
     <div className="w-full bg-[#f7f8fa]">
       <section className="lg:block hidden w-full h-[85vh] overflow-hidden">
@@ -170,8 +184,8 @@ export default function Checkout() {
                   loop
                   breakpoints={swiperBreakpoints}
                 >
-                  {onlineCourseData.map(item => (
-                    <SwiperSlide key={item._id}>
+                  {onlineCourseData.map((item, index) => (
+                    <SwiperSlide key={index}>
                       <div className="
                       bg-white
                       rounded-3xl
@@ -225,6 +239,7 @@ export default function Checkout() {
                             </button>
 
                             <button
+                              onClick={handleBtn}
                               className="
                               rounded-full
                               bg-gradient-to-b from-[#1f1f1f] to-black
@@ -236,6 +251,7 @@ export default function Checkout() {
                               transition
                             "
                             >
+
                               Buy Now
                             </button>
                           </div>
@@ -253,8 +269,8 @@ export default function Checkout() {
                 </h3>
 
                 <Swiper modules={[Autoplay]} autoplay={{ delay: 1000 }} loop breakpoints={swiperBreakpoints}>
-                  {offlineCourseData.map(item => (
-                    <SwiperSlide key={item._id}>
+                  {offlineCourseData.map((item, index) => (
+                    <SwiperSlide key={index}>
                       <div className="bg-white rounded-3xl border border-gray-200 shadow-sm hover:shadow-md transition overflow-hidden h-[600px] flex flex-col">
                         <Image
                           src={item.courseImage}
@@ -276,7 +292,9 @@ export default function Checkout() {
                             </p>
                           </div>
 
-                          <button className="
+                          <button
+                          onClick={handleBtn}
+                          className="
                           w-full
                           rounded-full
                           bg-gradient-to-b from-[#1f1f1f] to-black
@@ -304,10 +322,10 @@ export default function Checkout() {
                 Cart Summary
               </h2>
 
-              {cartData.length ? cartData.map(item => {
+              {cartData.length ? cartData.map((item, index) => {
                 const { courseDetails } = item;
                 return (
-                  <div key={item._id} className="mb-6 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
+                  <div key={index} className="mb-6 rounded-2xl border border-gray-200 shadow-sm overflow-hidden">
                     <Image
                       src={courseDetails?.courseImage}
                       alt={courseDetails?.courseName}
