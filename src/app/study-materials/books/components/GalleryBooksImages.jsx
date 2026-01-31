@@ -9,6 +9,7 @@ const bookImages = [
     alt: "NIFT Study Material - Creative Ability Test",
     title: "NIFT CAT - Creative Ability Test",
     exam: "NIFT",
+    bundle: "NIFT NID UCEED UG Bundle",
     description:
       "Complete guide for NIFT Creative Ability Test with drawing, design thinking exercises.",
   },
@@ -18,6 +19,7 @@ const bookImages = [
     alt: "NID Study Material - Studio Test",
     title: "NID Studio Test",
     exam: "NID",
+    bundle: "NIFT NID UCEED UG Bundle",
     description:
       "Complete preparation for NID Studio Test with material handling and model making.",
   },
@@ -27,6 +29,7 @@ const bookImages = [
     alt: "UCEED Study Material - Visualization",
     title: "UCEED Visualization",
     exam: "UCEED",
+    bundle: "NIFT NID UCEED UG Bundle",
     description: "Master visualization and spatial reasoning for UCEED exam.",
   },
   {
@@ -35,6 +38,7 @@ const bookImages = [
     alt: "NATA Study Material - Drawing",
     title: "NATA Drawing",
     exam: "NATA",
+    bundle: "NATA JEE UG Bundle",
     description: "Professional architectural drawing techniques for NATA exam.",
   },
   {
@@ -43,6 +47,7 @@ const bookImages = [
     alt: "JEE Study Material - Aptitude",
     title: "JEE Aptitude",
     exam: "JEE",
+    bundle: "NATA JEE UG Bundle",
     description: "Practice sets for JEE Paper 2 aptitude test.",
   },
   {
@@ -51,6 +56,7 @@ const bookImages = [
     alt: "GATE Study Material - Design",
     title: "GATE Design",
     exam: "GATE",
+    bundle: "GATE PG Bundle",
     description: "Advanced design theory for GATE Design exam.",
   },
   {
@@ -59,6 +65,7 @@ const bookImages = [
     alt: "NIFT Study Material - GAT",
     title: "NIFT GAT",
     exam: "NIFT",
+    bundle: "NIFT NID UCEED UG Bundle",
     description: "Complete guide for NIFT General Ability Test.",
   },
   {
@@ -67,6 +74,7 @@ const bookImages = [
     alt: "NID Study Material - Design",
     title: "NID DAT",
     exam: "NID",
+    bundle: "NIFT NID UCEED UG Bundle",
     description: "Preparation for NID Design Aptitude Test.",
   },
   {
@@ -75,6 +83,7 @@ const bookImages = [
     alt: "UCEED Study Material - Drawing",
     title: "UCEED Sketching",
     exam: "UCEED",
+    bundle: "NIFT NID UCEED UG Bundle",
     description: "Advanced sketching techniques for UCEED exam.",
   },
   {
@@ -83,6 +92,7 @@ const bookImages = [
     alt: "NATA Study Material - Maths",
     title: "NATA Mathematics",
     exam: "NATA",
+    bundle: "NATA JEE UG Bundle",
     description: "Mathematics curriculum for architecture exams.",
   },
   {
@@ -91,6 +101,7 @@ const bookImages = [
     alt: "JEE Study Material - Drawing",
     title: "JEE Engineering Drawing",
     exam: "JEE",
+    bundle: "NATA JEE UG Bundle",
     description: "Technical drawing for JEE Paper 2.",
   },
   {
@@ -99,6 +110,7 @@ const bookImages = [
     alt: "GATE Study Material - Theory",
     title: "GATE Design History",
     exam: "GATE",
+    bundle: "GATE PG Bundle",
     description: "Design history and theory for GATE exam.",
   },
   {
@@ -107,6 +119,7 @@ const bookImages = [
     alt: "NIFT Study Material - Portfolio",
     title: "NIFT Portfolio",
     exam: "NIFT",
+    bundle: "NIFT NID UCEED PG Bundle",
     description: "Guide to create design portfolios for NIFT.",
   },
   {
@@ -115,6 +128,7 @@ const bookImages = [
     alt: "NID Study Material - Sketching",
     title: "NID Sketching",
     exam: "NID",
+    bundle: "NIFT NID UCEED PG Bundle",
     description: "Professional sketching for NID exam.",
   },
   {
@@ -123,6 +137,7 @@ const bookImages = [
     alt: "UCEED Study Material - Observation",
     title: "UCEED Observation",
     exam: "UCEED",
+    bundle: "NIFT NID UCEED PG Bundle",
     description: "Observation skills for UCEED exam.",
   },
   {
@@ -131,6 +146,7 @@ const bookImages = [
     alt: "NATA Study Material - Aesthetic",
     title: "NATA Aesthetic",
     exam: "NATA",
+    bundle: "NATA JEE UG Bundle",
     description: "Aesthetic sensitivity for NATA exam.",
   },
   {
@@ -139,6 +155,7 @@ const bookImages = [
     alt: "JEE Study Material - Physics",
     title: "JEE Physics",
     exam: "JEE",
+    bundle: "NATA JEE UG Bundle",
     description: "Physics concepts for JEE Paper 2.",
   },
   {
@@ -147,6 +164,7 @@ const bookImages = [
     alt: "GATE Study Material - Research",
     title: "GATE Research Methods",
     exam: "GATE",
+    bundle: "GATE PG Bundle",
     description: "Research methodologies for GATE Design.",
   },
   {
@@ -155,6 +173,7 @@ const bookImages = [
     alt: "Comprehensive Study Material",
     title: "Complete Study Package",
     exam: "ALL",
+    bundle: "ALL",
     description: "All-in-one package for all design exams.",
   },
   {
@@ -163,6 +182,7 @@ const bookImages = [
     alt: "Practice Workbook",
     title: "Practice Workbook",
     exam: "ALL",
+    bundle: "ALL",
     description: "Practice exercises for all exams.",
   },
   {
@@ -171,6 +191,7 @@ const bookImages = [
     alt: "Solved Papers",
     title: "Solved Papers",
     exam: "ALL",
+    bundle: "ALL",
     description: "Previous years' solved question papers.",
   },
   {
@@ -179,6 +200,7 @@ const bookImages = [
     alt: "Mock Test Series",
     title: "Mock Test Series",
     exam: "ALL",
+    bundle: "ALL",
     description: "Complete mock test series.",
   },
   {
@@ -187,6 +209,7 @@ const bookImages = [
     alt: "Revision Guide",
     title: "Revision Guide",
     exam: "ALL",
+    bundle: "ALL",
     description: "Last minute revision guide.",
   },
 ];
@@ -195,30 +218,34 @@ export const GalleryBooksImages = () => {
   const [filter, setFilter] = useState("ALL");
   const [filteredImages, setFilteredImages] = useState(bookImages);
 
-  // Filter exams list
-  const exams = ["ALL", "NIFT", "NID", "UCEED", "NATA", "JEE", "GATE"];
+  // Filter exams list - match these with bundle property
+  const exams = [
+    "ALL",
+    "NIFT NID UCEED UG Bundle",
+    "NATA JEE UG Bundle",
+    "NIFT NID UCEED PG Bundle",
+    "GATE PG Bundle",
+  ];
 
   useEffect(() => {
     if (filter === "ALL") {
       setFilteredImages(bookImages);
     } else {
-      setFilteredImages(bookImages.filter((image) => image.exam === filter));
+      setFilteredImages(bookImages.filter((image) => image.bundle === filter));
     }
   }, [filter]);
 
   return (
-    <section className="py-8 sm:py-12 md:py-16 bg-linear-to-b from-gray-50 to-white">
+    <section className="py-8 sm:py-12 md:py-16 bg-gradient-to-b from-gray-50 to-white">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
-        <div className="text-center mb-8 sm:mb-5">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-4xl font-black text-gray-900 mb-3 sm:mb-4 relative">
-            <span className="relative z-10">
-              <span className="bg-linear-to-r from-gray-900 via-black to-gray-900 bg-clip-text text-transparent">
-                Gallery of Our
-              </span>
-              <span className="bg-linear-to-r from-blue-700 via-blue-800 to-blue-900 bg-clip-text text-transparent ml-3">
-                Study Material
-              </span>
+        <div className="text-center mb-8 sm:mb-12">
+          <h2 className="text-3xl sm:text-4xl md:text-5xl font-bold text-gray-900 mb-3 sm:mb-4">
+            <span className="bg-gradient-to-r from-gray-900 to-gray-700 bg-clip-text text-transparent">
+              Gallery of Our{" "}
+            </span>
+            <span className="bg-gradient-to-r from-blue-700 to-blue-900 bg-clip-text text-transparent">
+              Study Material
             </span>
           </h2>
           <p className="text-gray-600 text-sm sm:text-lg md:text-xl max-w-3xl mx-auto px-4">
@@ -233,70 +260,88 @@ export const GalleryBooksImages = () => {
             <button
               key={exam}
               onClick={() => setFilter(exam)}
-              className={`px-3 sm:px-5 py-1.5 sm:py-2.5 rounded-full font-medium text-xs sm:text-base transition-all duration-300 cursor-pointer ${
-                filter === exam
-                  ? "bg-black text-white shadow-md sm:shadow-lg"
+              className={`px-4 sm:px-6 py-2 sm:py-3 rounded-full font-medium text-sm sm:text-base transition-all duration-300 ${filter === exam
+                  ? "bg-black text-white shadow-lg"
                   : "bg-white text-gray-700 border border-gray-300 hover:border-gray-400 hover:bg-gray-50"
-              }`}
+                }`}
             >
               {exam === "ALL" ? "All Materials" : exam}
             </button>
           ))}
         </div>
 
-        {/* Images Grid - No transitions, simple cards */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-3 sm:gap-4 md:gap-5">
+        {/* Images Grid - Clean Version */}
+        <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 xl:grid-cols-6 gap-4 sm:gap-5">
           {filteredImages.map((image) => (
-            <div key={image.id} className="cursor-pointer">
-              {/* Simple Card without transitions */}
-              <div className="relative overflow-hidden rounded-lg sm:rounded-xl shadow-md bg-white h-full">
-                {/* Image Container */}
-                <div className="aspect-3/4 relative overflow-hidden">
-                  {/* Actual Image - No hover effects */}
+            <div
+              key={image.id}
+              className="group flex flex-col h-full cursor-pointer"
+            >
+              {/* Card */}
+              <div className="relative flex flex-col h-full bg-white rounded-lg border border-gray-200 overflow-hidden hover:border-gray-300 hover:shadow-lg transition-all duration-200">
+
+                {/* Image */}
+                <div className="relative aspect-[3/4] overflow-hidden bg-gray-50">
                   <img
                     src={image.src}
                     alt={image.alt}
                     className="w-full h-full object-cover"
                     loading="lazy"
+                    onError={(e) => {
+                      e.target.src = `https://placehold.co/300x400/e2e8f0/475569?text=${encodeURIComponent(
+                        image.title
+                      )}`;
+                    }}
                   />
 
-                  {/* Exam Badge */}
-                  <div className="absolute top-2 right-2 sm:top-3 sm:right-3">
-                    <span className="px-2 sm:px-2.5 py-1 bg-black/80 text-white text-xs font-medium rounded-full">
+                  {/* Exam Tag */}
+                  <div className="absolute bottom-3 right-3">
+                    <span className="px-2.5 py-1 bg-black/80 text-white text-[11px] font-semibold rounded">
                       {image.exam}
                     </span>
                   </div>
                 </div>
 
-                {/* Content - Book titles matching the actual books */}
-                <div className="p-3 sm:p-4">
-                  <h3 className="text-sm font-bold text-gray-900 mb-1">
+                {/* Content */}
+                <div className="p-3 flex flex-col flex-grow">
+                  <h3 className="text-[13px] font-bold text-gray-900 mb-1.5 line-clamp-2 leading-snug">
                     {image.title}
                   </h3>
-                  <p className="text-xs text-gray-600 line-clamp-2 mb-1">
+
+                  <p className="text-[11px] text-gray-600 mb-2 line-clamp-2 flex-grow">
                     {image.description}
                   </p>
-                  <p className="text-xs text-gray-500">
-                    For{" "}
-                    {image.exam === "ALL"
-                      ? "All Design Exams"
-                      : `${image.exam} Exam`}
-                  </p>
+
+                  {/* Bundle Info */}
+                  <div className="pt-2 border-t border-gray-100">
+                    <p className="text-[10px] text-gray-500 font-medium">
+                      {image.bundle === "ALL" ? "All Design Exams" : image.bundle}
+                    </p>
+                  </div>
                 </div>
               </div>
             </div>
           ))}
         </div>
 
+        {/* Results Count */}
+        <div className="text-center mt-8 text-gray-600">
+          <p className="text-sm">
+            Showing {filteredImages.length} of {bookImages.length} materials
+            {filter !== "ALL" && ` in ${filter}`}
+          </p>
+        </div>
+
         {/* Empty State */}
         {filteredImages.length === 0 && (
-          <div className="text-center py-12 sm:py-16">
-            <div className="text-gray-400 text-5xl sm:text-6xl mb-4">📚</div>
+          <div className="text-center py-16">
+            <div className="text-gray-400 text-6xl mb-4">📚</div>
             <h3 className="text-xl font-semibold text-gray-600 mb-2">
-              No materials found for {filter}
+              No materials found for "{filter}"
             </h3>
-            <p className="text-gray-500 text-sm sm:text-base">
-              Try selecting a different filter
+            <p className="text-gray-500">
+              Try selecting a different filter or check back later for new
+              materials
             </p>
           </div>
         )}

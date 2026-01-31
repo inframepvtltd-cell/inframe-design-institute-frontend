@@ -1,5 +1,177 @@
+
 "use client";
+
 import { useState, useEffect, useRef } from "react";
+const STATE_CITY_MAP = {
+  "Andhra Pradesh": [
+    "Visakhapatnam", "Vijayawada", "Guntur", "Nellore",
+    "Kurnool", "Rajahmundry", "Tirupati", "Kadapa"
+  ],
+
+  "Arunachal Pradesh": [
+    "Itanagar", "Naharlagun", "Pasighat", "Tawang"
+  ],
+
+  "Assam": [
+    "Guwahati", "Dibrugarh", "Silchar", "Jorhat",
+    "Tezpur", "Nagaon"
+  ],
+
+  "Bihar": [
+    "Patna", "Gaya", "Bhagalpur", "Muzaffarpur",
+    "Darbhanga", "Purnia"
+  ],
+
+  "Chhattisgarh": [
+    "Raipur", "Bhilai", "Durg", "Bilaspur",
+    "Korba", "Raigarh"
+  ],
+
+  "Goa": [
+    "Panaji", "Margao", "Vasco da Gama", "Mapusa"
+  ],
+
+  "Gujarat": [
+    "Ahmedabad", "Surat", "Vadodara", "Rajkot",
+    "Bhavnagar", "Jamnagar"
+  ],
+
+  "Haryana": [
+    "Gurgaon", "Faridabad", "Panipat", "Ambala",
+    "Hisar", "Karnal"
+  ],
+
+  "Himachal Pradesh": [
+    "Shimla", "Solan", "Dharamshala", "Mandi",
+    "Kullu", "Una"
+  ],
+
+  "Jharkhand": [
+    "Ranchi", "Jamshedpur", "Dhanbad", "Bokaro",
+    "Hazaribagh"
+  ],
+
+  "Karnataka": [
+    "Bengaluru", "Mysuru", "Mangaluru", "Hubballi",
+    "Belagavi", "Shivamogga", "Davangere"
+  ],
+
+  "Kerala": [
+    "Thiruvananthapuram", "Kochi", "Kozhikode",
+    "Thrissur", "Kannur", "Alappuzha"
+  ],
+
+  "Madhya Pradesh": [
+    "Bhopal", "Indore", "Jabalpur", "Gwalior",
+    "Ujjain", "Sagar"
+  ],
+
+  "Maharashtra": [
+    "Mumbai", "Pune", "Nagpur", "Nashik",
+    "Thane", "Aurangabad", "Kolhapur", "Solapur"
+  ],
+
+  "Manipur": [
+    "Imphal", "Thoubal", "Churachandpur"
+  ],
+
+  "Meghalaya": [
+    "Shillong", "Tura", "Jowai"
+  ],
+
+  "Mizoram": [
+    "Aizawl", "Lunglei", "Champhai"
+  ],
+
+  "Nagaland": [
+    "Kohima", "Dimapur", "Mokokchung"
+  ],
+
+  "Odisha": [
+    "Bhubaneswar", "Cuttack", "Rourkela",
+    "Sambalpur", "Balasore"
+  ],
+
+  "Punjab": [
+    "Chandigarh", "Ludhiana", "Amritsar",
+    "Jalandhar", "Patiala", "Bathinda"
+  ],
+
+  "Rajasthan": [
+    "Jaipur", "Jodhpur", "Udaipur", "Ajmer",
+    "Bikaner", "Kota", "Alwar"
+  ],
+
+  "Sikkim": [
+    "Gangtok", "Namchi", "Gyalshing"
+  ],
+
+  "Tamil Nadu": [
+    "Chennai", "Coimbatore", "Madurai",
+    "Tiruchirappalli", "Salem", "Erode",
+    "Tirunelveli"
+  ],
+
+  "Telangana": [
+    "Hyderabad", "Warangal", "Karimnagar",
+    "Nizamabad", "Khammam", "Mahbubnagar"
+  ],
+
+  "Tripura": [
+    "Agartala", "Udaipur", "Dharmanagar"
+  ],
+
+  "Uttar Pradesh": [
+    "Lucknow", "Kanpur", "Noida", "Ghaziabad",
+    "Agra", "Meerut", "Varanasi", "Prayagraj",
+    "Bareilly", "Aligarh"
+  ],
+
+  "Uttarakhand": [
+    "Dehradun", "Haridwar", "Roorkee",
+    "Haldwani", "Rudrapur"
+  ],
+
+  "West Bengal": [
+    "Kolkata", "Howrah", "Durgapur",
+    "Asansol", "Siliguri", "Malda"
+  ],
+
+  /* ----------- UNION TERRITORIES ----------- */
+
+  "Andaman and Nicobar Islands": [
+    "Port Blair"
+  ],
+
+  "Chandigarh": [
+    "Chandigarh"
+  ],
+
+  "Dadra and Nagar Haveli and Daman and Diu": [
+    "Daman", "Silvassa"
+  ],
+
+  "Delhi": [
+    "New Delhi", "Delhi", "Dwarka", "Rohini",
+    "Saket", "Karol Bagh"
+  ],
+
+  "Jammu and Kashmir": [
+    "Srinagar", "Jammu", "Anantnag", "Baramulla"
+  ],
+
+  "Ladakh": [
+    "Leh", "Kargil"
+  ],
+
+  "Lakshadweep": [
+    "Kavaratti"
+  ],
+
+  "Puducherry": [
+    "Puducherry", "Karaikal", "Mahe", "Yanam"
+  ]
+};
 
 const courses = [
   "Study Material Combo NIFT NID UCEED UG Bundle",
@@ -8,10 +180,9 @@ const courses = [
   "Study Material GATE PG Bundle",
 ];
 
-const coursePrice = 4500;
+const coursePrice = 3500;
 
-// ==== Small Reusable Components ====
-
+// Error Message Component
 const ErrorMsg = ({ msg }) =>
   msg && <p className="text-red-500 text-xs mt-1">{msg}</p>;
 
@@ -23,7 +194,7 @@ const InputField = ({
   onChange,
   error,
   placeholder,
-  extra,
+  disabled,
 }) => (
   <div>
     <label className="block text-xs xs:text-sm font-semibold mb-1">
@@ -35,19 +206,20 @@ const InputField = ({
       value={value}
       onChange={onChange}
       placeholder={placeholder}
-      data-error={!!error}
+      disabled={disabled}
       className={`w-full border ${
         error ? "border-red-500" : "border-gray-300"
       } rounded-lg p-2 xs:p-3 text-xs xs:text-sm focus:ring-2 ${
         error ? "focus:ring-red-500" : "focus:ring-blue-500"
-      } outline-none transition-colors`}
-      {...extra}
+      } outline-none transition-colors ${
+        disabled ? "bg-gray-50 cursor-not-allowed" : ""
+      }`}
     />
     <ErrorMsg msg={error} />
   </div>
 );
 
-// Custom Dropdown Component
+// Custom Dropdown Component for Courses
 const CustomDropdown = ({
   label,
   value,
@@ -72,7 +244,6 @@ const CustomDropdown = ({
 
   const handleSelect = (option) => {
     onChange({ target: { name: "course", value: option } });
-    onChange({ target: { name: "price", value: coursePrice } });
     setIsOpen(false);
   };
 
@@ -114,7 +285,7 @@ const CustomDropdown = ({
         </svg>
       </button>
 
-      {/* Dropdown Menu - Modal ke andar hi rhega */}
+      {/* Dropdown Menu */}
       {isOpen && (
         <div className="absolute z-50 w-full mt-1 bg-white border border-gray-300 rounded-lg shadow-lg max-h-48 xs:max-h-56 sm:max-h-60 overflow-y-auto text-xs xs:text-sm">
           {options.map((option, index) => (
@@ -139,15 +310,54 @@ const CustomDropdown = ({
   );
 };
 
-// ==== Main Component ====
+// Fixed Custom Select Component for State/City
+const CustomSelect = ({
+  label,
+  name,
+  value,
+  onChange,
+  options,
+  error,
+  disabled = false,
+  placeholder = "Select an option",
+}) => (
+  <div>
+    <label className="block text-xs xs:text-sm font-semibold mb-1">
+      {label} *
+    </label>
+    <select
+      name={name} // Fixed: Added name attribute
+      value={value}
+      onChange={onChange}
+      disabled={disabled}
+      className={`w-full border ${
+        error ? "border-red-500" : "border-gray-300"
+      } rounded-lg p-2 xs:p-3 text-xs xs:text-sm focus:ring-2 ${
+        error ? "focus:ring-red-500" : "focus:ring-blue-500"
+      } outline-none transition-colors ${
+        disabled ? "bg-gray-50 text-gray-500 cursor-not-allowed" : "bg-white"
+      }`}
+    >
+      <option value="">{placeholder}</option>
+      {options.map((option) => (
+        <option key={option} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+    <ErrorMsg msg={error} />
+  </div>
+);
 
+// ==== Main Component ====
 export default function EnrollmentPopup({ open, onClose }) {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     phone: "",
     course: "",
-    price: "",
+    state: "",
+    city: "",
   });
 
   const [errors, setErrors] = useState({});
@@ -155,17 +365,18 @@ export default function EnrollmentPopup({ open, onClose }) {
   const [done, setDone] = useState(false);
   const modalRef = useRef(null);
 
+  // Get cities based on selected state
+  const cityOptions = formData.state ? STATE_CITY_MAP[formData.state] : [];
+
   // Prevent body scroll when modal is open
   useEffect(() => {
     if (open) {
       document.body.style.overflow = "hidden";
-      // Modal ko screen ke center mein rakhein
       if (modalRef.current) {
         const modal = modalRef.current;
         const rect = modal.getBoundingClientRect();
         const viewportHeight = window.innerHeight;
 
-        // Agar modal viewport se bada hai toh top margin adjust karein
         if (rect.height > viewportHeight * 0.9) {
           modal.style.marginTop = "5vh";
           modal.style.marginBottom = "5vh";
@@ -194,6 +405,10 @@ export default function EnrollmentPopup({ open, onClose }) {
 
     if (!formData.course) e.course = "Select course";
 
+    if (!formData.state) e.state = "Select state";
+
+    if (!formData.city) e.city = "Select city";
+
     return e;
   };
 
@@ -216,7 +431,17 @@ export default function EnrollmentPopup({ open, onClose }) {
       value = value.replace(/\D/g, "").slice(0, 10);
     }
 
-    setFormData((prev) => ({ ...prev, [name]: value }));
+    // 🔹 If state changes, clear city
+    if (name === "state") {
+      setFormData((prev) => ({
+        ...prev,
+        [name]: value,
+        city: "",
+      }));
+    } else {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+
     setErrors((prev) => ({ ...prev, [name]: "" }));
   };
 
@@ -226,12 +451,21 @@ export default function EnrollmentPopup({ open, onClose }) {
     if (Object.keys(err).length) return setErrors(err);
 
     setLoading(true);
+    // Simulate API call
     await new Promise((r) => setTimeout(r, 1500));
     setDone(true);
 
     setTimeout(() => {
       setDone(false);
-      setFormData({ name: "", email: "", phone: "", course: "", price: "" });
+      setFormData({
+        name: "",
+        email: "",
+        phone: "",
+        course: "",
+        state: "",
+        city: "",
+      });
+      setErrors({});
       onClose();
     }, 2000);
 
@@ -302,6 +536,7 @@ export default function EnrollmentPopup({ open, onClose }) {
                   onChange={handleChange}
                   error={errors.name}
                   placeholder="Enter your full name"
+                  disabled={loading}
                 />
 
                 <InputField
@@ -312,6 +547,7 @@ export default function EnrollmentPopup({ open, onClose }) {
                   onChange={handleChange}
                   error={errors.email}
                   placeholder="Enter your email"
+                  disabled={loading}
                 />
 
                 <InputField
@@ -321,9 +557,9 @@ export default function EnrollmentPopup({ open, onClose }) {
                   onChange={handleChange}
                   error={errors.phone}
                   placeholder="Enter 10-digit phone number"
+                  disabled={loading}
                 />
 
-                {/* Custom Dropdown */}
                 <CustomDropdown
                   label="Select Course"
                   value={formData.course}
@@ -331,6 +567,30 @@ export default function EnrollmentPopup({ open, onClose }) {
                   options={courses}
                   error={errors.course}
                   placeholder="Choose course"
+                />
+
+                <CustomSelect
+                  label="State"
+                  name="state" // Fixed: Added name prop
+                  value={formData.state}
+                  onChange={handleChange}
+                  options={Object.keys(STATE_CITY_MAP)}
+                  error={errors.state}
+                  disabled={loading}
+                  placeholder="Select State"
+                />
+
+                <CustomSelect
+                  label="City"
+                  name="city" // Fixed: Added name prop
+                  value={formData.city}
+                  onChange={handleChange}
+                  options={cityOptions}
+                  error={errors.city}
+                  disabled={loading || !formData.state}
+                  placeholder={
+                    formData.state ? "Select City" : "Select State First"
+                  }
                 />
 
                 {/* Payment Amount - shows only after course selection */}
@@ -351,10 +611,10 @@ export default function EnrollmentPopup({ open, onClose }) {
                 <button
                   type="submit"
                   disabled={loading}
-                  className={`w-full py-2 xs:py-3 rounded-lg font-bold text-white transition-colors text-sm xs:text-base cursor-pointer ${
+                  className={`w-full py-2 xs:py-3 rounded-lg font-bold text-white transition-colors text-sm xs:text-base ${
                     loading
                       ? "bg-green-400 cursor-not-allowed"
-                      : "bg-green-600 hover:bg-green-700"
+                      : "bg-green-600 hover:bg-green-700 cursor-pointer"
                   }`}
                 >
                   {loading ? (

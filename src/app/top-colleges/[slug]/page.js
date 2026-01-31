@@ -1,5 +1,5 @@
 "use client";
-import { AllCollegesData } from "@/app/ApiData/CollegeApi";
+import { AllCollegesData } from "../../ApiData/CollegeApi";
 import { useParams } from "next/navigation";
 
 export default function TopColleges() {
