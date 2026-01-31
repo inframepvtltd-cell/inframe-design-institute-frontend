@@ -77,6 +77,22 @@ export default function OfflineCoursePage({ params }) {
     },
   ];
 
+  const [activePage, setActivePage] = useState('')
+
+  const handleBtn = () => {
+    setActivePage('login')
+    if (token) {
+      //razorypay setupta
+      alert('razorypay setup inplement')
+      return
+    }
+    else {
+      setActivePage('login')
+    }
+  }
+
+
+
   return (
     <div className="w-full bg-white text-gray-900">
       {/* Hero Section */}
@@ -100,8 +116,8 @@ export default function OfflineCoursePage({ params }) {
               {/* Course Card */}
               <div className="bg-white rounded-2xl p-10 shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-gray-100">
                 {/* Badge */}
-                <span className="inline-block mb-4 text-sm font-semibold px-4 py-1 rounded-full bg-black text-white">
-                  Premium Course
+                <span className="inline-flex items-center gap-2 mb-5 text-sm font-semibold px-5 py-2 rounded-full bg-green-700 text-white tracking-wide">
+                  ⭐ Premium Course
                 </span>
 
                 {/* Title */}
@@ -118,7 +134,7 @@ export default function OfflineCoursePage({ params }) {
                 </p>
 
                 {/* Course Points */}
-                <ul className="space-y-4 mb-8">
+                <ul className="space-y-3 mb-8">
                   {specificCourseData?.coursePoints?.map((item, index) => (
                     <li key={index} className="flex items-start gap-4">
                       <div className="mt-1 w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-sm">
@@ -149,9 +165,7 @@ export default function OfflineCoursePage({ params }) {
                   </button>
 
                   <button
-                    onClick={() =>
-                      alert("Thank you for purchasing the course!")
-                    }
+                    onClick={handleBtn}
                     className="col-span-2 bg-black text-white rounded-full px-8 py-3 font-semibold hover:bg-black/90 cursor-pointer transition shadow-lg hover:shadow-xl"
                   >
                     Buy Now
@@ -160,52 +174,43 @@ export default function OfflineCoursePage({ params }) {
               </div>
 
               {/* ================= KEY FEATURES ================= */}
-              <div className="mt-16">
-                <h2 className="lg:text-5xl text-4xl font-extrabold mb-4">
-                  Why Choose This Course?
-                </h2>
-                <p className="text-lg text-black mb-10 max-w-2xl">
-                  Designed for serious learners who want real skills, real
-                  projects, and real outcomes.
-                </p>
+              <div className="px-10 py-5 bg-white rounded-xl mt-6 shadow-[0_15px_40px_rgba(0,0,0,0.07)]">
+                <h1 className="font-extrabold text-3xl mb-5 text-black">
+                  Why Choose Us
+                </h1>
 
-                <div className="grid sm:grid-cols-2 gap-6">
-                  {[
-                    {
-                      title: "Recorded Classes",
-                      desc: "Lifetime access to structured, high-quality sessions.",
-                    },
-                    {
-                      title: "Complete Study Material",
-                      desc: "PDFs, assignments & mock tests included.",
-                    },
-                    {
-                      title: "Doubt Support",
-                      desc: "Direct mentor support whenever you're stuck.",
-                    },
-                    {
-                      title: "Live Project Reviews",
-                      desc: "Industry-level feedback on real projects.",
-                    },
-                    {
-                      title: "Progress Tracking",
-                      desc: "Track performance with structured milestones.",
-                    },
-                    {
-                      title: "Certification",
-                      desc: "Recognized certificate after course completion.",
-                    },
-                  ].map((item, index) => (
-                    <div
-                      key={index}
-                      className="bg-white hover:-mt-1.5 border rounded-full border-gray-200 text-center p-6 shadow-md duration-300 transition-all"
-                    >
-                      <h3 className="text-xl font-semibold mb-2">
-                        {item.title}
-                      </h3>
-                      <p className="text-black text-sm">{item.desc}</p>
+                <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                  {/* Section 1 */}
+                  <div className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition">
+                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center mb-3 text-lg">
+                      🎓
                     </div>
-                  ))}
+                    <h3 className="text-lg font-bold leading-snug">
+                      Industry-Focused Learning
+                    </h3>
+                  </div>
+
+                  {/* Section 2 */}
+                  <div className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition">
+                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center mb-3 text-lg">
+                      🚀
+                    </div>
+                    <h3 className="text-lg font-bold leading-snug">
+                      Learn at Your Own Pace
+                    </h3>
+                  </div>
+
+                  {/* Section 3 */}
+                  <div className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition">
+                    <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center mb-3 text-lg">
+                      💡
+                    </div>
+                    <h3 className="text-lg font-bold leading-snug">
+                      Expert Mentorship
+                    </h3>
+                  </div>
+
                 </div>
               </div>
             </div>
@@ -353,7 +358,9 @@ export default function OfflineCoursePage({ params }) {
                               Add to Cart
                             </button>
 
-                            <button className="rounded-full bg-black text-white hover:bg-black/90 transition py-2 text-sm font-medium">
+                            <button
+                              onClick={handleBtn}
+                              className="rounded-full bg-black text-white hover:bg-black/90 transition py-2 text-sm font-medium">
                               Buy Now
                             </button>
                           </div>
@@ -389,7 +396,7 @@ export default function OfflineCoursePage({ params }) {
       </section>
 
       {/* 10. Final CTA */}
-      <section className="bg-purple-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
+      <section className="bg-green-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
         <h2 className="text-[40px] font-extrabold mb-5 capitalize">
           Are you ready to learn this course ?{" "}
         </h2>
@@ -402,7 +409,7 @@ export default function OfflineCoursePage({ params }) {
           <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
 
           {/* Actual Button */}
-          <button className="relative z-10 bg-purple-700 hover:bg-purple-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-purple-500 hover:text-white  duration-300 transition">
+          <button className="relative z-10 bg-green-700 hover:bg-green-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-green-500 hover:text-white  duration-300 transition">
             Buy Now for ₹{specificCourseData?.coursePrice}/-
           </button>
         </div>

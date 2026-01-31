@@ -95,6 +95,8 @@ export function LoginForm({ activePage, userData, dispatch, userEmail, setUserEm
             background: 'white',
             iconColor: 'black',
             confirmButtonColor: 'black'
+          }).then((res) => {
+            window.location.reload()
           })
         }
         else if (finalRes.status == 2) {

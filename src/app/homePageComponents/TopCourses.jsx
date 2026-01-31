@@ -11,13 +11,20 @@ import Image from "next/image";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
 import { Autoplay } from "swiper/modules";
+import UserControl from "../common/UserControl";
 
 export default function TopCourses() {
+
+  const [activePage, setActivePage] = useState("");
+
 
   let apiBaseUrl = process.env.NEXT_PUBLIC_API_URL
 
   const token = useSelector((store) => store.loginStore.token)
   const userData = useSelector((store) => store.loginStore.user)
+
+
+
 
   const addToCart = ({ itemId, main }) => {
     if (!token || token === ' ' || token == undefined) {
@@ -60,21 +67,26 @@ export default function TopCourses() {
     }
   }
 
+  {
+    !token && <UserControl activePage={activePage} setActivePage={setActivePage} />
+  }
+
   return (
     <div className="w-full ">
       <div className="max-w-[1320px] lg:px-6 mx-auto px-3">
         <h3 className="lg:text-[40px] text-[30px] text-start font-bold text-black lg:pt-6 bg-white">
           Top Selling Course
         </h3>
-        <OnlineCourses addToCart={addToCart} apiBaseUrl={apiBaseUrl} />
-        <OfflineCourses addToCart={addToCart} apiBaseUrl={apiBaseUrl} />
+        <OnlineCourses token={token} activePage={activePage} setActivePage={setActivePage} addToCart={addToCart} apiBaseUrl={apiBaseUrl} />
+        <OfflineCourses token={token} activePage={activePage} setActivePage={setActivePage} addToCart={addToCart} apiBaseUrl={apiBaseUrl} />
       </div>
     </div>
   );
 }
 
 
-export function OnlineCourses({ apiBaseUrl, addToCart }) {
+export function OnlineCourses({ apiBaseUrl, addToCart, activePage, setActivePage, token }) {
+
   const [onlineCourseData, setOnlineCourseData] = useState([])
 
   useEffect(() => {
@@ -83,67 +95,132 @@ export function OnlineCourses({ apiBaseUrl, addToCart }) {
       .then(finalRes => setOnlineCourseData(finalRes.onlineCourseData))
   }, [])
 
-  return (
-    <div className="my-[0px]">
-      <h3 className="text-gray-900 font-normal text-[25px] pt-3 mb-0">
-        Best Selling Online Courses
-      </h3>
+  const handleBtn = () => {
+    setActivePage('login')
+    if (token) {
+      //razorypay setupta
+      alert('razorypay setup inplement')
+      return
+    }
+    else {
+      setActivePage('login')
+    }
+  }
 
-      <div className="my-4">
-        <Swiper
-          modules={[Autoplay]}
-          spaceBetween={30}
-          loop={true}
-          autoplay={{ delay: 2500 }}
-          breakpoints={{
-            0: { slidesPerView: 1 },
-            640: { slidesPerView: 1 },
-            768: { slidesPerView: 2 },
-            1024: { slidesPerView: 4 },
-          }}
-        >
-          {onlineCourseData?.map((item, index) => (
-            <SwiperSlide key={index}>
-              <div className="rounded-[10px] h-[600px] shadow-sm group overflow-hidden hover:shadow-md transition duration-300">
-                <Image
-                  width={100}
-                  height={100}
-                  className="w-full h-[350px] object-cover object-top rounded-t-[10px] group-hover:scale-[1.01] transition duration-300"
-                  src={item?.courseImage}
-                  alt={item?.courseName}
-                />
-                <div className="p-5 h-auto">
-                  <Link href={`/online-courses/${item?.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}>
-                    <h2 className="text-[18px] capitalize font-semibold mb-2 text-gray-950 hover:underline cursor-pointer">
-                      {item?.courseName}
-                    </h2>
-                  </Link>
-                  <p className="text-gray-600 font-normal">{item?.cousreHeadline}</p>
-                  <p className="text-[28px] mt-2 font-semibold flex items-center gap-1 text-gray-950">
-                    <FaIndianRupeeSign /> {item?.coursePrice}/-
-                  </p>
-                  <div className="mt-4 grid grid-cols-2 gap-4">
-                    <button
-                      onClick={() => addToCart({ itemId: item._id, main: 'online course' })}
-                      className="bg-gray-200 hover:bg-gray-300 cursor-pointer py-[7px] text-[14px] w-full rounded-lg font-medium">
-                      Add to Cart
-                    </button>
-                    <button className="bg-gray-900 hover:bg-gray-800 cursor-pointer py-[7px] text-[14px] rounded-lg text-white font-medium">
-                      Buy Now
-                    </button>
+  return (
+    <>
+      <div className="my-[0px]">
+        {/* Overlay */}
+        {
+          activePage && !token && (
+            <div
+              onClick={() => setActivePage("")}
+              className="fixed inset-0 bg-black/70 z-[999]"
+            ></div>
+          )
+        }
+        <h3 className="text-gray-900 font-normal text-[25px] pt-3 mb-0">
+          Best Selling Online Courses
+        </h3>
+
+        <div className="my-4">
+          <Swiper
+            modules={[Autoplay]}
+            spaceBetween={30}
+            loop={true}
+            autoplay={{ delay: 3000 }}
+            breakpoints={{
+              0: { slidesPerView: 1 },
+              640: { slidesPerView: 1 },
+              768: { slidesPerView: 2 },
+              1024: { slidesPerView: 4 },
+            }}
+          >
+            {onlineCourseData.map((item, index) => (
+              <SwiperSlide key={index}>
+                <div className="
+                                 bg-white
+                                 rounded-3xl
+                                 border border-gray-200
+                                 shadow-sm
+                                 hover:shadow-md
+                                 transition
+                                 overflow-hidden
+                                 flex flex-col
+                                 h-[600px]
+                               ">
+                  <Image
+                    src={item.courseImage}
+                    alt={item.courseName}
+                    width={800}
+                    height={350}
+                    className="h-[320px] w-full object-cover"
+                  />
+
+                  <div className="p-6 flex flex-col justify-between flex-1">
+                    <div>
+                      <Link href={`/online-courses/${item.courseName.toLowerCase().replace(/[^a-zA-Z0-9]/g, "-")}`}>
+                        <h4 className="text-lg font-semibold mb-2 hover:text-gray-700">
+                          {item.courseName.replace(/[^a-zA-Z0-9]/g, " ")}
+                        </h4>
+                      </Link>
+
+                      <p className="text-gray-500 text-sm mb-4">
+                        {item.cousreHeadline}
+                      </p>
+
+                      <p className="text-2xl font-semibold">
+                        ₹{item.coursePrice}
+                      </p>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-2 mt-6">
+                      <button
+                        onClick={() => addToCart({ itemId: item._id, main: "online course" })}
+                        className="
+                                         rounded-full
+                                         border border-gray-300
+                                         py-2.5
+                                         font-medium
+                                         hover:bg-gray-100
+                                         transition
+                                         px-2
+                                       "
+                      >
+                        Add to Cart
+                      </button>
+
+                      <button
+                        onClick={handleBtn}
+                        className="
+                                         rounded-full
+                                         bg-gradient-to-b from-[#1f1f1f] to-black
+                                         text-white
+                                         py-2.5
+                                         font-medium
+                                         shadow-sm shadow-black/20
+                                         hover:shadow-md
+                                         transition
+                                       "
+                      >
+
+                        Buy Now
+                      </button>
+                    </div>
                   </div>
                 </div>
-              </div>
-            </SwiperSlide>
-          ))}
-        </Swiper>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
       </div>
-    </div>
+    </>
+
   );
 }
 
 
-export function OfflineCourses({ apiBaseUrl, addToCart }) {
+export function OfflineCourses({ apiBaseUrl, addToCart, activePage, setActivePage, token }) {
   const [offlineCourseData, setOfflineCourseData] = useState([])
 
   useEffect(() => {
@@ -152,8 +229,29 @@ export function OfflineCourses({ apiBaseUrl, addToCart }) {
       .then(finalRes => setOfflineCourseData(finalRes.offlineCourseData))
   }, [])
 
+  const handleBtn = () => {
+    if (token) {
+      //razorypay setupta
+      alert('razorypay setup inplement')
+      return
+    }
+    else {
+      setActivePage('login')
+    }
+  }
+
   return (
     <div className="my-[0px]">
+
+      {/* Overlay */}
+      {
+        activePage && !token && (
+          <div
+            onClick={() => setActivePage("")}
+            className="fixed inset-0 bg-black/70 z-[999]"
+          ></div>
+        )
+      }
       <h3 className="text-gray-900 font-normal text-[25px] pt-3 mb-0">
         Best Selling Offline Courses
       </h3>
@@ -197,7 +295,7 @@ export function OfflineCourses({ apiBaseUrl, addToCart }) {
                       className="bg-gray-200 hover:bg-gray-300 cursor-pointer py-[7px] text-[14px] w-full rounded-lg font-medium">
                       Add to Cart
                     </button>
-                    <button className="bg-gray-900 hover:bg-gray-800 cursor-pointer py-[7px] text-[14px] rounded-lg text-white font-medium">
+                    <button onClick={handleBtn} className="bg-gray-900 hover:bg-gray-800 cursor-pointer py-[7px] text-[14px] rounded-lg text-white font-medium">
                       Buy Now
                     </button>
                   </div>

@@ -17,6 +17,8 @@ import "swiper/css/navigation";
 import "swiper/css/pagination";
 import { Autoplay, Navigation, Pagination } from "swiper/modules";
 import Image from "next/image";
+import OverLay from "@/app/components/OverLay";
+import UserControl from "@/app/common/UserControl";
 
 export default function OnlineCoursePage({ params }) {
   const slug = useParams().slug.replace(/[^a-zA-Z0-9+]/g, " ");
@@ -128,6 +130,26 @@ export default function OnlineCoursePage({ params }) {
     },
   ];
 
+  const [activePage, setActivePage] = useState('login')
+
+  const handleBtn = () => {
+    setActivePage('login')
+    if (token) {
+      //razorypay setupta
+      alert('razorypay setup inplement')
+      return
+    }
+    else {
+      setActivePage('login')
+    }
+  }
+
+  {
+    activePage && !token &&
+      < OverLay />
+  }
+
+  <UserControl activePage={activePage} setActivePage={setActivePage} />
   return (
     <>
       <div className="w-full overflow-x-hidden bg-white text-black">
@@ -149,140 +171,149 @@ export default function OnlineCoursePage({ params }) {
       </section> */}
 
         {/* course details section */}
-        <section className="w-full bg-gray-50 py-16 text-black">
+        <section className="w-full bg-gradient-to-b from-gray-50 to-white py-20 text-black">
           <div className="max-w-[1320px] mx-auto px-4">
-            <div className="grid lg:grid-cols-[68%_32%] gap-12 items-start">
+            <div className="grid lg:grid-cols-[65%_35%] gap-14 items-start">
+
               {/* ================= LEFT CONTENT ================= */}
               <div>
-                {/* Course Card */}
-                <div className="bg-white rounded-2xl p-10 shadow-[0_20px_60px_rgba(0,0,0,0.08)] border border-gray-100">
+                <div className="bg-white rounded-3xl p-10 lg:p-12 shadow-[0_30px_80px_rgba(0,0,0,0.08)] border border-gray-100">
+
                   {/* Badge */}
-                  <span className="inline-block mb-4 text-sm font-semibold px-4 py-1 rounded-full bg-black text-white">
-                    Premium Course
+                  <span className="inline-flex items-center gap-2 mb-5 text-sm font-semibold px-5 py-2 rounded-full bg-orange-600 text-white tracking-wide">
+                    ⭐ Premium Course
                   </span>
 
                   {/* Title */}
-                  <h1 className="text-4xl lg:text-5xl capitalize font-extrabold leading-tight tracking-tight mb-5">
-                    {specificCourseData?.courseName?.replace(
-                      /[^a-zA-Z0-9]/g,
-                      " ",
-                    )}
+                  <h1 className="text-4xl lg:text-5xl capitalize font-extrabold leading-tight tracking-tight mb-6">
+                    {specificCourseData?.courseName?.replace(/[^a-zA-Z0-9]/g, " ")}
                   </h1>
 
                   {/* Description */}
-                  <p className="text-lg text-black leading-relaxed mb-8">
+                  <p className="text-lg text-gray-700 leading-relaxed mb-5">
                     {specificCourseData?.courseAbout}
                   </p>
 
                   {/* Course Points */}
-                  <ul className="space-y-4 mb-8">
+                  <ul className="space-y-3 mb-10">
                     {specificCourseData?.coursePoints?.map((item, index) => (
                       <li key={index} className="flex items-start gap-4">
-                        <div className="mt-1 w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-sm">
+                        <div className="mt-1 w-6 h-6 rounded-full bg-black text-white flex items-center justify-center text-sm shadow">
                           <TiTick />
                         </div>
-                        <span className="text-black text-[17px]">{item}</span>
+                        <span className="text-gray-800 text-[16px] leading-snug">
+                          {item}
+                        </span>
                       </li>
                     ))}
                   </ul>
 
                   {/* Price */}
-                  <div className="border-t pt-6">
-                    <p className="text-4xl font-extrabold text-black">
-                      ₹ {specificCourseData?.coursePrice}/-
-                    </p>
-                    <p className="text-gray-500 mt-1">
-                      Lifetime access · All recordings & material included
-                    </p>
+                  <div className="flex items-center justify-between border-t pt-8">
+                    <div>
+                      <p className="text-4xl font-extrabold text-black">
+                        ₹ {specificCourseData?.coursePrice}/-
+                      </p>
+                      <p className="text-gray-500 mt-1 text-sm">
+                        Lifetime access · All recordings & materials included
+                      </p>
+                    </div>
+
+                    <div className="hidden lg:block text-sm text-gray-400">
+                      100% Practical Learning
+                    </div>
                   </div>
 
                   {/* CTA Buttons */}
-                  <div className="grid grid-cols-3 gap-4 mt-8">
+                  <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 mt-10">
                     <button
                       onClick={scrollMoment}
-                      className="border border-gray-400 rounded-full px-6 py-3 font-medium hover:bg-gray-100 transition"
+                      className="rounded-full px-6 py-3 font-medium border border-gray-300 hover:bg-gray-100 transition"
                     >
                       Preview Course
                     </button>
-                    <button className="border border-gray-400 rounded-full px-6 py-3 font-medium hover:bg-gray-100 transition">
+
+                    <button onClick={() => addToCart(specificCourseData?._id)} className="rounded-full px-6 py-3 font-medium border border-gray-300 hover:bg-gray-100 transition">
                       Add To Cart
                     </button>
 
                     <button
-                      onClick={() =>
-                        alert("Thank you for purchasing the course!")
-                      }
-                      className="bg-black text-white rounded-full px-8 py-3 font-semibold hover:bg-black/90 cursor-pointer transition shadow-lg hover:shadow-xl"
+                      onClick={handleBtn}
+                      className="rounded-full px-8 py-3 font-semibold bg-black text-white hover:bg-black/90 transition shadow-lg hover:shadow-2xl hover:-translate-y-[1px]"
                     >
                       Buy Now
                     </button>
                   </div>
                 </div>
 
-                {/* ================= KEY FEATURES ================= */}
-                <div className="mt-16">
-                  <h2 className="text-4xl font-extrabold mb-4">
-                    Why Choose This Course?
-                  </h2>
-                  <p className="text-lg text-black mb-10 max-w-2xl">
-                    Designed for serious learners who want real skills, real
-                    projects, and real outcomes.
-                  </p>
 
-                  <div className="grid sm:grid-cols-2 gap-6">
-                    {[
-                      {
-                        title: "Recorded Classes",
-                        desc: "Lifetime access to structured, high-quality sessions.",
-                      },
-                      {
-                        title: "Complete Study Material",
-                        desc: "PDFs, assignments & mock tests included.",
-                      },
-                      {
-                        title: "Doubt Support",
-                        desc: "Direct mentor support whenever you're stuck.",
-                      },
-                      {
-                        title: "Live Project Reviews",
-                        desc: "Industry-level feedback on real projects.",
-                      },
-                      {
-                        title: "Progress Tracking",
-                        desc: "Track performance with structured milestones.",
-                      },
-                      {
-                        title: "Certification",
-                        desc: "Recognized certificate after course completion.",
-                      },
-                    ].map((item, index) => (
-                      <div
-                        key={index}
-                        className="bg-white hover:-mt-1.5 border rounded-full border-gray-200 text-center p-6 shadow-md duration-300 transition-all"
-                      >
-                        <h3 className="text-xl font-semibold mb-2">
-                          {item.title}
-                        </h3>
-                        <p className="text-black text-sm">{item.desc}</p>
+                <div className="px-10 py-5 bg-white rounded-xl mt-6 shadow-[0_15px_40px_rgba(0,0,0,0.07)]">
+                  <h1 className="font-extrabold text-3xl mb-5 text-black">
+                    Why Choose Us
+                  </h1>
+
+                  <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+
+                    {/* Section 1 */}
+                    <div className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition">
+                      <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center mb-3 text-lg">
+                        🎓
                       </div>
-                    ))}
+                      <h3 className="text-lg font-bold leading-snug">
+                        Industry-Focused Learning
+                      </h3>
+                    </div>
+
+                    {/* Section 2 */}
+                    <div className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition">
+                      <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center mb-3 text-lg">
+                        🚀
+                      </div>
+                      <h3 className="text-lg font-bold leading-snug">
+                        Learn at Your Own Pace
+                      </h3>
+                    </div>
+
+                    {/* Section 3 */}
+                    <div className="p-4 rounded-lg border border-gray-100 hover:shadow-md transition">
+                      <div className="w-10 h-10 rounded-full bg-black text-white flex items-center justify-center mb-3 text-lg">
+                        💡
+                      </div>
+                      <h3 className="text-lg font-bold leading-snug">
+                        Expert Mentorship
+                      </h3>
+                    </div>
+
                   </div>
                 </div>
+
+
               </div>
 
               {/* ================= RIGHT IMAGE ================= */}
               <div className="sticky top-24">
-                <div className="rounded-2xl overflow-hidden shadow-2xl">
-                  <img
-                    src={specificCourseData?.courseBannerImage}
-                    alt={`${specificCourseData?.courseName} banner`}
-                    className="w-full h-full object-cover"
-                  />
+                <div className="relative rounded-3xl overflow-hidden shadow-[0_40px_90px_rgba(0,0,0,0.25)]">
+
+                  {/* Fixed Aspect Ratio */}
+                  <div className="overflow-hidden group">
+                    <img
+                      src={specificCourseData?.courseBannerImage}
+                      alt={`${specificCourseData?.courseName} banner`}
+                      className="w-full h-fit object-cover transition-transform duration-700 group-hover:scale-105"
+                    />
+                  </div>
+
+                  {/* Gradient Overlay */}
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/30 via-transparent to-transparent pointer-events-none" />
+
                 </div>
               </div>
             </div>
           </div>
         </section>
+
+
+
 
         {/* recording section */}
         <section id="recording-section" className="pb-12 my-10 bg-white">
@@ -365,7 +396,7 @@ export default function OnlineCoursePage({ params }) {
                                   target="_blank"
                                   rel="noopener noreferrer"
                                   className={`font-semibold ${index < 2
-                                    ? "text-green-600 hover:underline"
+                                    ? "text-orange-600 hover:underline"
                                     : "text-blue-600 hover:underline"
                                     }`}
                                 >
@@ -516,407 +547,9 @@ export default function OnlineCoursePage({ params }) {
           </div>
         </section>
 
-        {/* 🔸 Content Wrapper */}
-        <section className="">
-          <div className="max-w-[1320px]  mx-auto ">
-            {/* 🔹 Features Section */}
-
-            {/* recording section */}
-            <section id="recording-section" className="pb-12 my-10 bg-white">
-              <div className="max-w-[1320px] mx-auto px-4">
-                {/* Heading */}
-                <div className="mb-10">
-                  <h2 className="text-4xl text-black font-extrabold mb-2">
-                    Course Overview
-                  </h2>
-                  <p className="text-gray-600 text-lg">
-                    Explore recordings, study materials, and detailed course
-                    content
-                  </p>
-                </div>
-
-                {/* Tabs */}
-                <div className="flex flex-wrap gap-3 mb-10 border-b border-gray-200 pb-4">
-                  {tabs?.map((item, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setActiveTab(item)}
-                      className={`px-6 py-2.5 rounded-full text-sm font-medium capitalize transition
-            ${item === activeTab
-                          ? "bg-black text-white shadow-md"
-                          : "bg-gray-100 text-gray-700 hover:bg-black hover:text-white"
-                        }`}
-                    >
-                      {item}
-                    </button>
-                  ))}
-                </div>
-
-                {/* ================= RECORDINGS ================= */}
-                {activeTab === "recordings" && (
-                  <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full text-left">
-                        <thead className="bg-gray-50">
-                          <tr>
-                            {["Sr. No", "Title", "Duration", "Action"].map(
-                              (head, i) => (
-                                <th
-                                  key={i}
-                                  className="py-4 px-6 text-sm font-semibold text-gray-700 border-b border-gray-300"
-                                >
-                                  {head}
-                                </th>
-                              ),
-                            )}
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          {specificCourseData?.courseRecordingTitle?.map(
-                            (title, index) => {
-                              const duration =
-                                specificCourseData?.courseRecordingDuration?.[
-                                index
-                                ] || "N/A";
-                              const url =
-                                specificCourseData?.courseRecordingUrl?.[
-                                index
-                                ] || "#";
-
-                              return (
-                                <tr
-                                  key={index}
-                                  className="hover:bg-gray-50 transition"
-                                >
-                                  <td className="py-4 px-6 border-b border-gray-300">
-                                    {index + 1}
-                                  </td>
-                                  <td className="py-4 px-6 border-b border-gray-300 font-medium">
-                                    {title}
-                                  </td>
-                                  <td className="py-4 px-6 border-b border-gray-300 text-gray-600">
-                                    {duration} min
-                                  </td>
-                                  <td className="py-4 px-6 border-b border-gray-300">
-                                    <a
-                                      href={url}
-                                      target="_blank"
-                                      rel="noopener noreferrer"
-                                      className={`font-semibold ${index < 2
-                                        ? "text-green-600 hover:underline"
-                                        : "text-blue-600 hover:underline"
-                                        }`}
-                                    >
-                                      {index < 2 ? "Preview" : "Play"}
-                                    </a>
-                                  </td>
-                                </tr>
-                              );
-                            },
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-
-                    {/* Show More */}
-                    <div className="py-6 text-center">
-                      <button
-                        onClick={() => setShowAll(!showAll)}
-                        className="text-black font-medium hover:underline"
-                      >
-                        {showAll ? "Show Less" : "Show More"}
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                {/* ================= STUDY MATERIAL ================= */}
-                {activeTab === "study materials" && (
-                  <div className="bg-white rounded-xl shadow-md border border-gray-200 overflow-hidden">
-                    <div className="overflow-x-auto">
-                      <table className="min-w-full text-left">
-                        <thead className="bg-gray-50">
-                          <tr>
-                            <th className="py-4 px-6 font-semibold border-b border-gray-300">
-                              Sr. No
-                            </th>
-                            <th className="py-4 px-6 font-semibold border-b border-gray-300">
-                              Material Name
-                            </th>
-                            <th className="py-4 px-6 font-semibold border-b border-gray-300 text-center">
-                              Download
-                            </th>
-                          </tr>
-                        </thead>
-
-                        <tbody>
-                          {specificCourseData?.courseStudyMaterialName?.map(
-                            (materialName, index) => {
-                              const file =
-                                specificCourseData?.courseStudyMaterials?.[
-                                index
-                                ];
-                              const fileUrl = `http://localhost:9200/uploads/coursesImages/${file}`;
-
-                              return (
-                                <tr
-                                  key={index}
-                                  className={`transition hover:bg-gray-50 ${index > 1 ? "opacity-50" : "opacity-100"
-                                    }`}
-                                >
-                                  <td className="py-4 px-6 border-b border-gray-300 ">
-                                    {index + 1}
-                                  </td>
-                                  <td className="py-4 px-6 border-b border-gray-300 font-medium">
-                                    {materialName}
-                                  </td>
-                                  <td className="py-4 px-6 border-b border-gray-300 text-center">
-                                    <a
-                                      href={fileUrl}
-                                      download
-                                      className="inline-block bg-black text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-black/90 transition"
-                                    >
-                                      Download
-                                    </a>
-                                  </td>
-                                </tr>
-                              );
-                            },
-                          )}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
-
-                {/* ================= DESCRIPTION ================= */}
-                {activeTab === "description" && (
-                  <div className="bg-white rounded-xl shadow-md border border-gray-200 p-8">
-                    <h3 className="text-2xl font-bold mb-6">
-                      What You’ll Learn
-                    </h3>
-
-                    <ul className="space-y-5">
-                      {specificCourseData?.courseLearnPoints?.map(
-                        (point, index) => (
-                          <li key={index} className="flex items-start gap-4">
-                            <div className="w-7 h-7 rounded-full bg-black text-white flex items-center justify-center text-sm font-semibold">
-                              {index + 1}
-                            </div>
-                            <p className="text-gray-700 leading-relaxed">
-                              {point}
-                            </p>
-                          </li>
-                        ),
-                      )}
-                    </ul>
-                  </div>
-                )}
-              </div>
-            </section>
-
-            {/* 🔹 Why Choose Us Section */}
-            <section className="w-full bg-black my-10 text-white rounded-2xl p-10">
-              <div className="max-w-[1320px] mx-auto">
-                {/* Heading */}
-                <div className="mb-14 max-w-3xl">
-                  <h2 className="text-3xl lg:text-4xl font-extrabold mb-4">
-                    Features of the Program
-                  </h2>
-                  <p className="text-lg text-gray-300">
-                    Tailored for design aspirants with structured training,
-                    expert mentorship, and exam-focused practice.
-                  </p>
-                </div>
-
-                {/* Feature Cards */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-10">
-                  {[
-                    {
-                      title: "Interactive Doubt-Solving Lectures",
-                      desc: "Live two-way interactive sessions supported by detailed class notes.",
-                    },
-                    {
-                      title: "Practice eBooks with Video Solutions",
-                      desc: "Covers CAT/DAT, GAT, and other design aptitude sections in depth.",
-                    },
-                    {
-                      title: "Comprehensive Study Material",
-                      desc: "12+ expertly curated booklets covering the complete CEED syllabus.",
-                    },
-                    {
-                      title: "Previous Year Question Analysis",
-                      desc: "Includes detailed video solutions from past CEED examinations.",
-                    },
-                    {
-                      title: "Daily Practice Assignments",
-                      desc: "Daily Practice Problems (DPPs) with step-by-step explanations.",
-                    },
-                    {
-                      title: "Personalized Expert Feedback",
-                      desc: "Individualized reviews on drawing and creative assignments.",
-                    },
-                  ].map((item, idx) => (
-                    <div
-                      key={idx}
-                      className="
-            group
-            bg-[#111111]
-            border border-gray-800
-            rounded-[28px]
-            p-8
-            transition-all duration-300 ease-out
-            hover:-translate-y-1
-            hover:border-gray-600
-            hover:shadow-[0_20px_60px_rgba(255,255,255,0.06)]
-          "
-                    >
-                      {/* Soft Accent */}
-                      <div className="w-12 h-1 bg-white/90 rounded-full mb-6 transition-all duration-300 group-hover:w-20"></div>
-
-                      <h4 className="text-lg font-semibold mb-3">
-                        {item.title}
-                      </h4>
-
-                      <p className="text-sm text-gray-400 leading-relaxed">
-                        {item.desc}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            </section>
-
-            {/* explore more courses section */}
-            <section className="w-full lg:my-20 my-12 px-4 lg:px-6">
-              <div className="max-w-[1320px] mx-auto">
-                {/* Heading */}
-                <div className="mb-12 max-w-3xl">
-                  <h2 className="text-3xl lg:text-4xl text-black font-extrabold capitalize mb-4">
-                    Explore More Courses
-                  </h2>
-                  <p className="text-lg text-gray-600">
-                    Discover expertly curated courses designed to elevate your
-                    skills.
-                  </p>
-                </div>
-
-                {onlineCourseData.length >= 1 ? (
-                  <Swiper
-                    modules={[Autoplay]}
-                    spaceBetween={24}
-                    slidesPerView={1}
-                    autoplay={{ delay: 3000, disableOnInteraction: false }}
-                    breakpoints={{
-                      640: { slidesPerView: 1.2 },
-                      768: { slidesPerView: 2.2 },
-                      1024: { slidesPerView: 4 },
-                    }}
-                  >
-                    {onlineCourseData.map((course) => (
-                      <SwiperSlide key={course._id}>
-                        <div className="px-2">
-                          <div
-                            className="
-                  group
-                  bg-white
-                  h-[560px]
-                  rounded-[28px] border border-gray-300
-                  overflow-hidden
-                  transition-all duration-300 ease-out
-                  hover:-translate-y-1
-                  hover:shadow-[0_30px_80px_rgba(0,0,0,0.12)]
-                "
-                          >
-                            {/* Image */}
-                            <div className="overflow-hidden rounded-t-[28px]">
-                              <img
-                                src={course.courseImage}
-                                alt={course.courseName}
-                                className="w-full h-[340px] object-cover transition-transform duration-500 group-hover:scale-[1.04]"
-                              />
-                            </div>
-
-                            {/* Content */}
-                            <div className="p-6 flex flex-col justify-between h-[220px]">
-                              <div>
-                                <Link
-                                  href={`/online-courses/${course.courseName
-                                    .toLowerCase()
-                                    .replace(/[^a-zA-Z0-9]/g, "-")}`}
-                                >
-                                  <h3 className="text-lg font-semibold capitalize text-black hover:underline">
-                                    {course.courseName.replace(
-                                      /[^a-zA-Z0-9]/g,
-                                      " ",
-                                    )}
-                                  </h3>
-                                </Link>
-
-                                <p className="text-sm text-gray-600 mt-1 line-clamp-2">
-                                  {course.cousreHeadline}
-                                </p>
-                              </div>
-
-                              {/* Price + CTA */}
-                              <div>
-                                <p className="text-2xl font-bold mt-3 text-black">
-                                  ₹ {course.coursePrice} /-
-                                </p>
-
-                                <div className="mt-4 grid grid-cols-2 gap-4">
-                                  <button
-                                    onClick={() =>
-                                      addToCart({
-                                        itemId: course._id,
-                                        main: "online course",
-                                      })
-                                    }
-                                    className="rounded-full bg-gray-100 hover:bg-gray-200 transition py-2 text-sm font-medium"
-                                  >
-                                    Add to Cart
-                                  </button>
-
-                                  <button className="rounded-full bg-black text-white hover:bg-black/90 transition py-2 text-sm font-medium">
-                                    Buy Now
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </SwiperSlide>
-                    ))}
-                  </Swiper>
-                ) : (
-                  /* Skeleton Loader */
-                  <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
-                    {[...Array(4)].map((_, index) => (
-                      <div
-                        key={index}
-                        className="bg-white rounded-[28px] p-6 shadow-md animate-pulse"
-                      >
-                        <div className="h-[220px] bg-gray-200 rounded-[20px] mb-6"></div>
-                        <div className="h-4 bg-gray-300 rounded w-3/4 mb-3"></div>
-                        <div className="h-3 bg-gray-200 rounded w-full mb-2"></div>
-                        <div className="h-3 bg-gray-200 rounded w-5/6 mb-6"></div>
-                        <div className="h-5 bg-gray-300 rounded w-1/3 mb-6"></div>
-                        <div className="grid grid-cols-2 gap-4">
-                          <div className="h-10 bg-gray-200 rounded-full"></div>
-                          <div className="h-10 bg-gray-300 rounded-full"></div>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                )}
-              </div>
-            </section>
-          </div>
-        </section>
 
         {/* 10. Final CTA */}
-        <section className="bg-green-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
+        <section className="bg-orange-100 text-black text-center py-12 px-4 lg:my-[40] my-[30px]">
           <h2 className="text-[40px] font-extrabold mb-5 capitalize">
             Are you ready to learn this course ?{" "}
           </h2>
@@ -929,10 +562,13 @@ export default function OnlineCoursePage({ params }) {
             <div className="absolute inset-0 z-0 rounded-full bg-white blur-md opacity-50 animate-glow"></div>
 
             {/* Actual Button */}
-            <button className="relative z-10 bg-green-700 hover:bg-green-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-green-500 hover:text-white  duration-300 transition">
+            <button onClick={handleBtn} className="relative z-10 bg-orange-700 hover:bg-orange-800 text-white text-xl cursor-pointer  px-6 py-3 rounded-full font-medium  shadow-2xl shadow-orange-500 hover:text-white  duration-300 transition">
               Buy Now for ₹{specificCourseData?.coursePrice}/-
             </button>
           </div>
+
+
+
         </section>
 
         <section className="w-full bg-[#f7f7f7] py-16 px-4">

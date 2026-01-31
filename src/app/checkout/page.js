@@ -197,7 +197,7 @@ export default function CartPage() {
               <tbody>
                 {cartData.map((item, index) => (
                   <tr
-                    key={item._id}
+                    key={index}
                     className="bg-white text-lg shadow-sm rounded-xl transition hover:shadow-md"
                   >
                     <td className="p-4 text-center font-medium text-gray-600">

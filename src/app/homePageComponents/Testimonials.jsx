@@ -21,7 +21,7 @@ export default function Testimonials() {
 
                 {/* Section Header */}
                 <div className="max-w-[700px] mb-14">
-                    <h3 className="lg:text-[42px] text-[28px] font-extrabold text-black leading-tight">
+                    <h3 className="lg:text-4xl text-3xl font-extrabold text-black leading-tight">
                         What Our Students Say
                     </h3>
 
