@@ -3,7 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { useParams } from "next/navigation";
 import Image from "next/image";
-import FullScreenLoader from "@/app/components/Loading";
+import FullScreenLoader from "@/app/components/loading";
 import axios from "axios";
 
 export default function BlogPage() {
