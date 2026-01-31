@@ -15,13 +15,13 @@ export const metadata = {
   title: "Best NIFT NID NATA UCEED Study Material Books in India",
   description:
     "Explore top study material books for NIFT, NID, NATA & UCEED exams in India with full syllabus, practice tests & past papers for serious prep.",
-//   keywords: [
-//     "NIFT study material",
-//     "NID books",
-//     "NATA preparation books",
-//     "UCEED study material",
-//     "design entrance exam books",
-//   ],
+  //   keywords: [
+  //     "NIFT study material",
+  //     "NID books",
+  //     "NATA preparation books",
+  //     "UCEED study material",
+  //     "design entrance exam books",
+  //   ],
 };
 // /study-material/books/nift-nid-nata-uceed-study-material-books-in-india
 // /study-material/notes/slugghgh
